@@ -1,0 +1,107 @@
+<h1>Show Cpu</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, PcpbWeb.CPULive.FormComponent,
+    id: @cpu.id,
+    title: @page_title,
+    action: @live_action,
+    cpu: @cpu,
+    return_to: Routes.cpu_show_path(@socket, :show, @cpu) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @cpu.name %>
+  </li>
+
+  <li>
+    <strong>Manufacturer:</strong>
+    <%= @cpu.manufacturer %>
+  </li>
+
+  <li>
+    <strong>Model:</strong>
+    <%= @cpu.model %>
+  </li>
+
+  <li>
+    <strong>Model year:</strong>
+    <%= @cpu.model_year %>
+  </li>
+
+  <li>
+    <strong>Series:</strong>
+    <%= @cpu.series %>
+  </li>
+
+  <li>
+    <strong>Family:</strong>
+    <%= @cpu.family %>
+  </li>
+
+  <li>
+    <strong>Integrated graphics:</strong>
+    <%= @cpu.integrated_graphics %>
+  </li>
+
+  <li>
+    <strong>Max memory:</strong>
+    <%= @cpu.max_memory %>
+  </li>
+
+  <li>
+    <strong>Memory channels:</strong>
+    <%= @cpu.memory_channels %>
+  </li>
+
+  <li>
+    <strong>Simultaneous multithreading:</strong>
+    <%= @cpu.simultaneous_multithreading %>
+  </li>
+
+  <li>
+    <strong>Core count:</strong>
+    <%= @cpu.core_count %>
+  </li>
+
+  <li>
+    <strong>Core clock:</strong>
+    <%= @cpu.core_clock %>
+  </li>
+
+  <li>
+    <strong>Boost clock:</strong>
+    <%= @cpu.boost_clock %>
+  </li>
+
+  <li>
+    <strong>Cache:</strong>
+    <%= @cpu.cache %>
+  </li>
+
+  <li>
+    <strong>Tdp:</strong>
+    <%= @cpu.tdp %>
+  </li>
+
+  <li>
+    <strong>Boost tdp:</strong>
+    <%= @cpu.boost_tdp %>
+  </li>
+
+  <li>
+    <strong>Lithography:</strong>
+    <%= @cpu.lithography %>
+  </li>
+
+  <li>
+    <strong>Stock cooler:</strong>
+    <%= @cpu.stock_cooler %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.cpu_show_path(@socket, :edit, @cpu), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.cpu_index_path(@socket, :index) %></span>

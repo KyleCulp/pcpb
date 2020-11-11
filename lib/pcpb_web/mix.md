@@ -1,0 +1,1 @@
+    mix phx.gen.live Parts CPU cpus name manufacturer model model_year series family integrated_graphics max_memory:integer memory_channels:integer simultaneous_multithreading core_count:integer core_clock:integer boost_clock:integer cache tdp:integer boost_tdp:integer lithography stock_cooler

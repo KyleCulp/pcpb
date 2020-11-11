@@ -1,0 +1,69 @@
+<h1>Listing Cpus</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, PcpbWeb.CPULive.FormComponent,
+    id: @cpu.id || :new,
+    title: @page_title,
+    action: @live_action,
+    cpu: @cpu,
+    return_to: Routes.cpu_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Manufacturer</th>
+      <th>Model</th>
+      <th>Model year</th>
+      <th>Series</th>
+      <th>Family</th>
+      <th>Integrated graphics</th>
+      <th>Max memory</th>
+      <th>Memory channels</th>
+      <th>Simultaneous multithreading</th>
+      <th>Core count</th>
+      <th>Core clock</th>
+      <th>Boost clock</th>
+      <th>Cache</th>
+      <th>Tdp</th>
+      <th>Boost tdp</th>
+      <th>Lithography</th>
+      <th>Stock cooler</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="cpus">
+    <%= for cpu <- @cpus do %>
+      <tr id="cpu-<%= cpu.id %>">
+        <td><%= cpu.name %></td>
+        <td><%= cpu.manufacturer %></td>
+        <td><%= cpu.model %></td>
+        <td><%= cpu.model_year %></td>
+        <td><%= cpu.series %></td>
+        <td><%= cpu.family %></td>
+        <td><%= cpu.integrated_graphics %></td>
+        <td><%= cpu.max_memory %></td>
+        <td><%= cpu.memory_channels %></td>
+        <td><%= cpu.simultaneous_multithreading %></td>
+        <td><%= cpu.core_count %></td>
+        <td><%= cpu.core_clock %></td>
+        <td><%= cpu.boost_clock %></td>
+        <td><%= cpu.cache %></td>
+        <td><%= cpu.tdp %></td>
+        <td><%= cpu.boost_tdp %></td>
+        <td><%= cpu.lithography %></td>
+        <td><%= cpu.stock_cooler %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.cpu_show_path(@socket, :show, cpu) %></span>
+          <span><%= live_patch "Edit", to: Routes.cpu_index_path(@socket, :edit, cpu) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: cpu.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Cpu", to: Routes.cpu_index_path(@socket, :new) %></span>
