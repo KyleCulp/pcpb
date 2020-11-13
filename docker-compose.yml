@@ -7,3 +7,4 @@ services:
       - "5434:5432"
     environment:
       POSTGRES_PASSWORD: postgrespassword
+      DATABASE: pcpb_dev

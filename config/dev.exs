@@ -5,7 +5,7 @@ config :pcpb, Pcpb.Repo,
   username: "postgres",
   password: "postgrespassword",
   database: "pcpb_dev",
-  hostname: "127.0.0.1",
+  hostname: "localhost",
   port: 5434,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
