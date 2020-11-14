@@ -23,6 +23,7 @@ defmodule PcpbWeb do
 
       import Plug.Conn
       alias PcpbWeb.Router.Helpers, as: Routes
+      import PcpbWeb.Pow.Helper
     end
   end
 
@@ -30,6 +31,7 @@ defmodule PcpbWeb do
     quote do
       use Phoenix.View,
         root: "lib/pcpb_web/templates",
+        pattern: "**/*",
         namespace: PcpbWeb
 
       # Import convenience functions from controllers
@@ -88,6 +90,14 @@ defmodule PcpbWeb do
 
       import PcpbWeb.ErrorHelpers
       alias PcpbWeb.Router.Helpers, as: Routes
+    end
+  end
+
+  def mailer_view do
+    quote do
+      use Phoenix.View, root: "lib/pcpb_web/templates", namespace: PcpbWeb
+
+      use Phoenix.HTML
     end
   end
 

@@ -8,6 +8,7 @@ defmodule Pcpb.Parts.CPU do
     field :cache, :string
     field :core_clock, :integer
     field :core_count, :integer
+    field :ecc_support, :string
     field :family, :string
     field :integrated_graphics, :string
     field :lithography, :string

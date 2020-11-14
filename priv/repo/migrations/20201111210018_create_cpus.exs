@@ -9,6 +9,7 @@ defmodule Pcpb.Repo.Migrations.CreateCpus do
       add :model_year, :string
       add :series, :string
       add :family, :string
+      add :ecc_support, :string
       add :integrated_graphics, :string
       add :max_memory, :integer
       add :memory_channels, :integer
