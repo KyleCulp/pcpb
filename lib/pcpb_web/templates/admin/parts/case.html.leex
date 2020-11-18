@@ -1,0 +1,77 @@
+<h1>Listing Cases</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+<%= live_component @socket, PcpbWeb.AdminLive.Parts.CaseFormComponent,
+    id: @case.id || :new,
+    title: @page_title,
+    action: @live_action,
+    case: @case,
+    return_to: Routes.admin_parts_case_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Manufacturer</th>
+      <th>Model</th>
+      <th>Release</th>
+      <th>Model number</th>
+      <th>Color</th>
+      <th>Type</th>
+      <th>Color</th>
+      <th>Motherboard support</th>
+      <th>Psu support</th>
+      <th>Included psu</th>
+      <th>Psu shroud</th>
+      <th>Psu mount location</th>
+      <th>Windows</th>
+      <th>Dimensions</th>
+      <th>Clearance</th>
+      <th>Weight</th>
+      <th>Io</th>
+      <th>Dust filters</th>
+      <th>Expansion slots</th>
+      <th>Radiator support</th>
+      <th>Fan options</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="cases">
+    <%= for case <- @cases do %>
+      <tr id="case-<%= case.id %>">
+        <td><%= case.name %></td>
+        <td><%= case.manufacturer %></td>
+        <td><%= case.model %></td>
+        <td><%= case.release %></td>
+        <td><%= case.model_number %></td>
+        <td><%= case.color %></td>
+        <td><%= case.type %></td>
+        <td><%= case.color %></td>
+        <td><%= case.motherboard_support %></td>
+        <td><%= case.psu_support %></td>
+        <td><%= case.included_psu %></td>
+        <td><%= case.psu_shroud %></td>
+        <td><%= case.psu_mount_location %></td>
+        <td><%= case.windows %></td>
+        <td><%= case.dimensions %></td>
+        <td><%= case.clearance %></td>
+        <td><%= case.weight %></td>
+        <td><%= case.io %></td>
+        <td><%= case.dust_filters %></td>
+        <td><%= case.expansion_slots %></td>
+        <td><%= case.radiator_support %></td>
+        <td><%= case.fan_options %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.case_show_path(@socket, :show, case) %></span>
+          <span><%= live_patch "Edit", to: Routes.case_index_path(@socket, :edit, case) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: case.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Case", to: Routes.case_index_path(@socket, :new) %></span>

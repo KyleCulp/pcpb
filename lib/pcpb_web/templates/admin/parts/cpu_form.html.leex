@@ -22,13 +22,29 @@
   <%= text_input f, :model_year %>
   <%= error_tag f, :model_year %>
 
-  <%= label f, :series %>
-  <%= text_input f, :series %>
-  <%= error_tag f, :series %>
+  <%= label f, :model_number %>
+  <%= text_input f, :model_number %>
+  <%= error_tag f, :model_number %>
 
   <%= label f, :family %>
   <%= text_input f, :family %>
   <%= error_tag f, :family %>
+
+  <%= label f, :series %>
+  <%= text_input f, :series %>
+  <%= error_tag f, :series %>
+
+  <%= label f, :socket %>
+  <%= text_input f, :socket %>
+  <%= error_tag f, :socket %>
+
+  <%= label f, :cache %>
+  <%= text_input f, :cache %>
+  <%= error_tag f, :cache %>
+
+  <%= label f, :ecc_support %>
+  <%= text_input f, :ecc_support %>
+  <%= error_tag f, :ecc_support %>
 
   <%= label f, :integrated_graphics %>
   <%= text_input f, :integrated_graphics %>
@@ -42,9 +58,9 @@
   <%= number_input f, :memory_channels %>
   <%= error_tag f, :memory_channels %>
 
-  <%= label f, :simultaneous_multithreading %>
-  <%= text_input f, :simultaneous_multithreading %>
-  <%= error_tag f, :simultaneous_multithreading %>
+  <%= label f, :smt %>
+  <%= text_input f, :smt %>
+  <%= error_tag f, :smt %>
 
   <%= label f, :core_count %>
   <%= number_input f, :core_count %>
@@ -58,21 +74,9 @@
   <%= number_input f, :boost_clock %>
   <%= error_tag f, :boost_clock %>
 
-  <%= label f, :ecc_support %>
-  <%= text_input f, :ecc_support %>
-  <%= error_tag f, :ecc_support %>
-
-  <%= label f, :cache %>
-  <%= text_input f, :cache %>
-  <%= error_tag f, :cache %>
-
   <%= label f, :tdp %>
   <%= number_input f, :tdp %>
   <%= error_tag f, :tdp %>
-
-  <%= label f, :boost_tdp %>
-  <%= number_input f, :boost_tdp %>
-  <%= error_tag f, :boost_tdp %>
 
   <%= label f, :lithography %>
   <%= text_input f, :lithography %>

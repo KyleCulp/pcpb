@@ -1,6 +1,6 @@
 {application,phoenix_live_view,
-             [{applications,[kernel,stdlib,elixir,logger,phoenix_html,
-                             phoenix]},
+             [{applications,[kernel,stdlib,elixir,logger,phoenix,phoenix_html,
+                             telemetry]},
               {description,"Rich, real-time user experiences with server-rendered HTML\n"},
               {modules,['Elixir.Inspect.Phoenix.LiveView.Socket',
                         'Elixir.Inspect.Phoenix.LiveView.Socket.AssignsNotInSocket',
@@ -36,5 +36,5 @@
                         'Elixir.Phoenix.LiveViewTest.View',
                         'Elixir.String.Chars.Phoenix.LiveComponent.CID']},
               {registered,[]},
-              {vsn,"0.13.3"},
+              {vsn,"0.14.8"},
               {mod,{'Elixir.Phoenix.LiveView.Application',[]}}]}.

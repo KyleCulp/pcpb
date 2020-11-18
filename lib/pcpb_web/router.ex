@@ -52,12 +52,21 @@ defmodule PcpbWeb.Router do
 
   scope "/", PcpbWeb do
     pipe_through :browser
+    live "/cases", CaseLive.Index, :index
+    live "/cases/new", CaseLive.Index, :new
+    live "/cases/:id/edit", CaseLive.Index, :edit
+
+    live "/cases/:id", CaseLive.Show, :show
+    live "/cases/:id/show/edit", CaseLive.Show, :edit
 
     live "/", PageLive, :index
     live "/admin", AdminLive.Index, :index
     live "/admin/parts/cpu", AdminLive.Parts.CPU, :index
     live "/admin/parts/cpu/new", AdminLive.Parts.CPU, :new
     live "/admin/parts/cpu/:id", AdminLive.Parts.CPU, :edit
+    live "/admin/parts/case", AdminLive.Parts.Case, :index
+    live "/admin/parts/case/new", AdminLive.Parts.Case, :new
+    live "/admin/parts/case/:id", AdminLive.Parts.Case, :edit
     # live "/admin/parts/cpu", AdminLive.Parts, :index
   end
   # Other scopes may use custom stacks.

@@ -1,6 +1,6 @@
 {application,pow,
-             [{applications,[kernel,stdlib,elixir,logger,ecto,phoenix_html,
-                             phoenix]},
+             [{applications,[kernel,stdlib,elixir,logger,ecto,phoenix,
+                             phoenix_html]},
               {description,"Robust user authentication solution"},
               {modules,['Elixir.Mix.Pow','Elixir.Mix.Pow.Ecto.Migration',
                         'Elixir.Mix.Pow.Extension','Elixir.Mix.Pow.Phoenix',

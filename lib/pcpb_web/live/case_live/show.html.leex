@@ -1,0 +1,127 @@
+<h1>Show Case</h1>
+
+<%= if @live_action in [:edit] do %>
+  <%= live_modal @socket, PcpbWeb.CaseLive.FormComponent,
+    id: @case.id,
+    title: @page_title,
+    action: @live_action,
+    case: @case,
+    return_to: Routes.case_show_path(@socket, :show, @case) %>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @case.name %>
+  </li>
+
+  <li>
+    <strong>Manufacturer:</strong>
+    <%= @case.manufacturer %>
+  </li>
+
+  <li>
+    <strong>Model:</strong>
+    <%= @case.model %>
+  </li>
+
+  <li>
+    <strong>Release:</strong>
+    <%= @case.release %>
+  </li>
+
+  <li>
+    <strong>Model number:</strong>
+    <%= @case.model_number %>
+  </li>
+
+  <li>
+    <strong>Color:</strong>
+    <%= @case.color %>
+  </li>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @case.type %>
+  </li>
+
+  <li>
+    <strong>Color:</strong>
+    <%= @case.color %>
+  </li>
+
+  <li>
+    <strong>Motherboard support:</strong>
+    <%= @case.motherboard_support %>
+  </li>
+
+  <li>
+    <strong>Psu support:</strong>
+    <%= @case.psu_support %>
+  </li>
+
+  <li>
+    <strong>Included psu:</strong>
+    <%= @case.included_psu %>
+  </li>
+
+  <li>
+    <strong>Psu shroud:</strong>
+    <%= @case.psu_shroud %>
+  </li>
+
+  <li>
+    <strong>Psu mount location:</strong>
+    <%= @case.psu_mount_location %>
+  </li>
+
+  <li>
+    <strong>Windows:</strong>
+    <%= @case.windows %>
+  </li>
+
+  <li>
+    <strong>Dimensions:</strong>
+    <%= @case.dimensions %>
+  </li>
+
+  <li>
+    <strong>Clearance:</strong>
+    <%= @case.clearance %>
+  </li>
+
+  <li>
+    <strong>Weight:</strong>
+    <%= @case.weight %>
+  </li>
+
+  <li>
+    <strong>Io:</strong>
+    <%= @case.io %>
+  </li>
+
+  <li>
+    <strong>Dust filters:</strong>
+    <%= @case.dust_filters %>
+  </li>
+
+  <li>
+    <strong>Expansion slots:</strong>
+    <%= @case.expansion_slots %>
+  </li>
+
+  <li>
+    <strong>Radiator support:</strong>
+    <%= @case.radiator_support %>
+  </li>
+
+  <li>
+    <strong>Fan options:</strong>
+    <%= @case.fan_options %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.case_show_path(@socket, :edit, @case), class: "button" %></span>
+<span><%= live_redirect "Back", to: Routes.case_index_path(@socket, :index) %></span>

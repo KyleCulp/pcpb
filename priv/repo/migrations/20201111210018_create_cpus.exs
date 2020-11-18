@@ -7,19 +7,21 @@ defmodule Pcpb.Repo.Migrations.CreateCpus do
       add :manufacturer, :string
       add :model, :string
       add :model_year, :string
-      add :series, :string
+      add :model_number, :string
       add :family, :string
+      add :series, :string
+      add :socket, :string
+      add :cache, :string
+      add :cache_map, :map
       add :ecc_support, :string
       add :integrated_graphics, :string
       add :max_memory, :integer
       add :memory_channels, :integer
-      add :simultaneous_multithreading, :string
+      add :smt, :string
       add :core_count, :integer
-      add :core_clock, :integer
-      add :boost_clock, :integer
-      add :cache, :string
+      add :core_clock, :decimal
+      add :boost_clock, :decimal
       add :tdp, :integer
-      add :boost_tdp, :integer
       add :lithography, :string
       add :stock_cooler, :string
 

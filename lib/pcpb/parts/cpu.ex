@@ -3,23 +3,25 @@ defmodule Pcpb.Parts.CPU do
   import Ecto.Changeset
 
   schema "cpus" do
-    field :boost_clock, :integer
-    field :boost_tdp, :integer
-    field :cache, :string
-    field :core_clock, :integer
-    field :core_count, :integer
-    field :ecc_support, :string
-    field :family, :string
-    field :integrated_graphics, :string
-    field :lithography, :string
+    field :name, :string
     field :manufacturer, :string
-    field :max_memory, :integer
-    field :memory_channels, :integer
     field :model, :string
     field :model_year, :string
-    field :name, :string
+    field :model_number, :string
+    field :family, :string
     field :series, :string
-    field :simultaneous_multithreading, :string
+    field :socket, :string
+    field :cache, :string
+    field :cache_map, :map
+    field :core_count, :integer
+    field :core_clock, :decimal
+    field :boost_clock, :decimal
+    field :ecc_support, :string
+    field :integrated_graphics, :string
+    field :lithography, :string
+    field :max_memory, :integer
+    field :memory_channels, :integer
+    field :smt, :string
     field :stock_cooler, :string
     field :tdp, :integer
 
@@ -29,7 +31,7 @@ defmodule Pcpb.Parts.CPU do
   @doc false
   def changeset(cpu, attrs) do
     cpu
-    |> cast(attrs, [:name, :manufacturer, :model, :model_year, :series, :family, :integrated_graphics, :max_memory, :memory_channels, :simultaneous_multithreading, :core_count, :core_clock, :boost_clock, :cache, :tdp, :boost_tdp, :lithography, :stock_cooler])
-    |> validate_required([:name, :manufacturer, :model, :model_year, :series, :family, :integrated_graphics, :max_memory, :memory_channels, :simultaneous_multithreading, :core_count, :core_clock, :boost_clock, :cache, :tdp, :boost_tdp, :lithography, :stock_cooler])
+    |> cast(attrs, [:name, :manufacturer, :model, :model_year, :model_number, :series, :cache, :cache_map, :family, :integrated_graphics, :core_count, :core_clock, :boost_clock, :cache, :tdp, :lithography, :max_memory, :memory_channels, :smt, :stock_cooler])
+    |> validate_required([:name, :manufacturer, :model, :model_year, :model_number, :series, :family, :integrated_graphics, :max_memory, :memory_channels, :smt, :core_count, :core_clock, :boost_clock, :cache, :tdp, :lithography, :stock_cooler])
   end
 end
