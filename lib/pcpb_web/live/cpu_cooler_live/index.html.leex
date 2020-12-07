@@ -1,0 +1,75 @@
+<h1>Listing Cpu coolers</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, PcpbWeb.CPUCoolerLive.FormComponent,
+    id: @cpu_cooler.id || :new,
+    title: @page_title,
+    action: @live_action,
+    cpu_cooler: @cpu_cooler,
+    return_to: Routes.cpu_cooler_index_path(@socket, :index) %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Manufacturer</th>
+      <th>Model</th>
+      <th>Series</th>
+      <th>Release</th>
+      <th>Model number</th>
+      <th>Color</th>
+      <th>Led</th>
+      <th>Type</th>
+      <th>Intel socket support</th>
+      <th>Amd socket support</th>
+      <th>Bearing type</th>
+      <th>Fans</th>
+      <th>Fan size</th>
+      <th>Rpm</th>
+      <th>Noise level</th>
+      <th>Fan cfm</th>
+      <th>Dimensions</th>
+      <th>Watercool</th>
+      <th>Fan dimensions</th>
+      <th>Rgb</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="cpu_coolers">
+    <%= for cpu_cooler <- @cpu_coolers do %>
+      <tr id="cpu_cooler-<%= cpu_cooler.id %>">
+        <td><%= cpu_cooler.name %></td>
+        <td><%= cpu_cooler.manufacturer %></td>
+        <td><%= cpu_cooler.model %></td>
+        <td><%= cpu_cooler.series %></td>
+        <td><%= cpu_cooler.release %></td>
+        <td><%= cpu_cooler.model_number %></td>
+        <td><%= cpu_cooler.color %></td>
+        <td><%= cpu_cooler.led %></td>
+        <td><%= cpu_cooler.type %></td>
+        <td><%= cpu_cooler.intel_socket_support %></td>
+        <td><%= cpu_cooler.amd_socket_support %></td>
+        <td><%= cpu_cooler.bearing_type %></td>
+        <td><%= cpu_cooler.fans %></td>
+        <td><%= cpu_cooler.fan_size %></td>
+        <td><%= cpu_cooler.rpm %></td>
+        <td><%= cpu_cooler.noise_level %></td>
+        <td><%= cpu_cooler.fan_cfm %></td>
+        <td><%= cpu_cooler.dimensions %></td>
+        <td><%= cpu_cooler.watercool %></td>
+        <td><%= cpu_cooler.fan_dimensions %></td>
+        <td><%= cpu_cooler.rgb %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.cpu_cooler_show_path(@socket, :show, cpu_cooler) %></span>
+          <span><%= live_patch "Edit", to: Routes.cpu_cooler_index_path(@socket, :edit, cpu_cooler) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: cpu_cooler.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Cpu cooler", to: Routes.cpu_cooler_index_path(@socket, :new) %></span>

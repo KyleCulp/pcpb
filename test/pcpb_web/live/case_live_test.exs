@@ -5,9 +5,75 @@ defmodule PcpbWeb.CaseLiveTest do
 
   alias Pcpb.Parts
 
-  @create_attrs %{clearance: %{}, color: "some color", dimensions: %{}, dust_filters: %{}, expansion_slots: %{}, fan_options: %{}, included_psu: "some included_psu", io: %{}, manufacturer: "some manufacturer", model: "some model", model_number: "some model_number", motherboard_support: [], name: "some name", psu_mount_location: "some psu_mount_location", psu_shroud: "some psu_shroud", psu_support: [], radiator_support: %{}, release: ~D[2010-04-17], type: "some type", weight: "120.5", windows: %{}}
-  @update_attrs %{clearance: %{}, color: "some updated color", dimensions: %{}, dust_filters: %{}, expansion_slots: %{}, fan_options: %{}, included_psu: "some updated included_psu", io: %{}, manufacturer: "some updated manufacturer", model: "some updated model", model_number: "some updated model_number", motherboard_support: [], name: "some updated name", psu_mount_location: "some updated psu_mount_location", psu_shroud: "some updated psu_shroud", psu_support: [], radiator_support: %{}, release: ~D[2011-05-18], type: "some updated type", weight: "456.7", windows: %{}}
-  @invalid_attrs %{clearance: nil, color: nil, dimensions: nil, dust_filters: nil, expansion_slots: nil, fan_options: nil, included_psu: nil, io: nil, manufacturer: nil, model: nil, model_number: nil, motherboard_support: nil, name: nil, psu_mount_location: nil, psu_shroud: nil, psu_support: nil, radiator_support: nil, release: nil, type: nil, weight: nil, windows: nil}
+  @create_attrs %{
+    clearance: %{},
+    color: "some color",
+    dimensions: %{},
+    dust_filters: %{},
+    expansion_slots: %{},
+    fan_options: %{},
+    included_psu: "some included_psu",
+    io: %{},
+    manufacturer: "some manufacturer",
+    model: "some model",
+    model_number: "some model_number",
+    motherboard_support: [],
+    name: "some name",
+    psu_mount_location: "some psu_mount_location",
+    psu_shroud: "some psu_shroud",
+    psu_support: [],
+    radiator_support: %{},
+    release: ~D[2010-04-17],
+    type: "some type",
+    weight: "120.5",
+    windows: %{}
+  }
+  @update_attrs %{
+    clearance: %{},
+    color: "some updated color",
+    dimensions: %{},
+    dust_filters: %{},
+    expansion_slots: %{},
+    fan_options: %{},
+    included_psu: "some updated included_psu",
+    io: %{},
+    manufacturer: "some updated manufacturer",
+    model: "some updated model",
+    model_number: "some updated model_number",
+    motherboard_support: [],
+    name: "some updated name",
+    psu_mount_location: "some updated psu_mount_location",
+    psu_shroud: "some updated psu_shroud",
+    psu_support: [],
+    radiator_support: %{},
+    release: ~D[2011-05-18],
+    type: "some updated type",
+    weight: "456.7",
+    windows: %{}
+  }
+  @invalid_attrs %{
+    clearance: nil,
+    color: nil,
+    dimensions: nil,
+    dust_filters: nil,
+    expansion_slots: nil,
+    fan_options: nil,
+    included_psu: nil,
+    io: nil,
+    manufacturer: nil,
+    model: nil,
+    model_number: nil,
+    motherboard_support: nil,
+    name: nil,
+    psu_mount_location: nil,
+    psu_shroud: nil,
+    psu_support: nil,
+    radiator_support: nil,
+    release: nil,
+    type: nil,
+    weight: nil,
+    windows: nil
+  }
 
   defp fixture(:case) do
     {:ok, case} = Parts.create_case(@create_attrs)

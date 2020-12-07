@@ -7,7 +7,7 @@
   phx_submit: "save" %>
 
   <%= label f, :name %>
-  <%= text_input f, :name %>
+  <%= text_input f, :name, class: "" %>
   <%= error_tag f, :name %>
 
   <%= label f, :manufacturer %>
@@ -41,6 +41,13 @@
   <%= label f, :cache %>
   <%= text_input f, :cache %>
   <%= error_tag f, :cache %>
+
+  <%= inputs_for f, :cache_map, fn fp -> %>
+    <%= text_input fp, :l1instruction %>
+    <%= text_input fp, :l1data %>
+    <%= text_input fp, :l2 %>
+    <%= text_input fp, :l3 %>
+  <% end %>
 
   <%= label f, :ecc_support %>
   <%= text_input f, :ecc_support %>

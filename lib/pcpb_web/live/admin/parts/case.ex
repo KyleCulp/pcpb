@@ -1,5 +1,5 @@
 defmodule PcpbWeb.AdminLive.Parts.Case do
-  use PcpbWeb, :live_view
+  use PcpbWeb, :live_admin_view
 
   alias Pcpb.Parts
   alias Pcpb.Parts.Case

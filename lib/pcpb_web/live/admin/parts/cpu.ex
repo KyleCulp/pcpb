@@ -1,5 +1,5 @@
 defmodule PcpbWeb.AdminLive.Parts.CPU do
-  use PcpbWeb, :live_view
+  use PcpbWeb, :live_admin_view
   alias Pcpb.Parts
   alias Pcpb.Parts.CPU
 
@@ -42,7 +42,6 @@ defmodule PcpbWeb.AdminLive.Parts.CPU do
 
     {:noreply, assign(socket, :cpus, list_cpus())}
   end
-
 
   defp list_cpus do
     Parts.list_cpus()

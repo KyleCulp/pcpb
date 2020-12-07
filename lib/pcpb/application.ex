@@ -14,7 +14,8 @@ defmodule Pcpb.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Pcpb.PubSub},
       # Start the Endpoint (http/https)
-      PcpbWeb.Endpoint
+      PcpbWeb.Endpoint,
+      Pow.Store.Backend.MnesiaCache
       # Start a worker by calling: Pcpb.Worker.start_link(arg)
       # {Pcpb.Worker, arg}
     ]

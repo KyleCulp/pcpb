@@ -300,4 +300,100 @@ defmodule Pcpb.Parts do
   def change_case(%Case{} = case, attrs \\ %{}) do
     Case.changeset(case, attrs)
   end
+
+  alias Pcpb.Parts.CPUCooler
+
+  @doc """
+  Returns the list of cpu_coolers.
+
+  ## Examples
+
+      iex> list_cpu_coolers()
+      [%CPUCooler{}, ...]
+
+  """
+  def list_cpu_coolers do
+    Repo.all(CPUCooler)
+  end
+
+  @doc """
+  Gets a single cpu_cooler.
+
+  Raises `Ecto.NoResultsError` if the Cpu cooler does not exist.
+
+  ## Examples
+
+      iex> get_cpu_cooler!(123)
+      %CPUCooler{}
+
+      iex> get_cpu_cooler!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_cpu_cooler!(id), do: Repo.get!(CPUCooler, id)
+
+  @doc """
+  Creates a cpu_cooler.
+
+  ## Examples
+
+      iex> create_cpu_cooler(%{field: value})
+      {:ok, %CPUCooler{}}
+
+      iex> create_cpu_cooler(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_cpu_cooler(attrs \\ %{}) do
+    %CPUCooler{}
+    |> CPUCooler.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a cpu_cooler.
+
+  ## Examples
+
+      iex> update_cpu_cooler(cpu_cooler, %{field: new_value})
+      {:ok, %CPUCooler{}}
+
+      iex> update_cpu_cooler(cpu_cooler, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_cpu_cooler(%CPUCooler{} = cpu_cooler, attrs) do
+    cpu_cooler
+    |> CPUCooler.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a cpu_cooler.
+
+  ## Examples
+
+      iex> delete_cpu_cooler(cpu_cooler)
+      {:ok, %CPUCooler{}}
+
+      iex> delete_cpu_cooler(cpu_cooler)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_cpu_cooler(%CPUCooler{} = cpu_cooler) do
+    Repo.delete(cpu_cooler)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking cpu_cooler changes.
+
+  ## Examples
+
+      iex> change_cpu_cooler(cpu_cooler)
+      %Ecto.Changeset{data: %CPUCooler{}}
+
+  """
+  def change_cpu_cooler(%CPUCooler{} = cpu_cooler, attrs \\ %{}) do
+    CPUCooler.changeset(cpu_cooler, attrs)
+  end
 end

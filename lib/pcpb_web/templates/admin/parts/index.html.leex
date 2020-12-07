@@ -1,0 +1,7 @@
+<ul>
+  <%= Enum.with_index(@parts) |> Enum.map(fn({part, index}) -> %>
+    <li>
+      <%= live_patch part.name, to: part.route %>
+    </li>
+<% end) %>
+</ul>

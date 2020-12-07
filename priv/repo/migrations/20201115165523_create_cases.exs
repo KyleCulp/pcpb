@@ -27,6 +27,5 @@ defmodule Pcpb.Repo.Migrations.CreateCases do
 
       timestamps()
     end
-
   end
 end

@@ -27,6 +27,5 @@ defmodule Pcpb.Repo.Migrations.CreateCpus do
 
       timestamps()
     end
-
   end
 end

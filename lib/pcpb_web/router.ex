@@ -17,6 +17,11 @@ defmodule PcpbWeb.Router do
     # plug PcpbWeb.AssignUser
   end
 
+  pipeline :admin do
+    plug :put_root_layout, {PcpbWeb.AdminView, :layout}
+    plug :put_layout, {PcpbWeb.AdminView, :live}
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -28,6 +33,19 @@ defmodule PcpbWeb.Router do
     plug PcpbWeb.AssignUser
   end
 
+  pipeline :not_authenticated do
+    plug Pow.Plug.RequireNotAuthenticated,
+      error_handler: PcpbWeb.AuthErrorHandler
+  end
+
+  scope "/", PcpbWeb do
+    pipe_through [:browser, :not_authenticated]
+
+    get "/signup", RegistrationController, :new, as: :signup
+    post "/signup", RegistrationController, :create, as: :signup
+    get "/login", SessionController, :new, as: :login
+    post "/login", SessionController, :create, as: :login
+  end
 
   scope "/" do
     pipe_through :browser
@@ -40,7 +58,6 @@ defmodule PcpbWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
-    live "/admin", AdminLive.Index, :index
 
     live "/parts", PartLive.Index, :index
     live "/parts/new", PartLive.Index, :new
@@ -48,10 +65,6 @@ defmodule PcpbWeb.Router do
 
     live "/parts/:id", PartLive.Show, :show
     live "/parts/:id/show/edit", PartLive.Show, :edit
-  end
-
-  scope "/", PcpbWeb do
-    pipe_through :browser
     live "/cases", CaseLive.Index, :index
     live "/cases/new", CaseLive.Index, :new
     live "/cases/:id/edit", CaseLive.Index, :edit
@@ -59,18 +72,28 @@ defmodule PcpbWeb.Router do
     live "/cases/:id", CaseLive.Show, :show
     live "/cases/:id/show/edit", CaseLive.Show, :edit
 
-    live "/", PageLive, :index
+    live "/cpu_coolers", CPUCoolerLive.Index, :index
+    live "/cpu_coolers/new", CPUCoolerLive.Index, :new
+    live "/cpu_coolers/:id/edit", CPUCoolerLive.Index, :edit
+
+    live "/cpu_coolers/:id", CPUCoolerLive.Show, :show
+    live "/cpu_coolers/:id/show/edit", CPUCoolerLive.Show, :edit
+
+  end
+
+  scope "/", PcpbWeb do
+    pipe_through [:browser, :admin]
+
     live "/admin", AdminLive.Index, :index
+    live "/admin/parts", AdminLive.Parts.Index, :index
+
     live "/admin/parts/cpu", AdminLive.Parts.CPU, :index
     live "/admin/parts/cpu/new", AdminLive.Parts.CPU, :new
     live "/admin/parts/cpu/:id", AdminLive.Parts.CPU, :edit
+
     live "/admin/parts/case", AdminLive.Parts.Case, :index
     live "/admin/parts/case/new", AdminLive.Parts.Case, :new
     live "/admin/parts/case/:id", AdminLive.Parts.Case, :edit
-    # live "/admin/parts/cpu", AdminLive.Parts, :index
   end
-  # Other scopes may use custom stacks.
-  # scope "/api", PcpbWeb do
-  #   pipe_through :api
-  # end
+
 end

@@ -12,7 +12,12 @@ defmodule Pcpb.Parts.CPU do
     field :series, :string
     field :socket, :string
     field :cache, :string
-    field :cache_map, :map
+    embeds_one :cache_map, CacheMap do
+      field :l1instruction, :string
+      field :l1data, :string
+      field :l2, :string
+      field :l3, :string
+    end
     field :core_count, :integer
     field :core_clock, :decimal
     field :boost_clock, :decimal
@@ -31,7 +36,54 @@ defmodule Pcpb.Parts.CPU do
   @doc false
   def changeset(cpu, attrs) do
     cpu
-    |> cast(attrs, [:name, :manufacturer, :model, :model_year, :model_number, :series, :cache, :cache_map, :family, :integrated_graphics, :core_count, :core_clock, :boost_clock, :cache, :tdp, :lithography, :max_memory, :memory_channels, :smt, :stock_cooler])
-    |> validate_required([:name, :manufacturer, :model, :model_year, :model_number, :series, :family, :integrated_graphics, :max_memory, :memory_channels, :smt, :core_count, :core_clock, :boost_clock, :cache, :tdp, :lithography, :stock_cooler])
+    |> cast(attrs, [
+      :name,
+      :manufacturer,
+      :model,
+      :model_year,
+      :model_number,
+      :series,
+      :socket,
+      :ecc_support,
+      :cache,
+      :family,
+      :integrated_graphics,
+      :core_count,
+      :core_clock,
+      :boost_clock,
+      :cache,
+      :tdp,
+      :lithography,
+      :max_memory,
+      :memory_channels,
+      :smt,
+      :stock_cooler
+    ])
+    |> validate_required([
+      :name,
+      :manufacturer,
+      :model,
+      :model_year,
+      :model_number,
+      :series,
+      :family,
+      :integrated_graphics,
+      :max_memory,
+      :memory_channels,
+      :smt,
+      :core_count,
+      :core_clock,
+      :boost_clock,
+      :cache,
+      :tdp,
+      :lithography,
+      :stock_cooler
+    ])
+    |> cast_embed(:cache_map, with: &cache_map_changeset/2)
+  end
+
+  defp cache_map_changeset(schema, params) do
+    schema
+    |> cast(params, [:l1instruction, :l1data, :l2, :l3])
   end
 end

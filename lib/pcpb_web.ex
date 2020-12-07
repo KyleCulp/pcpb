@@ -52,6 +52,15 @@ defmodule PcpbWeb do
     end
   end
 
+  def live_admin_view do
+    quote do
+      use Phoenix.LiveView,
+        layout: {PcpbWeb.AdminView, "live.html"}
+
+      unquote(view_helpers())
+    end
+  end
+
   def live_component do
     quote do
       use Phoenix.LiveComponent

@@ -37,7 +37,51 @@ defmodule Pcpb.Parts.Case do
   @doc false
   def changeset(case, attrs) do
     case
-    |> cast(attrs, [:name, :manufacturer, :model, :release, :model_number, :color, :type, :motherboard_support, :psu_support, :included_psu, :psu_shroud, :psu_mount_location, :windows, :dimensions, :clearance, :weight, :io, :dust_filters, :expansion_slots, :radiator_support, :fan_options])
-    |> validate_required([:name, :manufacturer, :model, :release, :model_number, :color, :type, :motherboard_support, :psu_support, :included_psu, :psu_shroud, :psu_mount_location, :windows, :dimensions, :clearance, :weight, :io, :dust_filters, :expansion_slots, :radiator_support, :fan_options])
+    |> cast(attrs, [
+      :name,
+      :manufacturer,
+      :model,
+      :release,
+      :model_number,
+      :color,
+      :type,
+      :motherboard_support,
+      :psu_support,
+      :included_psu,
+      :psu_shroud,
+      :psu_mount_location,
+      :windows,
+      :dimensions,
+      :clearance,
+      :weight,
+      :io,
+      :dust_filters,
+      :expansion_slots,
+      :radiator_support,
+      :fan_options
+    ])
+    |> validate_required([
+      :name,
+      :manufacturer,
+      :model,
+      :release,
+      :model_number,
+      :color,
+      :type,
+      :motherboard_support,
+      :psu_support,
+      :included_psu,
+      :psu_shroud,
+      :psu_mount_location,
+      :windows,
+      :dimensions,
+      :clearance,
+      :weight,
+      :io,
+      :dust_filters,
+      :expansion_slots,
+      :radiator_support,
+      :fan_options
+    ])
   end
 end

@@ -1,5 +1,5 @@
 defmodule PcpbWeb.AdminLive.Index do
-  use PcpbWeb, :live_view
+  use PcpbWeb, :live_admin_view
 
   def render(assigns) do
     Phoenix.View.render(PcpbWeb.AdminView, "index.html", assigns)
@@ -9,5 +9,4 @@ defmodule PcpbWeb.AdminLive.Index do
   def mount(_params, _session, socket) do
     {:ok, socket}
   end
-
 end

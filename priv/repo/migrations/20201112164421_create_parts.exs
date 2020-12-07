@@ -8,6 +8,5 @@ defmodule Pcpb.Repo.Migrations.CreateParts do
 
       timestamps()
     end
-
   end
 end
