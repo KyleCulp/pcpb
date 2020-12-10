@@ -2,6 +2,7 @@ defmodule PcpbWeb.AdminLive.Parts.CaseFormComponent do
   use PcpbWeb, :live_component
 
   alias Pcpb.Parts
+  @motherboard_support [XL_ATX, E_ATX, XLE_ATX, ATX, Micro_ATX, Mini_DTX, Mini_ITX]
 
   def render(assigns) do
     Phoenix.View.render(PcpbWeb.AdminView, "parts/case_form.html", assigns)
@@ -10,11 +11,13 @@ defmodule PcpbWeb.AdminLive.Parts.CaseFormComponent do
   @impl true
   def update(%{case: case} = assigns, socket) do
     changeset = Parts.change_case(case)
+    motherboard_support_options = Parts.list_case_suggestions()
 
     {:ok,
      socket
      |> assign(assigns)
-     |> assign(:changeset, changeset)}
+     |> assign(:changeset, changeset)
+     |> assign(:motherboard_support_options, motherboard_support_options)}
   end
 
   @impl true

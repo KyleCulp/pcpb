@@ -6,24 +6,29 @@ defmodule Pcpb.Repo.Migrations.CreateCases do
       add :name, :string
       add :manufacturer, :string
       add :model, :string
-      add :release, :date
       add :model_number, :string
+      add :launch, :date
       add :color, :string
+      add :material, :string
       add :type, :string
       add :motherboard_support, {:array, :string}
       add :psu_support, {:array, :string}
-      add :included_psu, :string
-      add :psu_shroud, :string
       add :psu_mount_location, :string
-      add :windows, :map
-      add :dimensions, :map
-      add :clearance, :map
+      add :psu_shroud, :string
+      add :included_psu, :string
       add :weight, :decimal
-      add :io, :map
+
+      add :clearance, :map
+      add :dimensions, :map
       add :dust_filters, :map
-      add :expansion_slots, :map
       add :radiator_support, :map
       add :fan_options, :map
+
+      add :expansion_slots, :integer
+      add :fiveonefourthbays, :integer
+      add :threeonehalfbays, :integer
+      add :side_window, :string
+      add :io, {:array, :string}
 
       timestamps()
     end

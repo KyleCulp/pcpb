@@ -23,6 +23,13 @@ defmodule PcpbWeb.LiveHelpers do
     live_component(socket, PcpbWeb.ModalComponent, modal_opts)
   end
 
+  @spec live_dashboard_path(
+          atom | %{router: atom | %{__helpers__: atom | tuple}},
+          any,
+          atom,
+          any,
+          any
+        ) :: any
   @doc """
   Computes a route path to the given route, node, and params.
   """

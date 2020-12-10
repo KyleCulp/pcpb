@@ -206,6 +206,52 @@ defmodule Pcpb.Parts do
   end
 
   alias Pcpb.Parts.Case
+  import Ecto.Query, only: [from: 2]
+
+  # sort through a list of arrays of string, put unique values into a map
+  def list_case_suggestions do
+    query = "SELECT ARRAY(
+      SELECT DISTINCT e
+      FROM cases AS b
+      CROSS JOIN LATERAL unnest(motherboard_support) AS a(e)
+      -- ORDER BY e; -- if you want it sorted
+    ) as motherboard_support"
+
+    # from u in "cases",
+    #   select: u.motherboard_support
+
+    # "SELECT ARRAY(
+    #   SELECT DISTINCT e
+    #   FROM cases AS t
+    #   CROSS JOIN LATERAL unnest(motherboard_support) AS a(e)
+    #   ORDER BY e
+    # );"
+    data =
+      Ecto.Adapters.SQL.query!(
+        Pcpb.Repo,
+        "SELECT ARRAY(
+        SELECT DISTINCT e
+        FROM cases AS b
+        CROSS JOIN LATERAL unnest(motherboard_support) AS a(e)
+        -- ORDER BY e; -- if you want it sorted
+      ) as motherboard_support"
+      )
+
+    # data = Repo.all(query)
+    # List.to_tuple(data)
+    data.rows
+    |> List.flatten()
+    |> Enum.chunk_every(1)
+    |> Enum.map(fn [a] -> {a, a} end)
+    |> Map.new()
+    |> IO.inspect()
+
+    # data.rows
+    # |> Enum.chunk_every(1)
+    # |> Enum.map(fn [a] -> {a, a} end)
+    # |> Map.new()
+    # |> IO.inspect()
+  end
 
   @doc """
   Returns the list of cases.

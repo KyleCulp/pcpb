@@ -1,7 +1,9 @@
-<ul>
-  <%= Enum.with_index(@parts) |> Enum.map(fn({part, index}) -> %>
-    <li>
-      <%= live_patch part.name, to: part.route %>
+<div class="container w-full mx-auto pt-20">
+  <ul>
+    <%= Enum.with_index(@parts) |> Enum.map(fn({part, index}) -> %>
+    <li class="pt-5">
+      <%= live_patch part.name, to: part.route, class: "text-xl" %>
     </li>
-<% end) %>
+  <% end) %>
 </ul>
+</div>

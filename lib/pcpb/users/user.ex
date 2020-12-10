@@ -4,6 +4,7 @@ defmodule Pcpb.Users.User do
 
   schema "users" do
     pow_user_fields()
+    field :admin, :boolean
 
     timestamps()
   end

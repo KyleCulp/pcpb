@@ -58,27 +58,6 @@ defmodule PcpbWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
-
-    live "/parts", PartLive.Index, :index
-    live "/parts/new", PartLive.Index, :new
-    live "/parts/:id/edit", PartLive.Index, :edit
-
-    live "/parts/:id", PartLive.Show, :show
-    live "/parts/:id/show/edit", PartLive.Show, :edit
-    live "/cases", CaseLive.Index, :index
-    live "/cases/new", CaseLive.Index, :new
-    live "/cases/:id/edit", CaseLive.Index, :edit
-
-    live "/cases/:id", CaseLive.Show, :show
-    live "/cases/:id/show/edit", CaseLive.Show, :edit
-
-    live "/cpu_coolers", CPUCoolerLive.Index, :index
-    live "/cpu_coolers/new", CPUCoolerLive.Index, :new
-    live "/cpu_coolers/:id/edit", CPUCoolerLive.Index, :edit
-
-    live "/cpu_coolers/:id", CPUCoolerLive.Show, :show
-    live "/cpu_coolers/:id/show/edit", CPUCoolerLive.Show, :edit
-
   end
 
   scope "/", PcpbWeb do
@@ -95,5 +74,4 @@ defmodule PcpbWeb.Router do
     live "/admin/parts/case/new", AdminLive.Parts.Case, :new
     live "/admin/parts/case/:id", AdminLive.Parts.Case, :edit
   end
-
 end

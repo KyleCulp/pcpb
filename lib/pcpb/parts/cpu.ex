@@ -6,29 +6,34 @@ defmodule Pcpb.Parts.CPU do
     field :name, :string
     field :manufacturer, :string
     field :model, :string
-    field :model_year, :string
+    field :launch, :date
     field :model_number, :string
     field :family, :string
     field :series, :string
     field :socket, :string
+    field :unlocked, :boolean
+    field :pci_version, :string
+    field :memory_type, :string
     field :cache, :string
+
     embeds_one :cache_map, CacheMap do
       field :l1instruction, :string
       field :l1data, :string
       field :l2, :string
       field :l3, :string
     end
+
     field :core_count, :integer
     field :core_clock, :decimal
     field :boost_clock, :decimal
-    field :ecc_support, :string
     field :integrated_graphics, :string
     field :lithography, :string
+    field :tdp, :integer
+    field :ecc_support, :string
     field :max_memory, :integer
     field :memory_channels, :integer
     field :smt, :string
     field :stock_cooler, :string
-    field :tdp, :integer
 
     timestamps()
   end
@@ -40,10 +45,13 @@ defmodule Pcpb.Parts.CPU do
       :name,
       :manufacturer,
       :model,
-      :model_year,
+      :launch,
       :model_number,
       :series,
       :socket,
+      :unlocked,
+      :pci_version,
+      :memory_type,
       :ecc_support,
       :cache,
       :family,
@@ -63,7 +71,7 @@ defmodule Pcpb.Parts.CPU do
       :name,
       :manufacturer,
       :model,
-      :model_year,
+      :launch,
       :model_number,
       :series,
       :family,
@@ -74,7 +82,6 @@ defmodule Pcpb.Parts.CPU do
       :core_count,
       :core_clock,
       :boost_clock,
-      :cache,
       :tdp,
       :lithography,
       :stock_cooler
@@ -85,5 +92,12 @@ defmodule Pcpb.Parts.CPU do
   defp cache_map_changeset(schema, params) do
     schema
     |> cast(params, [:l1instruction, :l1data, :l2, :l3])
+
+    # |> validate_required([
+    #   :l1instruction,
+    #   :l1data,
+    #   :l2,
+    #   :l3
+    # ])
   end
 end

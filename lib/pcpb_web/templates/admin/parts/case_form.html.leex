@@ -1,94 +1,99 @@
 <h2><%= @title %></h2>
-
 <%= f = form_for @changeset, "#",
   id: "case-form",
+  class: "flex flex-row flex-wrap justify-center px-4",
   phx_target: @myself,
   phx_change: "validate",
   phx_submit: "save" %>
-
+<div class="p-2 align-middle">
   <%= label f, :name %>
   <%= text_input f, :name %>
   <%= error_tag f, :name %>
-
+</div>
+<div class="p-2 align-middle">
   <%= label f, :manufacturer %>
   <%= text_input f, :manufacturer %>
   <%= error_tag f, :manufacturer %>
-
+</div>
+<div class="p-2 align-middle">
   <%= label f, :model %>
   <%= text_input f, :model %>
   <%= error_tag f, :model %>
-
-  <%= label f, :release %>
-  <%= date_select f, :release %>
-  <%= error_tag f, :release %>
-
+</div>
+<div class="p-2 align-middle">
   <%= label f, :model_number %>
   <%= text_input f, :model_number %>
   <%= error_tag f, :model_number %>
-
+</div>
+<div class="p-2 align-middle">
+  <%= label f, :launch %>
+  <%= date_input f, :launch %>
+  <%= error_tag f, :launch %>
+</div>
+<div class="p-2 align-middle">
   <%= label f, :color %>
   <%= text_input f, :color %>
   <%= error_tag f, :color %>
-
+</div>
+<div class="p-2 align-middle">
+  <%= label f, :material %>
+  <%= text_input f, :material %>
+  <%= error_tag f, :material %>
+</div>
+<div class="p-2 align-middle">
   <%= label f, :type %>
   <%= text_input f, :type %>
   <%= error_tag f, :type %>
-
+</div>
+<div class="p-2 align-middle" id="select" phx-hook="select" phx-update="ignore">
   <%= label f, :motherboard_support %>
-  <%= multiple_select f, :motherboard_support, ["Option 1": "option1", "Option 2": "option2"] %>
+  <%= multiple_select f, :motherboard_support, @motherboard_support_options, class: "slim-select" %>
   <%= error_tag f, :motherboard_support %>
-
+</div>
+<div class="p-2 align-middle">
   <%= label f, :psu_support %>
   <%= multiple_select f, :psu_support, ["Option 1": "option1", "Option 2": "option2"] %>
   <%= error_tag f, :psu_support %>
-
-  <%= label f, :included_psu %>
-  <%= text_input f, :included_psu %>
-  <%= error_tag f, :included_psu %>
-
-  <%= label f, :psu_shroud %>
-  <%= text_input f, :psu_shroud %>
-  <%= error_tag f, :psu_shroud %>
-
+</div>
+<div class="p-2 align-middle">
   <%= label f, :psu_mount_location %>
   <%= text_input f, :psu_mount_location %>
   <%= error_tag f, :psu_mount_location %>
-
-  <%= label f, :windows %>
-  <%= text_input f, :windows %>
-  <%= error_tag f, :windows %>
-
-  <%= label f, :dimensions %>
-  <%= text_input f, :dimensions %>
-  <%= error_tag f, :dimensions %>
-
-  <%= label f, :clearance %>
-  <%= text_input f, :clearance %>
-  <%= error_tag f, :clearance %>
-
+</div>
+<div class="p-2 align-middle">
+  <%= label f, :included_psu %>
+  <%= text_input f, :included_psu %>
+  <%= error_tag f, :included_psu %>
+</div>
+<div class="p-2 align-middle">
+  <%= label f, :psu_shroud %>
+  <%= text_input f, :psu_shroud %>
+  <%= error_tag f, :psu_shroud %>
+</div>
+<div class="p-2 align-middle">
   <%= label f, :weight %>
   <%= number_input f, :weight, step: "any" %>
   <%= error_tag f, :weight %>
-
-  <%= label f, :io %>
-  <%= text_input f, :io %>
-  <%= error_tag f, :io %>
-
-  <%= label f, :dust_filters %>
-  <%= text_input f, :dust_filters %>
-  <%= error_tag f, :dust_filters %>
-
+</div>
+<div class="p-2 align-middle">
   <%= label f, :expansion_slots %>
-  <%= text_input f, :expansion_slots %>
+  <%= number_input f, :expansion_slots %>
   <%= error_tag f, :expansion_slots %>
-
-  <%= label f, :radiator_support %>
-  <%= text_input f, :radiator_support %>
-  <%= error_tag f, :radiator_support %>
-
-  <%= label f, :fan_options %>
-  <%= text_input f, :fan_options %>
-  <%= error_tag f, :fan_options %>
-
-  <%= submit "Save", phx_disable_with: "Saving..." %>
+</div>
+<div class="p-2 align-middle">
+  <%= label f, :fiveonefourthbays %>
+  <%= number_input f, :fiveonefourthbays %>
+  <%= error_tag f, :fiveonefourthbays %>
+</div>
+<div class="p-2 align-middle">
+  <%= label f, :threeonehalfbays %>
+  <%= number_input f, :threeonehalfbays %>
+  <%= error_tag f, :threeonehalfbays %>
+</div>
+<div class="p-2 align-middle">
+  <%= label f, :side_window %>
+  <%= text_input f, :side_window %>
+  <%= error_tag f, :side_window %>
+</div>
+<%= submit "Save", phx_disable_with: "Saving..." %>
 </form>

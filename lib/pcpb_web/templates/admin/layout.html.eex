@@ -8,19 +8,17 @@
     <%= live_title_tag assigns[:page_title] || "Admin" %>
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
-  </head>
-  <body>
-    <header>
-    </header>
-    <main role="main" class="container">
-      <p class="alert alert-info" role="alert"
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.26.2/slimselect.min.css" rel="stylesheet"></link>
+</head>
+<body class="justify-center min-w-full ">
+  <main role="main" class="container justify-center min-w-full">
+    <p class="alert alert-info" role="alert"
     phx-click="lv:clear-flash"
     phx-value-key="info"><%= live_flash(@flash, :info) %></p>
-      <p class="alert alert-danger" role="alert"
+    <p class="alert alert-danger" role="alert"
     phx-click="lv:clear-flash"
     phx-value-key="error"><%= live_flash(@flash, :error) %></p>
-
-<%= @inner_content %>
+    <%= @inner_content %>
   </main>
 </body>
 </html>

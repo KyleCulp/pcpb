@@ -1,42 +1,47 @@
 <h1>Listing Cpus</h1>
-
 <%= if @live_action in [:new, :edit] do %>
-  <%= live_component @socket, PcpbWeb.AdminLive.Parts.CPUFormComponent,
+  <div class="mx-auto pt-20 content-center min-w-full justify-center">
+    <%= live_modal @socket, PcpbWeb.AdminLive.Parts.CPUFormComponent,
+        id: @cpu.id || :new,
+        title: @page_title,
+        action: @live_action,
+        cpu: @cpu,
+        return_to: Routes.admin_parts_cpu_path(@socket, :index) %>
+    <%# <%= live_component @socket, PcpbWeb.AdminLive.Parts.CPUFormComponent,
     id: @cpu.id || :new,
     title: @page_title,
     action: @live_action,
     cpu: @cpu,
     return_to: Routes.admin_parts_cpu_path(@socket, :index) %>
-
+  </div>
 <% end %>
-
-<table class="table-auto min-w-full">
-  <thead>
-    <tr>
-      <th class="partth">Name</th>
-      <th class="partth">Manufacturer</th>
-      <th class="partth">Core count</th>
-      <th class="partth">Core clock</th>
-      <th class="partth">Boost clock</th>
-      <th class="partth">Tdp</th>
-
-
-      <th></th>
-    </tr>
-  </thead>
-  <tbody id="cpus">
-    <%= for cpu <- @cpus do %>
-      <tr id="cpu-<%= cpu.id %>">
-        <td><%= live_patch cpu.name, to: Routes.admin_parts_cpu_path(@socket, :edit, cpu) %></td>
-        <td><%= cpu.manufacturer %></td>
-        <td><%= cpu.core_count %></td>
-        <td><%= cpu.core_clock %></td>
-        <td><%= cpu.boost_clock %></td>
-        <td><%= cpu.tdp %>W</td>
-        <td>
-          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: cpu.id, data: [confirm: "Are you sure?"] %></span>
-        </td>
+<div class="mx-auto pt-20 content-center min-w-full justify-center">
+  <table>
+    <thead>
+      <tr>
+        <th class="partth">Name</th>
+        <th class="partth">Manufacturer</th>
+        <th class="partth">Core count</th>
+        <th class="partth">Core clock</th>
+        <th class="partth">Boost clock</th>
+        <th class="partth">Tdp</th>
+        <th></th>
       </tr>
+    </thead>
+    <tbody id="cpus">
+      <%= for cpu <- @cpus do %>
+        <tr id="cpu-<%= cpu.id %>">
+          <td><%= live_patch cpu.name, to: Routes.admin_parts_cpu_path(@socket, :edit, cpu) %></td>
+          <td><%= cpu.manufacturer %></td>
+          <td><%= cpu.core_count %></td>
+          <td><%= cpu.core_clock %></td>
+          <td><%= cpu.boost_clock %></td>
+          <td><%= cpu.tdp %>W</td>
+          <td>
+            <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: cpu.id, data: [confirm: "Are you sure?"] %></span>
+          </td>
+        </tr>
       <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>

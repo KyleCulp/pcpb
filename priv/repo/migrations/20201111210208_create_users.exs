@@ -5,6 +5,7 @@ defmodule Pcpb.Repo.Migrations.CreateUsers do
     create table(:users) do
       add :email, :string, null: false
       add :password_hash, :string
+      add :admin, :boolean
 
       timestamps()
     end
