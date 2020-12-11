@@ -5,7 +5,7 @@ defmodule PcpbWeb.AdminLive.Parts.Index do
   defp create_parts(socket) do
     parts = [
       %{name: "CPU", route: Routes.admin_parts_cpu_path(socket, :index)},
-      %{name: "Case", route: Routes.admin_parts_case_path(socket, :index)},
+      %{name: "Case", route: Routes.admin_parts_case_path(socket, :index)}
       # %{name: "CPU", route: Routes.admin_parts_cpu_path(socket, :index)}
     ]
   end
@@ -32,6 +32,4 @@ defmodule PcpbWeb.AdminLive.Parts.Index do
   defp list_cpus do
     Parts.list_cpus()
   end
-
-
 end

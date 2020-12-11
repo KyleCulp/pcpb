@@ -5,9 +5,75 @@ defmodule PcpbWeb.CPUCoolerLiveTest do
 
   alias Pcpb.Parts
 
-  @create_attrs %{amd_socket_support: [], bearing_type: "some bearing_type", color: "some color", dimensions: %{}, fan_cfm: "some fan_cfm", fan_dimensions: "some fan_dimensions", fan_size: 42, fans: 42, intel_socket_support: [], led: "some led", manufacturer: "some manufacturer", model: "some model", model_number: "some model_number", name: "some name", noise_level: "some noise_level", release: ~D[2010-04-17], rgb: "some rgb", rpm: "some rpm", series: "some series", type: "some type", watercool: %{}}
-  @update_attrs %{amd_socket_support: [], bearing_type: "some updated bearing_type", color: "some updated color", dimensions: %{}, fan_cfm: "some updated fan_cfm", fan_dimensions: "some updated fan_dimensions", fan_size: 43, fans: 43, intel_socket_support: [], led: "some updated led", manufacturer: "some updated manufacturer", model: "some updated model", model_number: "some updated model_number", name: "some updated name", noise_level: "some updated noise_level", release: ~D[2011-05-18], rgb: "some updated rgb", rpm: "some updated rpm", series: "some updated series", type: "some updated type", watercool: %{}}
-  @invalid_attrs %{amd_socket_support: nil, bearing_type: nil, color: nil, dimensions: nil, fan_cfm: nil, fan_dimensions: nil, fan_size: nil, fans: nil, intel_socket_support: nil, led: nil, manufacturer: nil, model: nil, model_number: nil, name: nil, noise_level: nil, release: nil, rgb: nil, rpm: nil, series: nil, type: nil, watercool: nil}
+  @create_attrs %{
+    amd_socket_support: [],
+    bearing_type: "some bearing_type",
+    color: "some color",
+    dimensions: %{},
+    fan_cfm: "some fan_cfm",
+    fan_dimensions: "some fan_dimensions",
+    fan_size: 42,
+    fans: 42,
+    intel_socket_support: [],
+    led: "some led",
+    manufacturer: "some manufacturer",
+    model: "some model",
+    model_number: "some model_number",
+    name: "some name",
+    noise_level: "some noise_level",
+    release: ~D[2010-04-17],
+    rgb: "some rgb",
+    rpm: "some rpm",
+    series: "some series",
+    type: "some type",
+    watercool: %{}
+  }
+  @update_attrs %{
+    amd_socket_support: [],
+    bearing_type: "some updated bearing_type",
+    color: "some updated color",
+    dimensions: %{},
+    fan_cfm: "some updated fan_cfm",
+    fan_dimensions: "some updated fan_dimensions",
+    fan_size: 43,
+    fans: 43,
+    intel_socket_support: [],
+    led: "some updated led",
+    manufacturer: "some updated manufacturer",
+    model: "some updated model",
+    model_number: "some updated model_number",
+    name: "some updated name",
+    noise_level: "some updated noise_level",
+    release: ~D[2011-05-18],
+    rgb: "some updated rgb",
+    rpm: "some updated rpm",
+    series: "some updated series",
+    type: "some updated type",
+    watercool: %{}
+  }
+  @invalid_attrs %{
+    amd_socket_support: nil,
+    bearing_type: nil,
+    color: nil,
+    dimensions: nil,
+    fan_cfm: nil,
+    fan_dimensions: nil,
+    fan_size: nil,
+    fans: nil,
+    intel_socket_support: nil,
+    led: nil,
+    manufacturer: nil,
+    model: nil,
+    model_number: nil,
+    name: nil,
+    noise_level: nil,
+    release: nil,
+    rgb: nil,
+    rpm: nil,
+    series: nil,
+    type: nil,
+    watercool: nil
+  }
 
   defp fixture(:cpu_cooler) do
     {:ok, cpu_cooler} = Parts.create_cpu_cooler(@create_attrs)

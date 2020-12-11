@@ -27,6 +27,5 @@ defmodule Pcpb.Repo.Migrations.CreateCpuCoolers do
 
       timestamps()
     end
-
   end
 end

@@ -23,3 +23,14 @@ look into phx_deboucne
 <nav class="<%= if @uri.path == "/", do: "transparent", else: "blue-background %>">
 
 https://github.com/phoenixframework/phoenix_live_dashboard/blob/910059ea39d9399c399ccc6d6a2d5be56a2998b9/lib/phoenix/live_dashboard/components/table_component.ex#L218
+
+  <div class="p-2 align-middle" id="motherboard_support" phx-hook="select" phx-update="ignore">
+    <%= label f, :motherboard_support %>
+    <%= multiple_select f, :motherboard_support, @motherboard_support_options, class: "motherboard_support-select" %>
+    <%= error_tag f, :motherboard_support %>
+  </div>
+  <div class="p-2 align-middle" id="psu_support" phx-hook="selecttwo" phx-update="ignore">
+    <%= label f, :psu_support %>
+    <%= multiple_select f, :psu_support, @motherboard_support_options, class: "psu_support-select" %>
+    <%= error_tag f, :psu_support %>
+  </div>

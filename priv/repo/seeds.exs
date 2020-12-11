@@ -146,8 +146,8 @@ alias Pcpb.Parts.{CPU, Case}
 
 %Case{}
 |> Case.changeset(%{
-  name: "MasterBox other case haha",
-  manufacturer: "Cooler Master",
+  name: "Corsair other case haha",
+  manufacturer: "Corsair",
   model: "Cooler Master MasterBox Q300L MicroATX Mini Tower Case",
   model_number: "MCB-Q300L-KANN-S00",
   launch: ~D[2020-04-18],
@@ -155,7 +155,7 @@ alias Pcpb.Parts.{CPU, Case}
   material: "Steel / Black",
   type: "Micro ATX Tower",
   motherboard_support: ["ATX", "Micro_ATX", "Mini_ITX"],
-  psu_support: ["ATX"],
+  psu_support: ["SFX"],
   psu_mount_location: "bottom",
   psu_shroud: "false",
   included_psu: "false",

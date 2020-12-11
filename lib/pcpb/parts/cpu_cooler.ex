@@ -31,7 +31,51 @@ defmodule Pcpb.Parts.CPUCooler do
   @doc false
   def changeset(cpu_cooler, attrs) do
     cpu_cooler
-    |> cast(attrs, [:name, :manufacturer, :model, :series, :release, :model_number, :color, :led, :type, :intel_socket_support, :amd_socket_support, :bearing_type, :fans, :fan_size, :rpm, :noise_level, :fan_cfm, :dimensions, :watercool, :fan_dimensions, :rgb])
-    |> validate_required([:name, :manufacturer, :model, :series, :release, :model_number, :color, :led, :type, :intel_socket_support, :amd_socket_support, :bearing_type, :fans, :fan_size, :rpm, :noise_level, :fan_cfm, :dimensions, :watercool, :fan_dimensions, :rgb])
+    |> cast(attrs, [
+      :name,
+      :manufacturer,
+      :model,
+      :series,
+      :release,
+      :model_number,
+      :color,
+      :led,
+      :type,
+      :intel_socket_support,
+      :amd_socket_support,
+      :bearing_type,
+      :fans,
+      :fan_size,
+      :rpm,
+      :noise_level,
+      :fan_cfm,
+      :dimensions,
+      :watercool,
+      :fan_dimensions,
+      :rgb
+    ])
+    |> validate_required([
+      :name,
+      :manufacturer,
+      :model,
+      :series,
+      :release,
+      :model_number,
+      :color,
+      :led,
+      :type,
+      :intel_socket_support,
+      :amd_socket_support,
+      :bearing_type,
+      :fans,
+      :fan_size,
+      :rpm,
+      :noise_level,
+      :fan_cfm,
+      :dimensions,
+      :watercool,
+      :fan_dimensions,
+      :rgb
+    ])
   end
 end

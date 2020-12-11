@@ -22,7 +22,7 @@
       <tbody id="cases">
         <%= for case <- @cases do %>
           <tr id="case-<%= case.id %>">
-            <td><%= case.name %></td>
+            <td><%= live_patch case.name, to: Routes.admin_parts_case_path(@socket, :edit, case) %></td>
             <td><%= case.manufacturer %></td>
             <td><%= case.model %></td>
             <td><%= case.launch %></td>

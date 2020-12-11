@@ -10,11 +10,7 @@
   <%= text_input f, :name %>
   <%= error_tag f, :name %>
 </div>
-<div class="p-2 align-middle">
-  <%= label f, :manufacturer %>
-  <%= text_input f, :manufacturer %>
-  <%= error_tag f, :manufacturer %>
-</div>
+
 <div class="p-2 align-middle">
   <%= label f, :model %>
   <%= text_input f, :model %>
@@ -41,20 +37,11 @@
   <%= error_tag f, :material %>
 </div>
 <div class="p-2 align-middle">
-  <%= label f, :type %>
-  <%= text_input f, :type %>
-  <%= error_tag f, :type %>
+  <%= input f, :type %>
 </div>
-<div class="p-2 align-middle" id="select" phx-hook="select" phx-update="ignore">
-  <%= label f, :motherboard_support %>
-  <%= multiple_select f, :motherboard_support, @motherboard_support_options, class: "slim-select" %>
-  <%= error_tag f, :motherboard_support %>
-</div>
-<div class="p-2 align-middle">
-  <%= label f, :psu_support %>
-  <%= multiple_select f, :psu_support, ["Option 1": "option1", "Option 2": "option2"] %>
-  <%= error_tag f, :psu_support %>
-</div>
+  <%= simple_autocomplete f, :manufacturer, [data: @manufacturer_options] %>
+  <%= tag_input f, :motherboard_support, [data: @motherboard_support_options] %>
+
 <div class="p-2 align-middle">
   <%= label f, :psu_mount_location %>
   <%= text_input f, :psu_mount_location %>

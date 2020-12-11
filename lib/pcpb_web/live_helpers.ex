@@ -1,7 +1,7 @@
 defmodule PcpbWeb.LiveHelpers do
   import Phoenix.LiveView.Helpers
-
-  # Most of this code is referenced from phoenix_dashboard's helpers.ex
+  use Phoenix.HTML
+  alias Phoenix.HTML.Form
 
   @doc """
   Renders a component inside the `PcpbWeb.ModalComponent` component.
@@ -23,73 +23,140 @@ defmodule PcpbWeb.LiveHelpers do
     live_component(socket, PcpbWeb.ModalComponent, modal_opts)
   end
 
-  @spec live_dashboard_path(
-          atom | %{router: atom | %{__helpers__: atom | tuple}},
-          any,
-          atom,
-          any,
-          any
-        ) :: any
   @doc """
-  Computes a route path to the given route, node, and params.
+  Renders an input form, with label and error support.
+
+  ## Examples
+
+      <%= label form, :colunmn %>
   """
-  def live_dashboard_path(socket, route, node, old_params, new_params) when is_atom(node) do
-    apply(
-      socket.router.__helpers__(),
-      :live_dashboard_path,
-      if node == node() and is_nil(old_params["node"]) do
-        [socket, :page, route, new_params]
-      else
-        [socket, :page, node, route, new_params]
+  def input(form, field, opts \\ []) do
+    type = opts[:using] || Phoenix.HTML.Form.input_type(form, field)
+
+    wrapper_opts = [class: "p-2 align-middle #{state_class(form, field)}"]
+    label_opts = [class: "control-label"]
+    input_opts = [class: "p-2 align-middle"]
+
+    content_tag :div, wrapper_opts do
+      label = label(form, field, humanize(field), label_opts)
+      input = apply(Phoenix.HTML.Form, type, [form, field, input_opts])
+      error = PcpbWeb.ErrorHelpers.error_tag(form, field)
+      [label, input, error || ""]
+    end
+  end
+
+  defp state_class(form, field) do
+    cond do
+      # The form was not yet submitted
+      !form.source.action -> ""
+      form.errors[field] -> "has-error"
+      true -> "has-success"
+    end
+  end
+
+  # Implement clauses below for custom inputs.
+  @doc """
+  Renders an input form, with label and error support.
+
+  ## Examples
+
+      <%= label form, :colunmn %>
+  """
+  def simple_autocomplete(form, field, opts \\ []) do
+    type = opts[:using] || Phoenix.HTML.Form.input_type(form, field)
+    list_name = to_string(field) <> "-datalist"
+    list = opts[:data]
+    wrapper_opts = [class: "p-2 align-middle #{state_class(form, field)}"]
+    label_opts = [class: "control-label"]
+    input_opts = [class: "p-2 align-middle", list: list_name]
+    datalist_opts = [id: list_name]
+
+    content_tag :div, wrapper_opts do
+      label = label(form, field, humanize(field), label_opts)
+      input = apply(Phoenix.HTML.Form, type, [form, field, input_opts])
+
+      datalist = content_tag :datalist, [id: list_name] do
+        for option <- list do
+          content_tag(:option, option)
+        end
       end
-    )
+
+      error = PcpbWeb.ErrorHelpers.error_tag(form, field)
+      [label, input, datalist, error || ""]
+    end
   end
 
-   @doc """
-  Computes a router path to the current page.
-  """
-  def live_dashboard_path(socket, %{route: route, node: node, params: params}) do
-    live_dashboard_path(socket, route, node, params, params)
+  def tag_input(form, field, opts \\ []) do
+    type = opts[:using] || Phoenix.HTML.Form.input_type(form, field)
+
+    list = opts[:data]
+    wrapper_opts = [id: "tagifyyo",  "phx-update": "ignore", "data-list": list]
+    input_opts = [class: "p-2 align-middle"]
+
+    content_tag :div, wrapper_opts do
+      # label = label(form, field, humanize(field), label_opts)
+      # input = apply(Phoenix.HTML.Form, type, [form, field, input_opts])
+      input = generic_input(:hidden, form, field, input_opts)
+      # tagify =
+
+
+      # error = PcpbWeb.ErrorHelpers.error_tag(form, field)
+      [input || ""]
+    end
   end
 
-  @doc """
-  Computes a router path to the current page with merged params.
-  """
-  def live_dashboard_path(socket, %{route: route, node: node, params: old_params}, extra) do
-    new_params = Enum.into(extra, old_params, fn {k, v} -> {Atom.to_string(k), v} end)
-    live_dashboard_path(socket, route, node, old_params, new_params)
+  def array_input_value(%{source: source, impl: impl} = form, field)
+  when is_atom(field) or is_binary(field) do
+try do
+  impl.input_value(source, form, field)
+rescue
+  UndefinedFunctionError ->
+    case Map.fetch(form.params, field_to_string(field)) do
+      {:ok, value} ->
+        value
+
+      :error ->
+        Map.get(form.data, field)
+    end
+end
+end
+
+
+  defp generic_input(type, form, field, opts) when is_list(opts) and (is_atom(field) or is_binary(field)) do
+  opts =
+  opts
+  |> Keyword.put_new(:type, type)
+  |> Keyword.put_new(:id, input_id(form, field))
+  |> Keyword.put_new(:name, input_name(form, field))
+  |> Keyword.put_new(:value, input_value(form, field) |> List.flatten() |> Enum.join(", "))
+  |> Keyword.update!(:value, &maybe_html_escape/1)
+
+  tag(:input, opts)
   end
 
-  @doc """
-  Encodes Sockets for URLs.
-  """
-  def encode_socket(ref) do
-    '#Port' ++ rest = :erlang.port_to_list(ref)
-    "Socket#{rest}"
+  defp selected(form, field, opts) do
+    {value, opts} = Keyword.pop(opts, :value)
+    {selected, opts} = Keyword.pop(opts, :selected)
+
+    if value != nil do
+      {value, opts}
+    else
+      param = field_to_string(field)
+
+      case form do
+        %{params: %{^param => sent}} ->
+          {sent, opts}
+
+        _ ->
+          {selected || input_value(form, field), opts}
+      end
+    end
   end
 
-  @doc """
-  Encodes ETSs for URLs.
-  """
-  def encode_ets(ref) do
-    '#Ref' ++ rest = :erlang.ref_to_list(ref)
-    "ETS#{rest}"
-  end
+  defp field_to_string(field) when is_list(field), do: field |> List.flatten() |> Enum.join(", ")
+  defp field_to_string(field) when is_atom(field), do: Atom.to_string(field)
+  defp field_to_string(field) when is_binary(field), do: field
 
-  @doc """
-  Encodes PIDs for URLs.
-  """
-  def encode_pid(pid) do
-    "PID#{:erlang.pid_to_list(pid)}"
-  end
-
-  @doc """
-  Encodes Port for URLs.
-  """
-  def encode_port(port) when is_port(port) do
-    port
-    |> :erlang.port_to_list()
-    |> tl()
-    |> List.to_string()
-  end
+  defp maybe_html_escape(nil), do: nil
+  defp maybe_html_escape(value), do: html_escape(value)
 end
