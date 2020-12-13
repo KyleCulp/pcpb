@@ -10,19 +10,19 @@ defmodule PcpbWeb.AdminLive.Parts.CaseFormComponent do
   @impl true
   def update(%{case: case} = assigns, socket) do
     changeset = Parts.change_case(case)
-    manufacturer_options = Parts.list_suggestions("cases", "manufacturer")
-    motherboard_support_options = Parts.list_array_suggestions("cases", "motherboard_support")
-    psu_support_options = Parts.list_array_suggestions("cases", "psu_support")
+    # manufacturer_options = Parts.list_suggestions("cases", "manufacturer")
+    # motherboard_support_options = Parts.list_array_suggestions("cases", "motherboard_support")
+    # psu_support_options = Parts.list_array_suggestions("cases", "psu_support")
+
+    autocomplete_lists = Parts.simple_autocomplete_lists("cases", ["type", "manufacturer"])
+    tag_lists = Parts.list_array_suggestions("cases", ["motherboard_support", "psu_support", "io"])
 
     {:ok,
      socket
      |> assign(assigns)
      |> assign(:changeset, changeset)
-     |> assign(:form_name, "case-form")
-     |> assign(:part_name, "case")
-     |> assign(:motherboard_support_options, motherboard_support_options)
-     |> assign(:manufacturer_options, manufacturer_options)
-     |> assign(:psu_support_options, psu_support_options)}
+     |> assign(:autocomplete_lists, autocomplete_lists)
+     |> assign(:tag_lists, tag_lists)}
   end
 
   @impl true

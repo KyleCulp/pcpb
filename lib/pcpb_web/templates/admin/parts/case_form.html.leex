@@ -16,6 +16,8 @@
   <%= text_input f, :model %>
   <%= error_tag f, :model %>
 </div>
+<%= simple_autocomplete f, :manufacturer, [data: @autocomplete_lists.manufacturer] %>
+
 <div class="p-2 align-middle">
   <%= label f, :model_number %>
   <%= text_input f, :model_number %>
@@ -36,11 +38,10 @@
   <%= text_input f, :material %>
   <%= error_tag f, :material %>
 </div>
-<div class="p-2 align-middle">
-  <%= input f, :type %>
-</div>
-  <%= simple_autocomplete f, :manufacturer, [data: @manufacturer_options] %>
-  <%= tag_input f, :motherboard_support, [data: @motherboard_support_options] %>
+  <%= simple_autocomplete f, :type, [data: @autocomplete_lists.type] %>
+  <%= tag_input f, :motherboard_support, [data: @tag_lists.motherboard_support] %>
+  <%= tag_input f, :psu_support, [data: @tag_lists.psu_support] %>
+  <%= tag_input f, :io, [data: @tag_lists.io] %>
 
 <div class="p-2 align-middle">
   <%= label f, :psu_mount_location %>

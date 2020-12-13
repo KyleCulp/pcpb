@@ -110,27 +110,34 @@ let Hooks = {}
 // function onDropdownSelect(e){
 //     console.log("onDropdownSelect: ", e.detail)
 // }
-
-  Hooks.tag = {
-    mounted() {
-      var input = document.querySelector('#case-form_motherboard_support');
-      const input2 = document.querySelector('#tagifyyo');
-      var tagify = new Tagify(input)
-      var nameArr = input2.dataset.list.split(', ');
-      console.log(nameArr)
-      // tagify.addTags(nameArr)
-
-      input.addEventListener('change', onChange)
-
-function onChange(e){
-  // outputs a String
-  console.log(e.target.value)
-}
-    //   new Tagify(inputElm, {
-    //     enforceWhitelist: true,
-    //     whitelist: inputElm.value.trim().split(/\s*,\s*/) // Array of values. stackoverflow.com/a/43375571/104380
-    // })
+let called_inputs = [];
+Hooks.tag = {
+  mounted() {
+    // children[1] is the first input, which gets cannabilized by tagify. A second, hidden input with an identical id is added, which we then change the value of to send data to and from liveview while maintaining valid form_for support
+    const form_id = this.el.children[1].id
+    called_inputs = called_inputs.concat(form_id)
+    const input = document.getElementById(form_id);
+    const input2 = document.getElementById(form_id.replace("case-form_", '') + "-datalist");
+    const tagify = new Tagify(input, {
+      originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(','),
+      whitelist: input2.dataset.list.split(','),
+      dropdown: {
+        classname: "color-blue",
+        enabled: 0,              // show the dropdown immediately on focus
+        maxItems: 5,
+        position: "text",         // place the dropdown near the typed text
+        closeOnSelect: false,          // keep the dropdown open after selecting a suggestion
+        highlightFirst: true
+      }
+    })
+    input.addEventListener('change', onChange)
+    function onChange(e) {
+      // outputs a String, so eval it cause its super safe prolly /s
+      // also it's a different docment from above, though they have the same id
+      let arrayinput = document.getElementById(form_id);
+    }
   }
+
 }
 
 Hooks.select = {

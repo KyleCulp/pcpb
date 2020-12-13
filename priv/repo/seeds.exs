@@ -154,7 +154,7 @@ alias Pcpb.Parts.{CPU, Case}
   color: "black",
   material: "Steel / Black",
   type: "Micro ATX Tower",
-  motherboard_support: ["ATX", "Micro_ATX", "Mini_ITX"],
+  motherboard_support: ["EATX", "ATX", "Micro_ATX", "Mini_ITX"],
   psu_support: ["SFX"],
   psu_mount_location: "bottom",
   psu_shroud: "false",

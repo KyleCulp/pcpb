@@ -111,37 +111,46 @@ defmodule Pcpb.Parts do
 
   alias Pcpb.Parts.Case
 
-  # sort through a list of arrays of string, put unique values into a map
-  def list_suggestions(table, column) do
-    data =
-      Ecto.Adapters.SQL.query!(
-        Pcpb.Repo,
-        "
-        SELECT
-           DISTINCT #{column}
-        FROM
-        #{table};"
-      )
+  def simple_autocomplete_lists(table, columns) do
+    columns_data = []
+    columns_data = for column <- columns do
+      # highly inefficient code but it really doesn't matter for admin panel use... yet
+      data =
+        Ecto.Adapters.SQL.query!(
+          Pcpb.Repo,
+          "
+          SELECT
+             DISTINCT #{column}
+          FROM
+          #{table};"
+        )
 
-    data.rows
-    |> List.flatten()
+    columns_data = columns_data ++ {String.to_atom(column), List.flatten(data.rows)}
+    end
+    columns_data |> Enum.into(%{})
   end
 
-  def list_array_suggestions(table, column) do
-    data =
-      Ecto.Adapters.SQL.query!(
-        Pcpb.Repo,
-        "SELECT ARRAY(
-        SELECT DISTINCT e
-        FROM #{table} AS b
-        CROSS JOIN LATERAL unnest(#{column}) AS a(e)
-        ORDER BY e -- if you want it sorted
-      ) as #{column}"
-      )
+  # sort through a list of arrays of string, put unique values into a map
+  def list_suggestions(table, column) do
 
-    data.rows
-    |> List.flatten()
-    |> Enum.join(", ")
+  end
+
+  def list_array_suggestions(table, columns) do
+    columns_data = []
+    columns_data = for column <- columns do
+      data =
+        Ecto.Adapters.SQL.query!(
+          Pcpb.Repo,
+          "SELECT ARRAY(
+          SELECT DISTINCT e
+          FROM #{table} AS b
+          CROSS JOIN LATERAL unnest(#{column}) AS a(e)
+          ORDER BY e -- if you want it sorted
+        ) as #{column}"
+        )
+        columns_data = columns_data ++ {String.to_atom(column), data.rows |> List.flatten() |> Enum.join(", ")}
+    end
+    columns_data |> Enum.into(%{})
   end
 
   @doc """

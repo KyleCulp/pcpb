@@ -39,7 +39,7 @@ defmodule PcpbWeb.LiveHelpers do
 
     content_tag :div, wrapper_opts do
       label = label(form, field, humanize(field), label_opts)
-      input = apply(Phoenix.HTML.Form, type, [form, field, input_opts])
+      input  = apply(Phoenix.HTML.Form, type, [form, field, input_opts])
       error = PcpbWeb.ErrorHelpers.error_tag(form, field)
       [label, input, error || ""]
     end
@@ -90,18 +90,25 @@ defmodule PcpbWeb.LiveHelpers do
     type = opts[:using] || Phoenix.HTML.Form.input_type(form, field)
 
     list = opts[:data]
-    wrapper_opts = [id: "tagifyyo",  "phx-update": "ignore", "data-list": list]
-    input_opts = [class: "p-2 align-middle"]
+    wrapper_opts = [class: "p-2 align-middle max-w-sm", id: to_string(field) <> "-datalist", "phx-hook": "tag", "phx-update": "ignore", "data-list": list]
+    label_opts = [class: "control-label"]
+    input_opts = [class: "tag-input", "phx-update": "ignore"]
+
+    field_value = input_value(form, field)
+    field_value = if is_list(field_value), do: Enum.join(field_value, ", ")
+    input_opts = input_opts
+    |> Keyword.put_new(:name, input_name(form, field) <> "[]")
+    |> Keyword.put_new(:value, field_value)
 
     content_tag :div, wrapper_opts do
-      # label = label(form, field, humanize(field), label_opts)
-      # input = apply(Phoenix.HTML.Form, type, [form, field, input_opts])
-      input = generic_input(:hidden, form, field, input_opts)
+      label = label(form, field, humanize(field), label_opts)
+      # input = aptply(Phoenix.HTML.Form, type, [form, field, input_opts])
+      input = text_input(form, field, input_opts)
       # tagify =
 
 
       # error = PcpbWeb.ErrorHelpers.error_tag(form, field)
-      [input || ""]
+      [label, input || ""]
     end
   end
 
@@ -123,15 +130,22 @@ end
 
 
   defp generic_input(type, form, field, opts) when is_list(opts) and (is_atom(field) or is_binary(field)) do
-  opts =
-  opts
-  |> Keyword.put_new(:type, type)
-  |> Keyword.put_new(:id, input_id(form, field))
-  |> Keyword.put_new(:name, input_name(form, field))
-  |> Keyword.put_new(:value, input_value(form, field) |> List.flatten() |> Enum.join(", "))
-  |> Keyword.update!(:value, &maybe_html_escape/1)
+    field_value = input_value(form, field)
+    field_value = if is_list(field_value), do: Enum.join(field_value, ", ")
+    opts = if opts[:isarray] do
+      Keyword.put_new(opts, :name, input_name(form, field) <> "[]")
+    else
+      Keyword.put_new(opts, :name, input_name(form, field))
+    end
+    opts =
+      opts
+      |> Keyword.put_new(:type, type)
+      |> Keyword.put_new(:id, input_id(form, field))
+      # |> Keyword.put_new(:name, input_name(form, field))
+      |> Keyword.put_new(:value, field_value)
+      |> Keyword.update!(:value, &maybe_html_escape/1)
 
-  tag(:input, opts)
+    tag(:input, opts)
   end
 
   defp selected(form, field, opts) do
