@@ -66,12 +66,26 @@ defmodule PcpbWeb.Router do
     live "/admin", AdminLive.Index, :index
     live "/admin/parts", AdminLive.Parts.Index, :index
 
-    live "/admin/parts/cpu", AdminLive.Parts.CPU, :index
-    live "/admin/parts/cpu/new", AdminLive.Parts.CPU, :new
-    live "/admin/parts/cpu/:id", AdminLive.Parts.CPU, :edit
+    live "/admin/parts/cpu", AdminLive.Parts.Part, :cpu
+    live "/admin/parts/cpu/new", AdminLive.Parts.Part, :cpu_new
+    live "/admin/parts/cpu/:id", AdminLive.Parts.Part, :cpu_edit
+    live "/admin/parts/cpu_cooler", AdminLive.Parts.Part, :cpu_cooler
+    live "/admin/parts/cpu_cooler/new", AdminLive.Parts.Part, :cpu_cooler_new
+    live "/admin/parts/cpu_cooler/:id", AdminLive.Parts.Part, :cpu_cooler_edit
+    live "/admin/parts/case", AdminLive.Parts.Part, :case
+    live "/admin/parts/case/new", AdminLive.Parts.Part, :case_new
+    live "/admin/parts/case/:id", AdminLive.Parts.Part, :case_edit
 
-    live "/admin/parts/case", AdminLive.Parts.Case, :index
-    live "/admin/parts/case/new", AdminLive.Parts.Case, :new
-    live "/admin/parts/case/:id", AdminLive.Parts.Case, :edit
+    # live "/admin/parts/cpu", AdminLive.Parts.CPU, :index
+    # live "/admin/parts/cpu/new", AdminLive.Parts.CPU, :new
+    # live "/admin/parts/cpu/:id", AdminLive.Parts.CPU, :edit
+
+    # live "/admin/parts/case", AdminLive.Parts.Case, :index
+    # live "/admin/parts/case/new", AdminLive.Parts.Case, :new
+    # live "/admin/parts/case/:id", AdminLive.Parts.Case, :edit
+
+    # live "/admin/parts/cpu_cooler", AdminLive.Parts.CPUCooler, :index
+    # live "/admin/parts/cpu_cooler/new", AdminLive.Parts.CPUCooler, :new
+    # live "/admin/parts/cpu_cooler/:id", AdminLive.Parts.CPUCooler, :edit
   end
 end

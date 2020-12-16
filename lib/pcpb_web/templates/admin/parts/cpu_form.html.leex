@@ -10,11 +10,8 @@
   <%= text_input f, :name, class: "" %>
   <%= error_tag f, :name %>
 </div>
-<div class="p-2 align-middle">
-  <%= label f, :manufacturer %>
-  <%= text_input f, :manufacturer %>
-  <%= error_tag f, :manufacturer %>
-</div>
+<%= simple_autocomplete f, :manufacturer, [data: @autocomplete_lists.manufacturer] %>
+
 <div class="p-2 align-middle">
   <%= label f, :model %>
   <%= text_input f, :model %>

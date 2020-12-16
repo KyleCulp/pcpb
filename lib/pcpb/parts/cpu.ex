@@ -1,13 +1,11 @@
 defmodule Pcpb.Parts.CPU do
   use Ecto.Schema
+  import Pcpb.Parts.Base
   import Ecto.Changeset
 
   schema "cpus" do
-    field :name, :string
-    field :manufacturer, :string
-    field :model, :string
-    field :launch, :date
-    field :model_number, :string
+    part_base_fields()
+
     field :family, :string
     field :series, :string
     field :socket, :string
@@ -41,12 +39,8 @@ defmodule Pcpb.Parts.CPU do
   @doc false
   def changeset(cpu, attrs) do
     cpu
+    |> part_base_fields_changeset(attrs)
     |> cast(attrs, [
-      :name,
-      :manufacturer,
-      :model,
-      :launch,
-      :model_number,
       :series,
       :socket,
       :unlocked,
@@ -68,22 +62,22 @@ defmodule Pcpb.Parts.CPU do
       :stock_cooler
     ])
     |> validate_required([
-      :name,
-      :manufacturer,
-      :model,
-      :launch,
-      :model_number,
       :series,
+      :socket,
+      :unlocked,
+      :pci_version,
+      :memory_type,
+      :ecc_support,
       :family,
       :integrated_graphics,
-      :max_memory,
-      :memory_channels,
-      :smt,
       :core_count,
       :core_clock,
       :boost_clock,
       :tdp,
       :lithography,
+      :max_memory,
+      :memory_channels,
+      :smt,
       :stock_cooler
     ])
     |> cast_embed(:cache_map, with: &cache_map_changeset/2)

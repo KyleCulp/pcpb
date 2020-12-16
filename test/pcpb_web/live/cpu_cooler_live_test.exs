@@ -5,75 +5,9 @@ defmodule PcpbWeb.CPUCoolerLiveTest do
 
   alias Pcpb.Parts
 
-  @create_attrs %{
-    amd_socket_support: [],
-    bearing_type: "some bearing_type",
-    color: "some color",
-    dimensions: %{},
-    fan_cfm: "some fan_cfm",
-    fan_dimensions: "some fan_dimensions",
-    fan_size: 42,
-    fans: 42,
-    intel_socket_support: [],
-    led: "some led",
-    manufacturer: "some manufacturer",
-    model: "some model",
-    model_number: "some model_number",
-    name: "some name",
-    noise_level: "some noise_level",
-    release: ~D[2010-04-17],
-    rgb: "some rgb",
-    rpm: "some rpm",
-    series: "some series",
-    type: "some type",
-    watercool: %{}
-  }
-  @update_attrs %{
-    amd_socket_support: [],
-    bearing_type: "some updated bearing_type",
-    color: "some updated color",
-    dimensions: %{},
-    fan_cfm: "some updated fan_cfm",
-    fan_dimensions: "some updated fan_dimensions",
-    fan_size: 43,
-    fans: 43,
-    intel_socket_support: [],
-    led: "some updated led",
-    manufacturer: "some updated manufacturer",
-    model: "some updated model",
-    model_number: "some updated model_number",
-    name: "some updated name",
-    noise_level: "some updated noise_level",
-    release: ~D[2011-05-18],
-    rgb: "some updated rgb",
-    rpm: "some updated rpm",
-    series: "some updated series",
-    type: "some updated type",
-    watercool: %{}
-  }
-  @invalid_attrs %{
-    amd_socket_support: nil,
-    bearing_type: nil,
-    color: nil,
-    dimensions: nil,
-    fan_cfm: nil,
-    fan_dimensions: nil,
-    fan_size: nil,
-    fans: nil,
-    intel_socket_support: nil,
-    led: nil,
-    manufacturer: nil,
-    model: nil,
-    model_number: nil,
-    name: nil,
-    noise_level: nil,
-    release: nil,
-    rgb: nil,
-    rpm: nil,
-    series: nil,
-    type: nil,
-    watercool: nil
-  }
+  @create_attrs %{bearing_type: "some bearing_type", color: "some color", dimensions: %{}, fan_cfm: "some fan_cfm", fan_size: 42, fans: "some fans", led: "some led", manufacturer: "some manufacturer", model: "some model", model_number: "some model_number", name: "some name", noise_level: "some noise_level", radiator_support: "some radiator_support", release: ~D[2010-04-17], rpm: "some rpm", series: "some series", socket_support: [], type: "some type"}
+  @update_attrs %{bearing_type: "some updated bearing_type", color: "some updated color", dimensions: %{}, fan_cfm: "some updated fan_cfm", fan_size: 43, fans: "some updated fans", led: "some updated led", manufacturer: "some updated manufacturer", model: "some updated model", model_number: "some updated model_number", name: "some updated name", noise_level: "some updated noise_level", radiator_support: "some updated radiator_support", release: ~D[2011-05-18], rpm: "some updated rpm", series: "some updated series", socket_support: [], type: "some updated type"}
+  @invalid_attrs %{bearing_type: nil, color: nil, dimensions: nil, fan_cfm: nil, fan_size: nil, fans: nil, led: nil, manufacturer: nil, model: nil, model_number: nil, name: nil, noise_level: nil, radiator_support: nil, release: nil, rpm: nil, series: nil, socket_support: nil, type: nil}
 
   defp fixture(:cpu_cooler) do
     {:ok, cpu_cooler} = Parts.create_cpu_cooler(@create_attrs)
@@ -92,7 +26,7 @@ defmodule PcpbWeb.CPUCoolerLiveTest do
       {:ok, _index_live, html} = live(conn, Routes.cpu_cooler_index_path(conn, :index))
 
       assert html =~ "Listing Cpu coolers"
-      assert html =~ cpu_cooler.amd_socket_support
+      assert html =~ cpu_cooler.bearing_type
     end
 
     test "saves new cpu_cooler", %{conn: conn} do
@@ -114,7 +48,7 @@ defmodule PcpbWeb.CPUCoolerLiveTest do
         |> follow_redirect(conn, Routes.cpu_cooler_index_path(conn, :index))
 
       assert html =~ "Cpu cooler created successfully"
-      assert html =~ "some amd_socket_support"
+      assert html =~ "some bearing_type"
     end
 
     test "updates cpu_cooler in listing", %{conn: conn, cpu_cooler: cpu_cooler} do
@@ -136,7 +70,7 @@ defmodule PcpbWeb.CPUCoolerLiveTest do
         |> follow_redirect(conn, Routes.cpu_cooler_index_path(conn, :index))
 
       assert html =~ "Cpu cooler updated successfully"
-      assert html =~ "some updated amd_socket_support"
+      assert html =~ "some updated bearing_type"
     end
 
     test "deletes cpu_cooler in listing", %{conn: conn, cpu_cooler: cpu_cooler} do
@@ -154,7 +88,7 @@ defmodule PcpbWeb.CPUCoolerLiveTest do
       {:ok, _show_live, html} = live(conn, Routes.cpu_cooler_show_path(conn, :show, cpu_cooler))
 
       assert html =~ "Show Cpu cooler"
-      assert html =~ cpu_cooler.amd_socket_support
+      assert html =~ cpu_cooler.bearing_type
     end
 
     test "updates cpu_cooler within modal", %{conn: conn, cpu_cooler: cpu_cooler} do
@@ -176,7 +110,7 @@ defmodule PcpbWeb.CPUCoolerLiveTest do
         |> follow_redirect(conn, Routes.cpu_cooler_show_path(conn, :show, cpu_cooler))
 
       assert html =~ "Cpu cooler updated successfully"
-      assert html =~ "some updated amd_socket_support"
+      assert html =~ "some updated bearing_type"
     end
   end
 end

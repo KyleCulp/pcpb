@@ -543,4 +543,97 @@ defmodule Pcpb.PartsTest do
       assert %Ecto.Changeset{} = Parts.change_cpu_cooler(cpu_cooler)
     end
   end
+
+  describe "cpu_coolers" do
+    alias Pcpb.Parts.CPUCooler
+
+    @valid_attrs %{bearing_type: "some bearing_type", color: "some color", dimensions: %{}, fan_cfm: "some fan_cfm", fan_size: 42, fans: "some fans", led: "some led", manufacturer: "some manufacturer", model: "some model", model_number: "some model_number", name: "some name", noise_level: "some noise_level", radiator_support: "some radiator_support", release: ~D[2010-04-17], rpm: "some rpm", series: "some series", socket_support: [], type: "some type"}
+    @update_attrs %{bearing_type: "some updated bearing_type", color: "some updated color", dimensions: %{}, fan_cfm: "some updated fan_cfm", fan_size: 43, fans: "some updated fans", led: "some updated led", manufacturer: "some updated manufacturer", model: "some updated model", model_number: "some updated model_number", name: "some updated name", noise_level: "some updated noise_level", radiator_support: "some updated radiator_support", release: ~D[2011-05-18], rpm: "some updated rpm", series: "some updated series", socket_support: [], type: "some updated type"}
+    @invalid_attrs %{bearing_type: nil, color: nil, dimensions: nil, fan_cfm: nil, fan_size: nil, fans: nil, led: nil, manufacturer: nil, model: nil, model_number: nil, name: nil, noise_level: nil, radiator_support: nil, release: nil, rpm: nil, series: nil, socket_support: nil, type: nil}
+
+    def cpu_cooler_fixture(attrs \\ %{}) do
+      {:ok, cpu_cooler} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Parts.create_cpu_cooler()
+
+      cpu_cooler
+    end
+
+    test "list_cpu_coolers/0 returns all cpu_coolers" do
+      cpu_cooler = cpu_cooler_fixture()
+      assert Parts.list_cpu_coolers() == [cpu_cooler]
+    end
+
+    test "get_cpu_cooler!/1 returns the cpu_cooler with given id" do
+      cpu_cooler = cpu_cooler_fixture()
+      assert Parts.get_cpu_cooler!(cpu_cooler.id) == cpu_cooler
+    end
+
+    test "create_cpu_cooler/1 with valid data creates a cpu_cooler" do
+      assert {:ok, %CPUCooler{} = cpu_cooler} = Parts.create_cpu_cooler(@valid_attrs)
+      assert cpu_cooler.bearing_type == "some bearing_type"
+      assert cpu_cooler.color == "some color"
+      assert cpu_cooler.dimensions == %{}
+      assert cpu_cooler.fan_cfm == "some fan_cfm"
+      assert cpu_cooler.fan_size == 42
+      assert cpu_cooler.fans == "some fans"
+      assert cpu_cooler.led == "some led"
+      assert cpu_cooler.manufacturer == "some manufacturer"
+      assert cpu_cooler.model == "some model"
+      assert cpu_cooler.model_number == "some model_number"
+      assert cpu_cooler.name == "some name"
+      assert cpu_cooler.noise_level == "some noise_level"
+      assert cpu_cooler.radiator_support == "some radiator_support"
+      assert cpu_cooler.release == ~D[2010-04-17]
+      assert cpu_cooler.rpm == "some rpm"
+      assert cpu_cooler.series == "some series"
+      assert cpu_cooler.socket_support == []
+      assert cpu_cooler.type == "some type"
+    end
+
+    test "create_cpu_cooler/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Parts.create_cpu_cooler(@invalid_attrs)
+    end
+
+    test "update_cpu_cooler/2 with valid data updates the cpu_cooler" do
+      cpu_cooler = cpu_cooler_fixture()
+      assert {:ok, %CPUCooler{} = cpu_cooler} = Parts.update_cpu_cooler(cpu_cooler, @update_attrs)
+      assert cpu_cooler.bearing_type == "some updated bearing_type"
+      assert cpu_cooler.color == "some updated color"
+      assert cpu_cooler.dimensions == %{}
+      assert cpu_cooler.fan_cfm == "some updated fan_cfm"
+      assert cpu_cooler.fan_size == 43
+      assert cpu_cooler.fans == "some updated fans"
+      assert cpu_cooler.led == "some updated led"
+      assert cpu_cooler.manufacturer == "some updated manufacturer"
+      assert cpu_cooler.model == "some updated model"
+      assert cpu_cooler.model_number == "some updated model_number"
+      assert cpu_cooler.name == "some updated name"
+      assert cpu_cooler.noise_level == "some updated noise_level"
+      assert cpu_cooler.radiator_support == "some updated radiator_support"
+      assert cpu_cooler.release == ~D[2011-05-18]
+      assert cpu_cooler.rpm == "some updated rpm"
+      assert cpu_cooler.series == "some updated series"
+      assert cpu_cooler.socket_support == []
+      assert cpu_cooler.type == "some updated type"
+    end
+
+    test "update_cpu_cooler/2 with invalid data returns error changeset" do
+      cpu_cooler = cpu_cooler_fixture()
+      assert {:error, %Ecto.Changeset{}} = Parts.update_cpu_cooler(cpu_cooler, @invalid_attrs)
+      assert cpu_cooler == Parts.get_cpu_cooler!(cpu_cooler.id)
+    end
+
+    test "delete_cpu_cooler/1 deletes the cpu_cooler" do
+      cpu_cooler = cpu_cooler_fixture()
+      assert {:ok, %CPUCooler{}} = Parts.delete_cpu_cooler(cpu_cooler)
+      assert_raise Ecto.NoResultsError, fn -> Parts.get_cpu_cooler!(cpu_cooler.id) end
+    end
+
+    test "change_cpu_cooler/1 returns a cpu_cooler changeset" do
+      cpu_cooler = cpu_cooler_fixture()
+      assert %Ecto.Changeset{} = Parts.change_cpu_cooler(cpu_cooler)
+    end
+  end
 end

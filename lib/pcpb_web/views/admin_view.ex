@@ -1,11 +1,17 @@
 defmodule PcpbWeb.AdminView do
   use PcpbWeb, :view
 
-  def create_parts(socket) do
-    [
-      %{name: "CPU", route: Routes.admin_parts_cpu_path(socket, :index)},
-      %{name: "Case", route: Routes.admin_parts_case_path(socket, :index)}
-      # %{name: "CPU", route: Routes.admin_parts_cpu_path(socket, :index)}
-    ]
-  end
+  # def get_part(socket, action) do
+  #   [
+  #     %{name: "CPU", action: :cpu, edit_action: :cpu_edit, form: PcpbWeb.AdminLive.Parts.CPUFormComponent},
+  #     %{name: "CPU Cooler", action: :cpu_cooler, edit_action: :cpu_cooler_edit, form: PcpbWeb.AdminLive.Parts.CPUCoolerFormComponent}
+  #     %{name: "Case", action: :case, edit_action: :case_edit, form: PcpbWeb.AdminLive.Parts.CaseFormComponent},
+  #       # %{name: "CPU", route: Routes.admin_parts_cpu_path(socket, :index)}
+  #   ]
+  #   |> Enum.filter(fn part -> part.action == action end)
+  # end
+
+  # def part_edit_path(socket, action, part) do
+  #   live_patch part.name, to: part.admin_parts_edit_path(@socket, :edit, part)
+  # end
 end

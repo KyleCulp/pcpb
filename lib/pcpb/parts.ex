@@ -111,45 +111,74 @@ defmodule Pcpb.Parts do
 
   alias Pcpb.Parts.Case
 
-  def simple_autocomplete_lists(table, columns) do
-    columns_data = []
-    columns_data = for column <- columns do
-      # highly inefficient code but it really doesn't matter for admin panel use... yet
-      data =
-        Ecto.Adapters.SQL.query!(
-          Pcpb.Repo,
-          "
-          SELECT
-             DISTINCT #{column}
-          FROM
-          #{table};"
-        )
 
-    columns_data = columns_data ++ {String.to_atom(column), List.flatten(data.rows)}
-    end
-    columns_data |> Enum.into(%{})
+
+
+  def autocomplete_lists(table, columns) do
+    select_list = Enum.map(columns, fn k ->
+      String.to_existing_atom(k)
+    end)
+    query = from p in table, select: map(p, ^select_list)
+
+    query
+    |> distinct(true)
+    |> Repo.all()
+    |> Enum.reduce(%{}, fn m, acc ->
+      Map.merge(acc, m, fn
+        _k, v1, v2 when is_list(v1) ->
+          :lists.reverse([v2 | :lists.reverse(v1)])
+        _k, v1, v2 -> [v1, v2]
+      end)
+    end)
+
   end
+
+  #first implementation of autocomplete, had to learn ecto stuff to do above.
+  # def simple_autocomplete_lists(table, columns) do
+  #   columns_data = []
+
+  #   columns_data =
+  #     for column <- columns do
+  #       # highly inefficient code but it really doesn't matter for admin panel use... yet
+  #       data =
+  #         Ecto.Adapters.SQL.query!(
+  #           Pcpb.Repo,
+  #           "
+  #         SELECT
+  #            DISTINCT #{column}
+  #         FROM
+  #         #{table};"
+  #         )
+
+  #       columns_data = columns_data ++ {String.to_atom(column), List.flatten(data.rows)}
+  #     end
+  #   columns_data |> Enum.into(%{})
+  # end
 
   # sort through a list of arrays of string, put unique values into a map
   def list_suggestions(table, column) do
-
   end
 
   def list_array_suggestions(table, columns) do
     columns_data = []
-    columns_data = for column <- columns do
-      data =
-        Ecto.Adapters.SQL.query!(
-          Pcpb.Repo,
-          "SELECT ARRAY(
+
+    columns_data =
+      for column <- columns do
+        data =
+          Ecto.Adapters.SQL.query!(
+            Pcpb.Repo,
+            "SELECT ARRAY(
           SELECT DISTINCT e
           FROM #{table} AS b
           CROSS JOIN LATERAL unnest(#{column}) AS a(e)
           ORDER BY e -- if you want it sorted
         ) as #{column}"
-        )
-        columns_data = columns_data ++ {String.to_atom(column), data.rows |> List.flatten() |> Enum.join(", ")}
-    end
+          )
+
+        columns_data =
+          columns_data ++ {String.to_atom(column), data.rows |> List.flatten() |> Enum.join(", ")}
+      end
+
     columns_data |> Enum.into(%{})
   end
 

@@ -1,81 +1,58 @@
 defmodule Pcpb.Parts.CPUCooler do
   use Ecto.Schema
   import Ecto.Changeset
+  import Pcpb.Parts.Base
+  alias Parts
 
   schema "cpu_coolers" do
-    field :bearing_type, :string
-    field :color, :string
-    field :dimensions, :map
-    field :fan_cfm, :string
-    field :fan_dimensions, :string
-    field :fan_size, :integer
-    field :fans, :integer
-    field :intel_socket_support, {:array, :string}
-    field :amd_socket_support, {:array, :string}
-    field :led, :string
-    field :manufacturer, :string
-    field :model, :string
-    field :model_number, :string
-    field :name, :string
-    field :noise_level, :string
-    field :release, :date
-    field :rgb, :string
-    field :rpm, :string
-    field :series, :string
-    field :type, :string
-    field :watercool, :map
+    part_base_fields()
 
+    field :series, :string
+    field :color, :string
+    field :led, :string
+    field :type, :string
+    field :socket_support, {:array, :string}
+    field :bearing_type, :string
+    field :fans, :string
+    field :fan_size, :string
+    field :fan_cfm, :string
+    field :fan_rpm, :string
+    field :noise_level, :string
+    field :radiator, :string
     timestamps()
+
   end
 
   @doc false
   def changeset(cpu_cooler, attrs) do
     cpu_cooler
+    |> part_base_fields_changeset(attrs)
     |> cast(attrs, [
-      :name,
-      :manufacturer,
-      :model,
-      :series,
-      :release,
-      :model_number,
       :color,
       :led,
       :type,
-      :intel_socket_support,
-      :amd_socket_support,
+      :socket_support,
       :bearing_type,
       :fans,
       :fan_size,
-      :rpm,
+      :fan_rpm,
       :noise_level,
       :fan_cfm,
-      :dimensions,
-      :watercool,
-      :fan_dimensions,
-      :rgb
+      :radiator
     ])
     |> validate_required([
-      :name,
-      :manufacturer,
-      :model,
-      :series,
-      :release,
-      :model_number,
       :color,
       :led,
       :type,
-      :intel_socket_support,
-      :amd_socket_support,
+      :socket_support,
       :bearing_type,
       :fans,
       :fan_size,
-      :rpm,
+      :fan_rpm,
       :noise_level,
       :fan_cfm,
-      :dimensions,
-      :watercool,
-      :fan_dimensions,
-      :rgb
+      :radiator
     ])
+    # |> cast_embed(:dimensions, with: &Base.dimensions_map_changeset/2)
   end
 end

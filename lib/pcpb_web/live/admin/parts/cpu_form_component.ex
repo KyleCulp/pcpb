@@ -10,10 +10,12 @@ defmodule PcpbWeb.AdminLive.Parts.CPUFormComponent do
   @impl true
   def update(%{cpu: cpu} = assigns, socket) do
     changeset = Parts.change_cpu(cpu)
+    autocomplete_lists = Parts.autocomplete_lists("cpus", ["manufacturer"])
 
     {:ok,
      socket
      |> assign(assigns)
+     |> assign(:autocomplete_lists, autocomplete_lists)
      |> assign(:changeset, changeset)}
   end
 

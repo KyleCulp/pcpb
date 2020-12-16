@@ -1,0 +1,28 @@
+<h2><%= @title %></h2>
+
+<%= f = form_for @changeset, "#",
+  id: "cpu_cooler-form",
+  class: "flex flex-row flex-wrap justify-center px-4",
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <%= input f, :name %>
+  <%= input f, :manufacturer %>
+  <%= input f, :model %>
+  <%= input f, :model_number %>
+  <%= input f, :launch, using: :datepicker %>
+
+  <%= input f, :color %>
+  <%= input f, :led %>
+  <%= input f, :type %>
+  <%= input f, :bearing_type %>
+  <%= input f, :fan_size %>
+  <%= input f, :fan_cfm %>
+  <%= input f, :fan_rpm %>
+  <%= input f, :noise_level %>
+  <%= input f, :radiator %>
+
+
+  <%= submit "Save", phx_disable_with: "Saving..." %>
+</form>

@@ -3,10 +3,10 @@ defmodule PcpbWeb.AdminLive.Parts.Index do
   alias Pcpb.Parts
 
   defp create_parts(socket) do
-    parts = [
-      %{name: "CPU", route: Routes.admin_parts_cpu_path(socket, :index)},
-      %{name: "Case", route: Routes.admin_parts_case_path(socket, :index)}
-      # %{name: "CPU", route: Routes.admin_parts_cpu_path(socket, :index)}
+    [
+      %{name: "CPU", route: Routes.admin_parts_cpu_path(socket, :index), form: PcpbWeb.AdminLive.Parts.CPUFormComponent},
+      %{name: "Case", route: Routes.admin_parts_case_path(socket, :index), form: PcpbWeb.AdminLive.Parts.CaseFormComponent},
+      %{name: "CPU Cooler", route: Routes.admin_parts_cpu_cooler_path(socket, :index), form: PcpbWeb.AdminLive.Parts.CPUCoolerFormComponent}
     ]
   end
 
@@ -16,7 +16,10 @@ defmodule PcpbWeb.AdminLive.Parts.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, :parts, create_parts(socket))}
+    {:ok,
+    socket
+    |> assign(:parts, create_parts(socket))
+  }
   end
 
   @impl true

@@ -11,7 +11,7 @@
 # and so on) as they will fail if something goes wrong.
 alias Pcpb.Repo
 alias Pcpb.Users.User
-alias Pcpb.Parts.{CPU, Case}
+alias Pcpb.Parts.{CPU, Case, CPUCooler}
 
 %User{admin: true}
 |> User.changeset(%{
@@ -52,7 +52,12 @@ alias Pcpb.Parts.{CPU, Case}
   memory_channels: 2,
   smt: "true",
   stock_cooler: "false",
-  tdp: 125
+  tdp: 125,
+    dimensions: %{
+    length: 0,
+    width: 0,
+    height: 0
+  },
 })
 |> Repo.insert!()
 
@@ -87,8 +92,13 @@ alias Pcpb.Parts.{CPU, Case}
   memory_channels: 2,
   smt: "true",
   stock_cooler: "false",
-  tdp: 125
-})
+  tdp: 125,
+  dimensions: %{
+    length: 0,
+    width: 0,
+    height: 0
+    },
+    })
 |> Repo.insert!()
 
 %Case{}
@@ -248,3 +258,41 @@ alias Pcpb.Parts.{CPU, Case}
 #   io: [""]
 # })
 # |> Repo.insert!()
+  %CPUCooler{}
+  |> CPUCooler.changeset(%{
+    name: "Corsair H100i RGB PLATINUM",
+    manufacturer: "Corsair",
+    model: "Corsair H100i RGB PLATINUM 75 CFM Liquid CPU Cooler",
+    model_number: "CW-9060039-WW",
+    launch: ~D[2020-04-18],
+    color: "Black / Silver",
+    led: "fan leds / corsair icue block",
+    type: "Liquid Cooling System",
+    socket_support: ["AM2", "AM2+",
+    "AM3+",
+    "AM4",
+    "FM1",
+    "FM2",
+    "FM2+",
+    "LGA1150",
+    "LGA1151",
+    "LGA1155",
+    "LGA1156",
+    "LGA1200",
+    "LGA2011",
+    "LGA2011-3",
+    "LGA2066"],
+    bearing_type: "Magnetic Levitation",
+    fans: "2 x 120mm",
+    fan_size: "120mm x 25mm",
+    fan_cfm: "75",
+    fan_rpm: "2700",
+    noise_level: "37",
+    radiator: "240mm",
+    dimensions: %{
+      length: 277.00,
+      width: 120,
+      height: 27
+    }
+  })
+  |> Repo.insert!()

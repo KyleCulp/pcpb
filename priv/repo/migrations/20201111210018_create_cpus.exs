@@ -1,13 +1,10 @@
 defmodule Pcpb.Repo.Migrations.CreateCpus do
   use Ecto.Migration
+  import Pcpb.Parts.Base
 
   def change do
     create table(:cpus) do
-      add :name, :string
-      add :manufacturer, :string
-      add :model, :string
-      add :launch, :date
-      add :model_number, :string
+      part_base_fields_migration
       add :family, :string
       add :series, :string
       add :socket, :string

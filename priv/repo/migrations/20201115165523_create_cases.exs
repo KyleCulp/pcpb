@@ -1,13 +1,10 @@
 defmodule Pcpb.Repo.Migrations.CreateCases do
   use Ecto.Migration
+  import Pcpb.Parts.Base
 
   def change do
     create table(:cases) do
-      add :name, :string
-      add :manufacturer, :string
-      add :model, :string
-      add :model_number, :string
-      add :launch, :date
+      part_base_fields_migration
       add :color, :string
       add :material, :string
       add :type, :string

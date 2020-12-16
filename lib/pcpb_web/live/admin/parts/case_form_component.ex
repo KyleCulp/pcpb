@@ -14,7 +14,7 @@ defmodule PcpbWeb.AdminLive.Parts.CaseFormComponent do
     # motherboard_support_options = Parts.list_array_suggestions("cases", "motherboard_support")
     # psu_support_options = Parts.list_array_suggestions("cases", "psu_support")
 
-    autocomplete_lists = Parts.simple_autocomplete_lists("cases", ["type", "manufacturer"])
+    autocomplete_lists = Parts.autocomplete_lists("cases", ["type", "manufacturer"])
     tag_lists = Parts.list_array_suggestions("cases", ["motherboard_support", "psu_support", "io"])
 
     {:ok,
