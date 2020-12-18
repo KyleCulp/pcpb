@@ -75,6 +75,9 @@ defmodule PcpbWeb.Router do
     live "/admin/parts/case", AdminLive.Parts.Part, :case
     live "/admin/parts/case/new", AdminLive.Parts.Part, :case_new
     live "/admin/parts/case/:id", AdminLive.Parts.Part, :case_edit
+    live "/admin/parts/gpu", AdminLive.Parts.Part, :gpu
+    live "/admin/parts/gpu/new", AdminLive.Parts.Part, :gpu_new
+    live "/admin/parts/gpu/:id", AdminLive.Parts.Part, :gpu_edit
 
     # live "/admin/parts/cpu", AdminLive.Parts.CPU, :index
     # live "/admin/parts/cpu/new", AdminLive.Parts.CPU, :new

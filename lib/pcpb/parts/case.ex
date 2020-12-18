@@ -58,6 +58,7 @@
     def changeset(case, attrs) do
       case
       |> part_base_fields_changeset(attrs)
+      |> cast_embed(:dimensions, with: &dimensions_map_changeset/2, force_update_on_change: true)
       |> cast(attrs, [
         :color,
         :material,
@@ -89,7 +90,6 @@
         :threeonehalfbays,
         :side_window
       ])
-      |> cast_embed(:dimensions, with: &dimensions_map_changeset/2)
       |> cast_embed(:clearance, with: &clearance_map_changeset/2)
       |> cast_embed(:dust_filters, with: &dust_filters_map_changeset/2)
       |> cast_embed(:fan_options, with: &fan_options_map_changeset/2)

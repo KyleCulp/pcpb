@@ -124,13 +124,11 @@ defmodule Pcpb.Parts do
     |> distinct(true)
     |> Repo.all()
     |> Enum.reduce(%{}, fn m, acc ->
-      Map.merge(acc, m, fn
-        _k, v1, v2 when is_list(v1) ->
-          :lists.reverse([v2 | :lists.reverse(v1)])
-        _k, v1, v2 -> [v1, v2]
+      Map.merge(acc, m, fn _k, v1, v2 ->
+        # Return an array of unique values and stuff, kinda magic and half stack overflow
+        Enum.uniq([v1, v2])
       end)
     end)
-
   end
 
   #first implementation of autocomplete, had to learn ecto stuff to do above.
@@ -154,10 +152,6 @@ defmodule Pcpb.Parts do
   #     end
   #   columns_data |> Enum.into(%{})
   # end
-
-  # sort through a list of arrays of string, put unique values into a map
-  def list_suggestions(table, column) do
-  end
 
   def list_array_suggestions(table, columns) do
     columns_data = []
@@ -370,5 +364,101 @@ defmodule Pcpb.Parts do
   """
   def change_cpu_cooler(%CPUCooler{} = cpu_cooler, attrs \\ %{}) do
     CPUCooler.changeset(cpu_cooler, attrs)
+  end
+
+  alias Pcpb.Parts.GPU
+
+  @doc """
+  Returns the list of gpus.
+
+  ## Examples
+
+      iex> list_gpus()
+      [%GPU{}, ...]
+
+  """
+  def list_gpus do
+    Repo.all(GPU)
+  end
+
+  @doc """
+  Gets a single gpu.
+
+  Raises `Ecto.NoResultsError` if the Gpu does not exist.
+
+  ## Examples
+
+      iex> get_gpu!(123)
+      %GPU{}
+
+      iex> get_gpu!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_gpu!(id), do: Repo.get!(GPU, id)
+
+  @doc """
+  Creates a gpu.
+
+  ## Examples
+
+      iex> create_gpu(%{field: value})
+      {:ok, %GPU{}}
+
+      iex> create_gpu(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_gpu(attrs \\ %{}) do
+    %GPU{}
+    |> GPU.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a gpu.
+
+  ## Examples
+
+      iex> update_gpu(gpu, %{field: new_value})
+      {:ok, %GPU{}}
+
+      iex> update_gpu(gpu, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_gpu(%GPU{} = gpu, attrs) do
+    gpu
+    |> GPU.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a gpu.
+
+  ## Examples
+
+      iex> delete_gpu(gpu)
+      {:ok, %GPU{}}
+
+      iex> delete_gpu(gpu)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_gpu(%GPU{} = gpu) do
+    Repo.delete(gpu)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking gpu changes.
+
+  ## Examples
+
+      iex> change_gpu(gpu)
+      %Ecto.Changeset{data: %GPU{}}
+
+  """
+  def change_gpu(%GPU{} = gpu, attrs \\ %{}) do
+    GPU.changeset(gpu, attrs)
   end
 end

@@ -8,7 +8,7 @@ defmodule PcpbWeb.AdminLive.Parts.CPUFormComponent do
   end
 
   @impl true
-  def update(%{cpu: cpu} = assigns, socket) do
+  def update(%{part: cpu} = assigns, socket) do
     changeset = Parts.change_cpu(cpu)
     autocomplete_lists = Parts.autocomplete_lists("cpus", ["manufacturer"])
 
@@ -22,7 +22,7 @@ defmodule PcpbWeb.AdminLive.Parts.CPUFormComponent do
   @impl true
   def handle_event("validate", %{"cpu" => cpu_params}, socket) do
     changeset =
-      socket.assigns.cpu
+      socket.assigns.part
       |> Parts.change_cpu(cpu_params)
       |> Map.put(:action, :validate)
 
@@ -34,7 +34,7 @@ defmodule PcpbWeb.AdminLive.Parts.CPUFormComponent do
   end
 
   defp save_cpu(socket, :edit, cpu_params) do
-    case Parts.update_cpu(socket.assigns.cpu, cpu_params) do
+    case Parts.update_cpu(socket.assigns.part, cpu_params) do
       {:ok, _cpu} ->
         {:noreply,
          socket

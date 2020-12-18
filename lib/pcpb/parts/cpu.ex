@@ -1,7 +1,7 @@
 defmodule Pcpb.Parts.CPU do
   use Ecto.Schema
-  import Pcpb.Parts.Base
   import Ecto.Changeset
+  import Pcpb.Parts.Base
 
   schema "cpus" do
     part_base_fields()

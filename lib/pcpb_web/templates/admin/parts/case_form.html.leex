@@ -1,21 +1,21 @@
 <h2><%= @title %></h2>
 <%= f = form_for @changeset, "#",
   id: "case-form",
-  class: "flex flex-row flex-wrap justify-center px-4",
+  class: form_classes,
   phx_target: @myself,
   phx_change: "validate",
   phx_submit: "save" %>
 
   <%= input f, :name %>
-  <%= simple_autocomplete f, :manufacturer, [data: @autocomplete_lists.manufacturer] %>
+  <%= autocomplete_input f, :manufacturer, [data: @autocomplete_lists.manufacturer] %>
   <%= input f, :model %>
   <%= input f, :model_number %>
   <%= input f, :launch, using: :datepicker %>
   <%= input f, :color %>
   <%= input f, :material %>
-  <%= simple_autocomplete f, :type, [data: @autocomplete_lists.type] %>
-
-  <%# <%= input f, :color %>
+  <%= autocomplete_input f, :type, [data: @autocomplete_lists.type] %>
+  <%= tag_input f, :motherboard_support, [data: @tag_lists.motherboard_support] %>
+  <%= tag_input f, :psu_support , [data: @tag_lists.psu_support] %>
   <%= input f, :psu_mount_location %>
   <%= input f, :included_psu %>
   <%= input f, :psu_shroud %>
@@ -24,6 +24,12 @@
   <%= input f, :fiveonefourthbays, using: :number_input %>
   <%= input f, :threeonehalfbays, using: :number_input %>
   <%= input f, :side_window %>
+  <%= tag_input f, :io, [data: @tag_lists.io] %>
+  <%= map_input f, :dimensions, [inputs: [[:length, :text], [:width, :text], [:height, :text]]] %>
+  <%= map_input f, :clearance, [inputs: [[:gpu_length, :number], [:cpu_cooler_height, :number], [:psu_length, :number]]] %>
+  <%= map_input f, :dust_filters, [inputs: [[:front, :boolean], [:back, :boolean], [:top, :boolean], [:bottom, :boolean], [:psu, :boolean]]] %>
+  <%= map_input f, :radiator_support, [inputs: [[:front, :text], [:back, :text], [:top, :text], [:bottom, :text]]] %>
+
 
 </div>
 <%= submit "Save", phx_disable_with: "Saving..." %>

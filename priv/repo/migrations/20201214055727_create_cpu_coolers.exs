@@ -5,6 +5,7 @@ defmodule Pcpb.Repo.Migrations.CreateCpuCoolers do
   def change do
     create table(:cpu_coolers) do
       part_base_fields_migration
+      add :dimensions, :map
       add :series, :string
       add :color, :string
       add :led, :string
@@ -16,7 +17,6 @@ defmodule Pcpb.Repo.Migrations.CreateCpuCoolers do
       add :fan_cfm, :string
       add :fan_rpm, :string
       add :noise_level, :string
-      add :dimensions, :map
       add :radiator, :string
 
       timestamps()

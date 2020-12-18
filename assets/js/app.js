@@ -117,7 +117,8 @@ Hooks.tag = {
     const form_id = this.el.children[1].id
     called_inputs = called_inputs.concat(form_id)
     const input = document.getElementById(form_id);
-    const input2 = document.getElementById(form_id.replace("case-form_", '') + "-datalist");
+    console.log(form_id.search("-form_"))
+    const input2 = document.getElementById(form_id.slice(form_id.search("-form_") + 6) + "-datalist");
     const tagify = new Tagify(input, {
       originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(','),
       whitelist: input2.dataset.list.split(','),

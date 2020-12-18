@@ -636,4 +636,129 @@ defmodule Pcpb.PartsTest do
       assert %Ecto.Changeset{} = Parts.change_cpu_cooler(cpu_cooler)
     end
   end
+
+  describe "gpus" do
+    alias Pcpb.Parts.GPU
+
+    @valid_attrs %{name: "some name", memory_type: "some memory_type", dimensions: %{}, backplate: "some backplate", interface: "some interface", release: ~D[2010-04-17], opengl: "some opengl", model_number: "some model_number", hdcp: "some hdcp", cooler: "some cooler", power_connector: "some power_connector", crossfire_support: "some crossfire_support", series: "some series", chipset: "some chipset", max_resolution: "some max_resolution", rgb: "some rgb", slot_width: "some slot_width", model: "some model", stream_processors: 42, directx: "some directx", io: %{}, max_monitors: "some max_monitors", memory: "some memory", frame_sync: "some frame_sync", base_clock: "120.5", ray_tracing: "some ray_tracing", GPU: "some GPU", memory_clock: "some memory_clock", virtuallink: "some virtuallink", boost_clock: "120.5", sli_support: "some sli_support", cuda_cores: 42, memory_interface: "some memory_interface", manufacturer: "some manufacturer"}
+    @update_attrs %{name: "some updated name", memory_type: "some updated memory_type", dimensions: %{}, backplate: "some updated backplate", interface: "some updated interface", release: ~D[2011-05-18], opengl: "some updated opengl", model_number: "some updated model_number", hdcp: "some updated hdcp", cooler: "some updated cooler", power_connector: "some updated power_connector", crossfire_support: "some updated crossfire_support", series: "some updated series", chipset: "some updated chipset", max_resolution: "some updated max_resolution", rgb: "some updated rgb", slot_width: "some updated slot_width", model: "some updated model", stream_processors: 43, directx: "some updated directx", io: %{}, max_monitors: "some updated max_monitors", memory: "some updated memory", frame_sync: "some updated frame_sync", base_clock: "456.7", ray_tracing: "some updated ray_tracing", GPU: "some updated GPU", memory_clock: "some updated memory_clock", virtuallink: "some updated virtuallink", boost_clock: "456.7", sli_support: "some updated sli_support", cuda_cores: 43, memory_interface: "some updated memory_interface", manufacturer: "some updated manufacturer"}
+    @invalid_attrs %{name: nil, memory_type: nil, dimensions: nil, backplate: nil, interface: nil, release: nil, opengl: nil, model_number: nil, hdcp: nil, cooler: nil, power_connector: nil, crossfire_support: nil, series: nil, chipset: nil, max_resolution: nil, rgb: nil, slot_width: nil, model: nil, stream_processors: nil, directx: nil, io: nil, max_monitors: nil, memory: nil, frame_sync: nil, base_clock: nil, ray_tracing: nil, GPU: nil, memory_clock: nil, virtuallink: nil, boost_clock: nil, sli_support: nil, cuda_cores: nil, memory_interface: nil, manufacturer: nil}
+
+    def gpu_fixture(attrs \\ %{}) do
+      {:ok, gpu} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Parts.create_gpu()
+
+      gpu
+    end
+
+    test "list_gpus/0 returns all gpus" do
+      gpu = gpu_fixture()
+      assert Parts.list_gpus() == [gpu]
+    end
+
+    test "get_gpu!/1 returns the gpu with given id" do
+      gpu = gpu_fixture()
+      assert Parts.get_gpu!(gpu.id) == gpu
+    end
+
+    test "create_gpu/1 with valid data creates a gpu" do
+      assert {:ok, %GPU{} = gpu} = Parts.create_gpu(@valid_attrs)
+      assert gpu.manufacturer == "some manufacturer"
+      assert gpu.memory_interface == "some memory_interface"
+      assert gpu.cuda_cores == 42
+      assert gpu.sli_support == "some sli_support"
+      assert gpu.boost_clock == Decimal.new("120.5")
+      assert gpu.virtuallink == "some virtuallink"
+      assert gpu.memory_clock == "some memory_clock"
+      assert gpu.GPU == "some GPU"
+      assert gpu.ray_tracing == "some ray_tracing"
+      assert gpu.base_clock == Decimal.new("120.5")
+      assert gpu.frame_sync == "some frame_sync"
+      assert gpu.memory == "some memory"
+      assert gpu.max_monitors == "some max_monitors"
+      assert gpu.io == %{}
+      assert gpu.directx == "some directx"
+      assert gpu.stream_processors == 42
+      assert gpu.model == "some model"
+      assert gpu.slot_width == "some slot_width"
+      assert gpu.rgb == "some rgb"
+      assert gpu.max_resolution == "some max_resolution"
+      assert gpu.chipset == "some chipset"
+      assert gpu.series == "some series"
+      assert gpu.crossfire_support == "some crossfire_support"
+      assert gpu.power_connector == "some power_connector"
+      assert gpu.cooler == "some cooler"
+      assert gpu.hdcp == "some hdcp"
+      assert gpu.model_number == "some model_number"
+      assert gpu.opengl == "some opengl"
+      assert gpu.release == ~D[2010-04-17]
+      assert gpu.interface == "some interface"
+      assert gpu.backplate == "some backplate"
+      assert gpu.dimensions == %{}
+      assert gpu.memory_type == "some memory_type"
+      assert gpu.name == "some name"
+    end
+
+    test "create_gpu/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Parts.create_gpu(@invalid_attrs)
+    end
+
+    test "update_gpu/2 with valid data updates the gpu" do
+      gpu = gpu_fixture()
+      assert {:ok, %GPU{} = gpu} = Parts.update_gpu(gpu, @update_attrs)
+      assert gpu.manufacturer == "some updated manufacturer"
+      assert gpu.memory_interface == "some updated memory_interface"
+      assert gpu.cuda_cores == 43
+      assert gpu.sli_support == "some updated sli_support"
+      assert gpu.boost_clock == Decimal.new("456.7")
+      assert gpu.virtuallink == "some updated virtuallink"
+      assert gpu.memory_clock == "some updated memory_clock"
+      assert gpu.GPU == "some updated GPU"
+      assert gpu.ray_tracing == "some updated ray_tracing"
+      assert gpu.base_clock == Decimal.new("456.7")
+      assert gpu.frame_sync == "some updated frame_sync"
+      assert gpu.memory == "some updated memory"
+      assert gpu.max_monitors == "some updated max_monitors"
+      assert gpu.io == %{}
+      assert gpu.directx == "some updated directx"
+      assert gpu.stream_processors == 43
+      assert gpu.model == "some updated model"
+      assert gpu.slot_width == "some updated slot_width"
+      assert gpu.rgb == "some updated rgb"
+      assert gpu.max_resolution == "some updated max_resolution"
+      assert gpu.chipset == "some updated chipset"
+      assert gpu.series == "some updated series"
+      assert gpu.crossfire_support == "some updated crossfire_support"
+      assert gpu.power_connector == "some updated power_connector"
+      assert gpu.cooler == "some updated cooler"
+      assert gpu.hdcp == "some updated hdcp"
+      assert gpu.model_number == "some updated model_number"
+      assert gpu.opengl == "some updated opengl"
+      assert gpu.release == ~D[2011-05-18]
+      assert gpu.interface == "some updated interface"
+      assert gpu.backplate == "some updated backplate"
+      assert gpu.dimensions == %{}
+      assert gpu.memory_type == "some updated memory_type"
+      assert gpu.name == "some updated name"
+    end
+
+    test "update_gpu/2 with invalid data returns error changeset" do
+      gpu = gpu_fixture()
+      assert {:error, %Ecto.Changeset{}} = Parts.update_gpu(gpu, @invalid_attrs)
+      assert gpu == Parts.get_gpu!(gpu.id)
+    end
+
+    test "delete_gpu/1 deletes the gpu" do
+      gpu = gpu_fixture()
+      assert {:ok, %GPU{}} = Parts.delete_gpu(gpu)
+      assert_raise Ecto.NoResultsError, fn -> Parts.get_gpu!(gpu.id) end
+    end
+
+    test "change_gpu/1 returns a gpu changeset" do
+      gpu = gpu_fixture()
+      assert %Ecto.Changeset{} = Parts.change_gpu(gpu)
+    end
+  end
 end

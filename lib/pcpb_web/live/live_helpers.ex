@@ -32,73 +32,71 @@ defmodule PcpbWeb.LiveHelpers do
   """
   def input(form, field, opts \\ []) do
     type = opts[:using] || Phoenix.HTML.Form.input_type(form, field)
-
-    wrapper_opts = [class: "p-2 align-middle #{state_class(form, field)}"]
-    label_opts = [class: "control-label"]
-    input_opts = [class: "p-2 align-middle"]
-
-    content_tag :div, wrapper_opts do
-      label = label(form, field, humanize(field), label_opts)
+    input_opts = [data: opts[:data], class: opts[:class] || "w-full"]
+    content_tag :div, [class: "p-2 align-middle w-full col-span-1"] do
+      label = label(form, field, humanize(field), [class: "control-label"])
       input = input(type, form, field, input_opts)
       error = PcpbWeb.ErrorHelpers.error_tag(form, field)
       [label, input, error || ""]
     end
   end
 
+  defp input(:text, form, field, input_opts) do
+    text_input form, field, input_opts
+  end
+
   defp input(:datepicker, form, field, input_opts) do
-    date_input form, field
+    date_input form, field, input_opts
+  end
+
+  defp input(:checkbox, form, field, input_opts) do
+    checkbox form, field, input_opts
+  end
+
+  defp input(:boolean, form, field, input_opts) do
+    checkbox form, field, input_opts
+  end
+
+  defp input(:number, form, field, input_opts) do
+    number_input form, field, input_opts
+  end
+
+  defp input(:autocomplete, form, field, opts) do
+    list = opts[:data]
+    list_name = to_string(field) <> "-datalist"
+    input_opts = [class: "w-full", list: list_name]
+      input = apply(Phoenix.HTML.Form, :text_input, [form, field, input_opts])
+      datalist = content_tag :datalist, [id: list_name] do
+        for option <- list do
+          content_tag(:option, option)
+        end
+      end
   end
 
   defp input(type, form, field, input_opts) do
     apply(Phoenix.HTML.Form, type, [form, field, input_opts])
   end
 
-  defp state_class(form, field) do
-    cond do
-      # The form was not yet submitted
-      !form.source.action -> ""
-      form.errors[field] -> "has-error"
-      true -> "has-success"
-    end
-  end
-
-  # Implement clauses below for custom inputs.
-  @doc """
-  Renders an input form, with label and error support.
-
-  ## Examples
-
-      <%= label form, :colunmn %>
-  """
-  def simple_autocomplete(form, field, opts \\ []) do
-    type = opts[:using] || Phoenix.HTML.Form.input_type(form, field)
-    list_name = to_string(field) <> "-datalist"
+  def autocomplete_input(form, field, opts \\ []) do
     list = opts[:data]
-    wrapper_opts = [class: "p-2 align-middle #{state_class(form, field)}"]
-    label_opts = [class: "control-label"]
-    input_opts = [class: "p-2 align-middle", list: list_name]
-    datalist_opts = [id: list_name]
-
-    content_tag :div, wrapper_opts do
-      label = label(form, field, humanize(field), label_opts)
-      input = apply(Phoenix.HTML.Form, type, [form, field, input_opts])
-
+    list_name = to_string(field) <> "-datalist"
+    input_opts = [class: "w-full", list: list_name]
+    content_tag :div, [class: "p-2 align-middle w-full col-span-1"] do
+      label = label(form, field, humanize(field), [class: "control-label"])
+      input = apply(Phoenix.HTML.Form, :text_input, [form, field, input_opts])
       datalist = content_tag :datalist, [id: list_name] do
         for option <- list do
           content_tag(:option, option)
         end
       end
-
       error = PcpbWeb.ErrorHelpers.error_tag(form, field)
       [label, input, datalist, error || ""]
     end
   end
 
   def tag_input(form, field, opts \\ []) do
-    type = opts[:using] || Phoenix.HTML.Form.input_type(form, field)
-
     list = opts[:data]
-    wrapper_opts = [class: "p-2 align-middle max-w-sm", id: to_string(field) <> "-datalist", "phx-hook": "tag", "phx-update": "ignore", "data-list": list]
+    wrapper_opts = [class: "", id: to_string(field) <> "-datalist", "phx-hook": "tag", "phx-update": "ignore", "data-list": list]
     label_opts = [class: "control-label"]
     input_opts = [class: "tag-input", "phx-update": "ignore"]
 
@@ -110,75 +108,48 @@ defmodule PcpbWeb.LiveHelpers do
 
     content_tag :div, wrapper_opts do
       label = label(form, field, humanize(field), label_opts)
-      # input = aptply(Phoenix.HTML.Form, type, [form, field, input_opts])
       input = text_input(form, field, input_opts)
-      # tagify =
-
-
-      # error = PcpbWeb.ErrorHelpers.error_tag(form, field)
       [label, input || ""]
     end
   end
 
-  def array_input_value(%{source: source, impl: impl} = form, field)
-  when is_atom(field) or is_binary(field) do
-try do
-  impl.input_value(source, form, field)
-rescue
-  UndefinedFunctionError ->
-    case Map.fetch(form.params, field_to_string(field)) do
-      {:ok, value} ->
-        value
+  def map_input(form, field, opts \\ []) do
+    inputs = opts[:inputs]
+    wrapper_opts = [class: "grid grid-cols-2"]
+    label_opts = [class: "control-label text-center col-span-2"]
+    input_opts = [class: "tag-input", "phx-update": "ignore"]
+    subinput_opts = [class: "w-full", "phx-update": "ignore"]
+    subwrapper_opts = [class: "px-2 "]
 
-      :error ->
-        Map.get(form.data, field)
-    end
-end
-end
-
-
-  defp generic_input(type, form, field, opts) when is_list(opts) and (is_atom(field) or is_binary(field)) do
     field_value = input_value(form, field)
     field_value = if is_list(field_value), do: Enum.join(field_value, ", ")
-    opts = if opts[:isarray] do
-      Keyword.put_new(opts, :name, input_name(form, field) <> "[]")
-    else
-      Keyword.put_new(opts, :name, input_name(form, field))
-    end
-    opts =
-      opts
-      |> Keyword.put_new(:type, type)
-      |> Keyword.put_new(:id, input_id(form, field))
-      # |> Keyword.put_new(:name, input_name(form, field))
-      |> Keyword.put_new(:value, field_value)
-      |> Keyword.update!(:value, &maybe_html_escape/1)
+    input_opts = input_opts
+    |> Keyword.put_new(:name, input_name(form, field) <> "[]")
+    |> Keyword.put_new(:value, field_value)
 
-    tag(:input, opts)
-  end
-
-  defp selected(form, field, opts) do
-    {value, opts} = Keyword.pop(opts, :value)
-    {selected, opts} = Keyword.pop(opts, :selected)
-
-    if value != nil do
-      {value, opts}
-    else
-      param = field_to_string(field)
-
-      case form do
-        %{params: %{^param => sent}} ->
-          {sent, opts}
-
-        _ ->
-          {selected || input_value(form, field), opts}
+    content_tag :div, wrapper_opts do
+      label = label(form, field, humanize(field), label_opts)
+      inputs_for form, field, fn fp ->
+        inputsloop = for option <- inputs do
+          content_tag :div, subwrapper_opts do
+            label = label(fp, Enum.at(option, 0), humanize(Enum.at(option, 0)), label_opts)
+            input = input(Enum.at(option, 1), fp, Enum.at(option, 0), subinput_opts)
+            error = PcpbWeb.ErrorHelpers.error_tag(fp, Enum.at(option, 0))
+            [label, input, error || ""]
+          end
+          # input fp, Enum.at(option, 0), [using: Enum.at(option, 1),  classwrapper: "row-span-1 grid-cols-", class: "row-span-1 grid-cols-1"]
+        end
+      [label, inputsloop || ""]
       end
     end
   end
 
-  defp field_to_string(field) when is_list(field), do: field |> List.flatten() |> Enum.join(", ")
-  defp field_to_string(field) when is_atom(field), do: Atom.to_string(field)
-  defp field_to_string(field) when is_binary(field), do: field
-
-  defp maybe_html_escape(nil), do: nil
-  defp maybe_html_escape(value), do: html_escape(value)
+  defp state_class(form, field) do
+    cond do
+      # The form was not yet submitted
+      !form.source.action -> ""
+      form.errors[field] -> "has-error"
+      true -> "has-success"
+    end
+  end
 end

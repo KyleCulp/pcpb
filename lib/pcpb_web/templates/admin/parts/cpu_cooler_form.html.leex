@@ -1,19 +1,17 @@
 <h2><%= @title %></h2>
-
 <%= f = form_for @changeset, "#",
   id: "cpu_cooler-form",
-  class: "flex flex-row flex-wrap justify-center px-4",
+  class: form_classes,
   phx_target: @myself,
   phx_change: "validate",
   phx_submit: "save" %>
 
   <%= input f, :name %>
-  <%= input f, :manufacturer %>
   <%= input f, :model %>
   <%= input f, :model_number %>
+  <%= autocomplete_input f, :manufacturer, [data: @autocomplete_lists.manufacturer] %>
   <%= input f, :launch, using: :datepicker %>
-
-  <%= input f, :color %>
+  <%= input f, :color, [using: :autocomplete, data: @autocomplete_lists.color] %>
   <%= input f, :led %>
   <%= input f, :type %>
   <%= input f, :bearing_type %>
@@ -22,6 +20,11 @@
   <%= input f, :fan_rpm %>
   <%= input f, :noise_level %>
   <%= input f, :radiator %>
+    <%= inputs_for f, :dimensions, fn fp -> %>
+    <%= input fp, :length %>
+    <%= input fp, :width %>
+    <%= input fp, :height %>
+  <% end %>
 
 
   <%= submit "Save", phx_disable_with: "Saving..." %>

@@ -8,8 +8,8 @@ defmodule PcpbWeb.AdminLive.Parts.CaseFormComponent do
   end
 
   @impl true
-  def update(%{case: case} = assigns, socket) do
-    changeset = Parts.change_case(case)
+  def update(%{part: part} = assigns, socket) do
+    changeset = Parts.change_case(part)
     # manufacturer_options = Parts.list_suggestions("cases", "manufacturer")
     # motherboard_support_options = Parts.list_array_suggestions("cases", "motherboard_support")
     # psu_support_options = Parts.list_array_suggestions("cases", "psu_support")
@@ -28,7 +28,7 @@ defmodule PcpbWeb.AdminLive.Parts.CaseFormComponent do
   @impl true
   def handle_event("validate", %{"case" => case_params}, socket) do
     changeset =
-      socket.assigns.case
+      socket.assigns.part
       |> Parts.change_case(case_params)
       |> Map.put(:action, :validate)
 
@@ -40,7 +40,7 @@ defmodule PcpbWeb.AdminLive.Parts.CaseFormComponent do
   end
 
   defp save_case(socket, :edit, case_params) do
-    case Parts.update_case(socket.assigns.case, case_params) do
+    case Parts.update_case(socket.assigns.part, case_params) do
       {:ok, _case} ->
         {:noreply,
          socket

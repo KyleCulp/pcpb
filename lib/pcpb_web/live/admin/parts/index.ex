@@ -4,9 +4,10 @@ defmodule PcpbWeb.AdminLive.Parts.Index do
 
   defp create_parts(socket) do
     [
-      %{name: "CPU", route: Routes.admin_parts_cpu_path(socket, :index), form: PcpbWeb.AdminLive.Parts.CPUFormComponent},
-      %{name: "Case", route: Routes.admin_parts_case_path(socket, :index), form: PcpbWeb.AdminLive.Parts.CaseFormComponent},
-      %{name: "CPU Cooler", route: Routes.admin_parts_cpu_cooler_path(socket, :index), form: PcpbWeb.AdminLive.Parts.CPUCoolerFormComponent}
+      %{name: "CPU", action: :cpu},
+      %{name: "CPU Cooler", action: :cpu_cooler},
+      %{name: "Case", action: :case},
+      %{name: "GPU", action: :gpu},
     ]
   end
 

@@ -11,7 +11,7 @@
 # and so on) as they will fail if something goes wrong.
 alias Pcpb.Repo
 alias Pcpb.Users.User
-alias Pcpb.Parts.{CPU, Case, CPUCooler}
+alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU}
 
 %User{admin: true}
 |> User.changeset(%{
@@ -53,11 +53,6 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler}
   smt: "true",
   stock_cooler: "false",
   tdp: 125,
-    dimensions: %{
-    length: 0,
-    width: 0,
-    height: 0
-  },
 })
 |> Repo.insert!()
 
@@ -93,12 +88,7 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler}
   smt: "true",
   stock_cooler: "false",
   tdp: 125,
-  dimensions: %{
-    length: 0,
-    width: 0,
-    height: 0
-    },
-    })
+  })
 |> Repo.insert!()
 
 %Case{}
@@ -286,8 +276,8 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler}
     fans: "2 x 120mm",
     fan_size: "120mm x 25mm",
     fan_cfm: "75",
-    fan_rpm: "2700",
-    noise_level: "37",
+    fan_rpm: "2700 rpm",
+    noise_level: "37 dBA",
     radiator: "240mm",
     dimensions: %{
       length: 277.00,
@@ -296,3 +286,129 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler}
     }
   })
   |> Repo.insert!()
+
+  %CPUCooler{}
+  |> CPUCooler.changeset(%{
+    name: "Hyper 212 Evo",
+    manufacturer: "Cooler Master",
+    model: "Cooler Master Hyper 212 Evo CPU Cooler",
+    model_number: "RR-212E-20PK-R2",
+    launch: ~D[2011-09-16],
+    color: "Black / Silver",
+    led: "fan leds / corsair icue block",
+    type: "Liquid Cooling System",
+    socket_support: ["AM2", "AM2+",
+    "AM3+",
+    "AM4",
+    "FM1",
+    "FM2",
+    "FM2+",
+    "LGA1150",
+    "LGA1151",
+    "LGA1155",
+    "LGA1156",
+    "LGA1200",
+    "LGA2011",
+    "LGA2011-3",
+    "LGA2066"],
+    bearing_type: "Long Life Sleeve Bearing",
+    fans: "1 x 120mm",
+    fan_size: "120mm x 25mm",
+    fan_cfm: "25-83 CFM",
+    fan_rpm: "600 - 2000rpm",
+    noise_level: "9 - 36 dBA",
+    dimensions: %{
+      length: 116.00,
+      width: 51,
+      height: 159
+    }
+  })
+  |> Repo.insert!()
+
+  %GPU{}
+  |> GPU.changeset(%{
+    name: "Radeon RX 570",
+    manufacturer: "AMD",
+    model: "MSI Radeon RX 570 DirectX 12 RX 570 ARMOR 8G OC",
+    color: "Black / Red",
+    model_number: "RR-212E-20PK-R2",
+    launch: ~D[2017-11-01],
+    series: "AMD Radeon RX 500 Series",
+    chipset: "Radeon™ RX 570",
+    interface: "PCI Express x16",
+    directx: "DirectX 12",
+    opengl: "OpenGL 4.5",
+    cuda_cores: -1,
+    stream_processors: 2048,
+    base_clock: 1168,
+    boost_clock: 1268,
+    memory: "8GB",
+    memory_clock: "7000 MHz",
+    memory_type: "GDDR5",
+    memory_interface: "256-Bit",
+    sli_support: "false",
+    crossfire_support: "2-Way (Bridgeless)",
+    frame_sync: "FreeSync",
+    slot_width: "2",
+    max_resolution: "-1",
+    max_monitors: 5,
+    power_connector: "8-pin",
+    ray_tracing: "false",
+    cooler: "Double Fans",
+    hdcp: "true",
+    backplate: "true",
+    io: ["1 x HDMI", "3 x DisplayPort", "1 x DL-DVI-D"],
+    rgb: "fals",
+    tdp: 150,
+    weight: 0.622,
+    dimensions: %{
+      length: 246.00,
+      width: 130,
+      height: 39
+    }
+    })
+    |> Repo.insert!()
+
+    %GPU{}
+  |> GPU.changeset(%{
+    name: "GeForce GTX 1660 SUPER",
+    manufacturer: "AMD",
+    model: "MSI GeForce GTX 1660 SUPER 6 GB VENTUS XS OC",
+    color: "Black / White",
+    model_number: "RR-212E-20PK-R2",
+    launch: ~D[2017-11-01],
+    series: "GeForce GTX 1600 Series",
+    chipset: "GeForce GTX 1660 SUPER",
+    interface: "PCI Express 3.0 x16",
+    directx: "DirectX 12",
+    opengl: "OpenGL 4.5",
+    cuda_cores: 1408,
+    stream_processors: -1,
+    base_clock: 1380,
+    boost_clock: 1815,
+    memory: "8GB",
+    memory_clock: "7000 MHz",
+    memory_type: "GDDR6",
+    memory_interface: "256-Bit",
+    sli_support: "false",
+    crossfire_support: "2-Way (Bridgeless)",
+    frame_sync: "G-Sync",
+    slot_width: "2",
+    max_resolution: "7680 x 4320",
+    max_monitors: 4,
+    power_connector: "8-pin",
+    ray_tracing: "true",
+    cooler: "Double Fans",
+    hdcp: "2.2",
+    backplate: "true",
+    io: ["1 x HDMI 2.0b", "3 x DisplayPort 1.4"],
+    rgb: "fals",
+    tdp: 150,
+    weight: 0.622,
+    dimensions: %{
+      length: 247,
+      width: 127,
+      height: 46
+    }
+    })
+    |> Repo.insert!()

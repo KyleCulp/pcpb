@@ -5,6 +5,7 @@ defmodule Pcpb.Repo.Migrations.CreateCases do
   def change do
     create table(:cases) do
       part_base_fields_migration
+      add :dimensions, :map
       add :color, :string
       add :material, :string
       add :type, :string
@@ -16,7 +17,6 @@ defmodule Pcpb.Repo.Migrations.CreateCases do
       add :weight, :decimal
 
       add :clearance, :map
-      add :dimensions, :map
       add :dust_filters, :map
       add :radiator_support, :map
       add :fan_options, :map

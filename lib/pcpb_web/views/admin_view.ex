@@ -14,4 +14,8 @@ defmodule PcpbWeb.AdminView do
   # def part_edit_path(socket, action, part) do
   #   live_patch part.name, to: part.admin_parts_edit_path(@socket, :edit, part)
   # end
+
+  def form_classes do
+    "grid grid-cols-2 gap-x-1 md:grid-cols-4 2xl:grid-cols-6 flex-wrap justify-center px-4 min-w-full"
+  end
 end

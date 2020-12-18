@@ -8,21 +8,23 @@ defmodule PcpbWeb.AdminLive.Parts.CPUCoolerFormComponent do
   end
 
   @impl true
-  def update(%{cpu_cooler: cpu_cooler} = assigns, socket) do
+  def update(%{part: cpu_cooler} = assigns, socket) do
     changeset = Parts.change_cpu_cooler(cpu_cooler)
     tag_lists = Parts.list_array_suggestions("cpu_coolers", ["socket_support"])
+    autocomplete_lists = Parts.autocomplete_lists("cpu_coolers", ["type", "manufacturer", "color"])
 
     {:ok,
      socket
      |> assign(assigns)
      |> assign(:changeset, changeset)
+     |> assign(:autocomplete_lists, autocomplete_lists)
      |> assign(:tag_lists, tag_lists)}
   end
 
   @impl true
   def handle_event("validate", %{"cpu_cooler" => cpu_cooler_params}, socket) do
     changeset =
-      socket.assigns.cpu_cooler
+      socket.assigns.part
       |> Parts.change_cpu_cooler(cpu_cooler_params)
       |> Map.put(:action, :validate)
 
@@ -34,7 +36,7 @@ defmodule PcpbWeb.AdminLive.Parts.CPUCoolerFormComponent do
   end
 
   defp save_cpu_cooler(socket, :edit, cpu_cooler_params) do
-    case Parts.update_cpu_cooler(socket.assigns.cpu_cooler, cpu_cooler_params) do
+    case Parts.update_cpu_cooler(socket.assigns.part, cpu_cooler_params) do
       {:ok, _cpu_cooler} ->
         {:noreply,
          socket

@@ -6,6 +6,7 @@ defmodule Pcpb.Parts.CPUCooler do
 
   schema "cpu_coolers" do
     part_base_fields()
+    dimensions_map()
 
     field :series, :string
     field :color, :string
@@ -27,6 +28,7 @@ defmodule Pcpb.Parts.CPUCooler do
   def changeset(cpu_cooler, attrs) do
     cpu_cooler
     |> part_base_fields_changeset(attrs)
+    |> cast_embed(:dimensions, with: &dimensions_map_changeset/2, force_update_on_change: true)
     |> cast(attrs, [
       :color,
       :led,
@@ -50,8 +52,7 @@ defmodule Pcpb.Parts.CPUCooler do
       :fan_size,
       :fan_rpm,
       :noise_level,
-      :fan_cfm,
-      :radiator
+      :fan_cfm
     ])
     # |> cast_embed(:dimensions, with: &Base.dimensions_map_changeset/2)
   end
