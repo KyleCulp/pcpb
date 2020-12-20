@@ -25,10 +25,10 @@
   <%= input f, :threeonehalfbays, using: :number_input %>
   <%= input f, :side_window %>
   <%= tag_input f, :io, [data: @tag_lists.io] %>
-  <%= map_input f, :dimensions, [inputs: [[:length, :text], [:width, :text], [:height, :text]]] %>
-  <%= map_input f, :clearance, [inputs: [[:gpu_length, :number], [:cpu_cooler_height, :number], [:psu_length, :number]]] %>
-  <%= map_input f, :dust_filters, [inputs: [[:front, :boolean], [:back, :boolean], [:top, :boolean], [:bottom, :boolean], [:psu, :boolean]]] %>
-  <%= map_input f, :radiator_support, [inputs: [[:front, :text], [:back, :text], [:top, :text], [:bottom, :text]]] %>
+  <%= map_input f, :dimensions, [inputs: [:length, :width, :height]] %>
+  <%= map_input f, :clearance, [inputs: [:gpu_length, :cpu_cooler_height, :psu_length]] %>
+  <%= map_input f, :dust_filters, [inputs: [:front, :back, :top, :bottom, :psu]] %>
+  <%= map_input f, :radiator_support, [inputs: [:front, :back, :top, :bottom]] %>
 
 
 </div>

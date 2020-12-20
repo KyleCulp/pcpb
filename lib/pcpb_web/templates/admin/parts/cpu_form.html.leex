@@ -31,6 +31,6 @@
   <%= input f, :smt %>
   <%= input f, :stock_cooler %>
   <%= input f, :cache %>
-  <%= map_input f, :cache_map, [inputs: [[:l1instruction, :text], [:l1data, :text], [:l2, :text], [:l3, :text]]] %>
+  <%= map_input f, :cache_map, [inputs: [:l1instruction, :l1data, :l2, :l3]] %>
 <%= submit "Save", class: "col-span-1 md:col-span-4 2xl:col-span-6", phx_disable_with: "Saving..." %>
 </form>

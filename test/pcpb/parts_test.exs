@@ -761,4 +761,200 @@ defmodule Pcpb.PartsTest do
       assert %Ecto.Changeset{} = Parts.change_gpu(gpu)
     end
   end
+
+  describe "memorys" do
+    alias Pcpb.Parts.Memory
+
+    @valid_attrs %{cas_latency: 42, chipset: "some chipset", color: "some color", ecc: "some ecc", ecc_rank: "some ecc_rank", heatsink: "some heatsink", launch: ~D[2010-04-17], led: "some led", manufacturer: "some manufacturer", model: "some model", model_number: "some model_number", modules: "some modules", name: "some name", series: "some series", speed: "some speed", timing: "some timing", type: "some type", voltage: "some voltage"}
+    @update_attrs %{cas_latency: 43, chipset: "some updated chipset", color: "some updated color", ecc: "some updated ecc", ecc_rank: "some updated ecc_rank", heatsink: "some updated heatsink", launch: ~D[2011-05-18], led: "some updated led", manufacturer: "some updated manufacturer", model: "some updated model", model_number: "some updated model_number", modules: "some updated modules", name: "some updated name", series: "some updated series", speed: "some updated speed", timing: "some updated timing", type: "some updated type", voltage: "some updated voltage"}
+    @invalid_attrs %{cas_latency: nil, chipset: nil, color: nil, ecc: nil, ecc_rank: nil, heatsink: nil, launch: nil, led: nil, manufacturer: nil, model: nil, model_number: nil, modules: nil, name: nil, series: nil, speed: nil, timing: nil, type: nil, voltage: nil}
+
+    def memory_fixture(attrs \\ %{}) do
+      {:ok, memory} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Parts.create_memory()
+
+      memory
+    end
+
+    test "list_memorys/0 returns all memorys" do
+      memory = memory_fixture()
+      assert Parts.list_memorys() == [memory]
+    end
+
+    test "get_memory!/1 returns the memory with given id" do
+      memory = memory_fixture()
+      assert Parts.get_memory!(memory.id) == memory
+    end
+
+    test "create_memory/1 with valid data creates a memory" do
+      assert {:ok, %Memory{} = memory} = Parts.create_memory(@valid_attrs)
+      assert memory.cas_latency == 42
+      assert memory.chipset == "some chipset"
+      assert memory.color == "some color"
+      assert memory.ecc == "some ecc"
+      assert memory.ecc_rank == "some ecc_rank"
+      assert memory.heatsink == "some heatsink"
+      assert memory.launch == ~D[2010-04-17]
+      assert memory.led == "some led"
+      assert memory.manufacturer == "some manufacturer"
+      assert memory.model == "some model"
+      assert memory.model_number == "some model_number"
+      assert memory.modules == "some modules"
+      assert memory.name == "some name"
+      assert memory.series == "some series"
+      assert memory.speed == "some speed"
+      assert memory.timing == "some timing"
+      assert memory.type == "some type"
+      assert memory.voltage == "some voltage"
+    end
+
+    test "create_memory/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Parts.create_memory(@invalid_attrs)
+    end
+
+    test "update_memory/2 with valid data updates the memory" do
+      memory = memory_fixture()
+      assert {:ok, %Memory{} = memory} = Parts.update_memory(memory, @update_attrs)
+      assert memory.cas_latency == 43
+      assert memory.chipset == "some updated chipset"
+      assert memory.color == "some updated color"
+      assert memory.ecc == "some updated ecc"
+      assert memory.ecc_rank == "some updated ecc_rank"
+      assert memory.heatsink == "some updated heatsink"
+      assert memory.launch == ~D[2011-05-18]
+      assert memory.led == "some updated led"
+      assert memory.manufacturer == "some updated manufacturer"
+      assert memory.model == "some updated model"
+      assert memory.model_number == "some updated model_number"
+      assert memory.modules == "some updated modules"
+      assert memory.name == "some updated name"
+      assert memory.series == "some updated series"
+      assert memory.speed == "some updated speed"
+      assert memory.timing == "some updated timing"
+      assert memory.type == "some updated type"
+      assert memory.voltage == "some updated voltage"
+    end
+
+    test "update_memory/2 with invalid data returns error changeset" do
+      memory = memory_fixture()
+      assert {:error, %Ecto.Changeset{}} = Parts.update_memory(memory, @invalid_attrs)
+      assert memory == Parts.get_memory!(memory.id)
+    end
+
+    test "delete_memory/1 deletes the memory" do
+      memory = memory_fixture()
+      assert {:ok, %Memory{}} = Parts.delete_memory(memory)
+      assert_raise Ecto.NoResultsError, fn -> Parts.get_memory!(memory.id) end
+    end
+
+    test "change_memory/1 returns a memory changeset" do
+      memory = memory_fixture()
+      assert %Ecto.Changeset{} = Parts.change_memory(memory)
+    end
+  end
+
+  describe "psus" do
+    alias Pcpb.Parts.PSU
+
+    @valid_attrs %{"12v_rails": "some 12v_rails", MTBF: "some MTBF", cable_type: "some cable_type", color: "some color", dimensions: %{}, efficiency: "some efficiency", fan_bearing: "some fan_bearing", fan_size: "some fan_size", fanless: "some fanless", form_factor: "some form_factor", input_current: "some input_current", input_voltage: "some input_voltage", led: "some led", main_connector: "some main_connector", modular: "some modular", pci_express_connector: "some pci_express_connector", rating: "some rating", rgb: "some rgb", sata_connectors: "some sata_connectors", series: "some series", type: "some type", wattage: 42, weight: 42}
+    @update_attrs %{"12v_rails": "some updated 12v_rails", MTBF: "some updated MTBF", cable_type: "some updated cable_type", color: "some updated color", dimensions: %{}, efficiency: "some updated efficiency", fan_bearing: "some updated fan_bearing", fan_size: "some updated fan_size", fanless: "some updated fanless", form_factor: "some updated form_factor", input_current: "some updated input_current", input_voltage: "some updated input_voltage", led: "some updated led", main_connector: "some updated main_connector", modular: "some updated modular", pci_express_connector: "some updated pci_express_connector", rating: "some updated rating", rgb: "some updated rgb", sata_connectors: "some updated sata_connectors", series: "some updated series", type: "some updated type", wattage: 43, weight: 43}
+    @invalid_attrs %{"12v_rails": nil, MTBF: nil, cable_type: nil, color: nil, dimensions: nil, efficiency: nil, fan_bearing: nil, fan_size: nil, fanless: nil, form_factor: nil, input_current: nil, input_voltage: nil, led: nil, main_connector: nil, modular: nil, pci_express_connector: nil, rating: nil, rgb: nil, sata_connectors: nil, series: nil, type: nil, wattage: nil, weight: nil}
+
+    def psu_fixture(attrs \\ %{}) do
+      {:ok, psu} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Parts.create_psu()
+
+      psu
+    end
+
+    test "list_psus/0 returns all psus" do
+      psu = psu_fixture()
+      assert Parts.list_psus() == [psu]
+    end
+
+    test "get_psu!/1 returns the psu with given id" do
+      psu = psu_fixture()
+      assert Parts.get_psu!(psu.id) == psu
+    end
+
+    test "create_psu/1 with valid data creates a psu" do
+      assert {:ok, %PSU{} = psu} = Parts.create_psu(@valid_attrs)
+      assert psu.12v_rails == "some 12v_rails"
+      assert psu.MTBF == "some MTBF"
+      assert psu.cable_type == "some cable_type"
+      assert psu.color == "some color"
+      assert psu.dimensions == %{}
+      assert psu.efficiency == "some efficiency"
+      assert psu.fan_bearing == "some fan_bearing"
+      assert psu.fan_size == "some fan_size"
+      assert psu.fanless == "some fanless"
+      assert psu.form_factor == "some form_factor"
+      assert psu.input_current == "some input_current"
+      assert psu.input_voltage == "some input_voltage"
+      assert psu.led == "some led"
+      assert psu.main_connector == "some main_connector"
+      assert psu.modular == "some modular"
+      assert psu.pci_express_connector == "some pci_express_connector"
+      assert psu.rating == "some rating"
+      assert psu.rgb == "some rgb"
+      assert psu.sata_connectors == "some sata_connectors"
+      assert psu.series == "some series"
+      assert psu.type == "some type"
+      assert psu.wattage == 42
+      assert psu.weight == 42
+    end
+
+    test "create_psu/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Parts.create_psu(@invalid_attrs)
+    end
+
+    test "update_psu/2 with valid data updates the psu" do
+      psu = psu_fixture()
+      assert {:ok, %PSU{} = psu} = Parts.update_psu(psu, @update_attrs)
+      assert psu.12v_rails == "some updated 12v_rails"
+      assert psu.MTBF == "some updated MTBF"
+      assert psu.cable_type == "some updated cable_type"
+      assert psu.color == "some updated color"
+      assert psu.dimensions == %{}
+      assert psu.efficiency == "some updated efficiency"
+      assert psu.fan_bearing == "some updated fan_bearing"
+      assert psu.fan_size == "some updated fan_size"
+      assert psu.fanless == "some updated fanless"
+      assert psu.form_factor == "some updated form_factor"
+      assert psu.input_current == "some updated input_current"
+      assert psu.input_voltage == "some updated input_voltage"
+      assert psu.led == "some updated led"
+      assert psu.main_connector == "some updated main_connector"
+      assert psu.modular == "some updated modular"
+      assert psu.pci_express_connector == "some updated pci_express_connector"
+      assert psu.rating == "some updated rating"
+      assert psu.rgb == "some updated rgb"
+      assert psu.sata_connectors == "some updated sata_connectors"
+      assert psu.series == "some updated series"
+      assert psu.type == "some updated type"
+      assert psu.wattage == 43
+      assert psu.weight == 43
+    end
+
+    test "update_psu/2 with invalid data returns error changeset" do
+      psu = psu_fixture()
+      assert {:error, %Ecto.Changeset{}} = Parts.update_psu(psu, @invalid_attrs)
+      assert psu == Parts.get_psu!(psu.id)
+    end
+
+    test "delete_psu/1 deletes the psu" do
+      psu = psu_fixture()
+      assert {:ok, %PSU{}} = Parts.delete_psu(psu)
+      assert_raise Ecto.NoResultsError, fn -> Parts.get_psu!(psu.id) end
+    end
+
+    test "change_psu/1 returns a psu changeset" do
+      psu = psu_fixture()
+      assert %Ecto.Changeset{} = Parts.change_psu(psu)
+    end
+  end
 end

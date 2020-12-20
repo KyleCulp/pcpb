@@ -2,7 +2,7 @@ defmodule PcpbWeb.AdminLive.Parts.Part do
   use PcpbWeb, :live_admin_view
 
   alias Pcpb.Parts
-  alias Pcpb.Parts.{CPU, CPUCooler, Case, GPU}
+  alias Pcpb.Parts.{CPU, CPUCooler, Case, GPU, Memory, PSU}
 
   def get_part(action) do
     [
@@ -10,7 +10,8 @@ defmodule PcpbWeb.AdminLive.Parts.Part do
       %{name: "CPU Cooler", action: :cpu_cooler, new: :cpu_cooler_new, edit: :cpu_cooler_edit, form: PcpbWeb.AdminLive.Parts.CPUCoolerFormComponent},
       %{name: "Case", action: :case, new: :case_new, edit: :case_edit, form: PcpbWeb.AdminLive.Parts.CaseFormComponent},
       %{name: "GPU", action: :gpu, new: :gpu_new, edit: :gpu_edit, form: PcpbWeb.AdminLive.Parts.GPUFormComponent},
-      # %{name: "CPU", route: Routes.admin_parts_cpu_path(socket, :index)}
+      %{name: "Memory", action: :memory, new: :memory_new, edit: :memory_edit, form: PcpbWeb.AdminLive.Parts.MemoryFormComponent},
+      %{name: "PSU", action: :psu, new: :psu_new, edit: :psu_edit, form: PcpbWeb.AdminLive.Parts.PSUFormComponent},
     ]
     |> Enum.filter(fn part -> (part.action == action) or (part.edit == action) or (part.new == action)end)
   end
@@ -110,6 +111,46 @@ defmodule PcpbWeb.AdminLive.Parts.Part do
     |> assign(:page_title, "New GPU")
     |> assign(:parts, Parts.list_gpus())
     |> assign(:part, %GPU{})
+  end
+
+  defp apply_action(socket, :memory, _params) do
+    socket
+    |> assign(:page_title, "Memorys")
+    |> assign(:parts, Parts.list_memorys())
+  end
+
+  defp apply_action(socket, :memory_edit, %{"id" => id}) do
+    socket
+    |> assign(:page_title, "Edit Memory")
+    |> assign(:parts, Parts.list_memorys())
+    |> assign(:part, Parts.get_memory!(id))
+  end
+
+  defp apply_action(socket, :memory_new, _params) do
+    socket
+    |> assign(:page_title, "New Memory")
+    |> assign(:parts, Parts.list_memorys())
+    |> assign(:part, %Memory{})
+  end
+
+  defp apply_action(socket, :psu, _params) do
+    socket
+    |> assign(:page_title, "PSUs")
+    |> assign(:parts, Parts.list_psus())
+  end
+
+  defp apply_action(socket, :psu_edit, %{"id" => id}) do
+    socket
+    |> assign(:page_title, "Edit PSU")
+    |> assign(:parts, Parts.list_psus())
+    |> assign(:part, Parts.get_psu!(id))
+  end
+
+  defp apply_action(socket, :psu_new, _params) do
+    socket
+    |> assign(:page_title, "New PSU")
+    |> assign(:parts, Parts.list_psus())
+    |> assign(:part, %PSU{})
   end
 
 

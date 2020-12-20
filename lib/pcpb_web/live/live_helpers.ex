@@ -130,11 +130,11 @@ defmodule PcpbWeb.LiveHelpers do
     content_tag :div, wrapper_opts do
       label = label(form, field, humanize(field), label_opts)
       inputs_for form, field, fn fp ->
-        inputsloop = for option <- inputs do
+        inputsloop = for subfield <- inputs do
           content_tag :div, subwrapper_opts do
-            label = label(fp, Enum.at(option, 0), humanize(Enum.at(option, 0)), label_opts)
-            input = input(Enum.at(option, 1), fp, Enum.at(option, 0), subinput_opts)
-            error = PcpbWeb.ErrorHelpers.error_tag(fp, Enum.at(option, 0))
+            label = label(fp, subfield, humanize(subfield), label_opts)
+            input = input(Phoenix.HTML.Form.input_type(fp, subfield), fp, subfield, subinput_opts)
+            error = PcpbWeb.ErrorHelpers.error_tag(fp, subfield)
             [label, input, error || ""]
           end
           # input fp, Enum.at(option, 0), [using: Enum.at(option, 1),  classwrapper: "row-span-1 grid-cols-", class: "row-span-1 grid-cols-1"]

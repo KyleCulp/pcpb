@@ -34,3 +34,20 @@ https://github.com/phoenixframework/phoenix_live_dashboard/blob/910059ea39d9399c
     <%= multiple_select f, :psu_support, @motherboard_support_options, class: "psu_support-select" %>
     <%= error_tag f, :psu_support %>
   </div>
+
+memory has to check the capacity based on the quantity in box from seller
+
+
+I don't really intend on supporting memory data specific to amd vs intel, as that seems to be a 1000/2000 series issue?
+https://www.reddit.com/r/Amd/comments/ctgeiw/different_between_gskill_regular_ram_and_gskill/
+
+return warnings in addition to errors for part compatability
+
+product listings: include warranty
+
+have product listings merge/overwrite the part on that page when viewing that specific page
+
+individually sleeved black plastic coating https://images-na.ssl-images-amazon.com/images/I/51Mpxeo3RdL._AC_SL1001_.jpg
+
+sleeved binded black plastic coating  https://c1.neweggimages.com/ProductImageCompressAll1280/A4M5_1_20200116596852916.jpg
+

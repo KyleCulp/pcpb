@@ -11,7 +11,7 @@
 # and so on) as they will fail if something goes wrong.
 alias Pcpb.Repo
 alias Pcpb.Users.User
-alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU}
+alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory}
 
 %User{admin: true}
 |> User.changeset(%{
@@ -52,7 +52,7 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU}
   memory_channels: 2,
   smt: "true",
   stock_cooler: "false",
-  tdp: 125,
+  tdp: 125
 })
 |> Repo.insert!()
 
@@ -87,8 +87,8 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU}
   memory_channels: 2,
   smt: "true",
   stock_cooler: "false",
-  tdp: 125,
-  })
+  tdp: 125
+})
 |> Repo.insert!()
 
 %Case{}
@@ -248,17 +248,19 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU}
 #   io: [""]
 # })
 # |> Repo.insert!()
-  %CPUCooler{}
-  |> CPUCooler.changeset(%{
-    name: "Corsair H100i RGB PLATINUM",
-    manufacturer: "Corsair",
-    model: "Corsair H100i RGB PLATINUM 75 CFM Liquid CPU Cooler",
-    model_number: "CW-9060039-WW",
-    launch: ~D[2020-04-18],
-    color: "Black / Silver",
-    led: "fan leds / corsair icue block",
-    type: "Liquid Cooling System",
-    socket_support: ["AM2", "AM2+",
+%CPUCooler{}
+|> CPUCooler.changeset(%{
+  name: "Corsair H100i RGB PLATINUM",
+  manufacturer: "Corsair",
+  model: "Corsair H100i RGB PLATINUM 75 CFM Liquid CPU Cooler",
+  model_number: "CW-9060039-WW",
+  launch: ~D[2020-04-18],
+  color: "Black / Silver",
+  led: "fan leds / corsair icue block",
+  type: "Liquid Cooling System",
+  socket_support: [
+    "AM2",
+    "AM2+",
     "AM3+",
     "AM4",
     "FM1",
@@ -271,33 +273,36 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU}
     "LGA1200",
     "LGA2011",
     "LGA2011-3",
-    "LGA2066"],
-    bearing_type: "Magnetic Levitation",
-    fans: "2 x 120mm",
-    fan_size: "120mm x 25mm",
-    fan_cfm: "75",
-    fan_rpm: "2700 rpm",
-    noise_level: "37 dBA",
-    radiator: "240mm",
-    dimensions: %{
-      length: 277.00,
-      width: 120,
-      height: 27
-    }
-  })
-  |> Repo.insert!()
+    "LGA2066"
+  ],
+  bearing_type: "Magnetic Levitation",
+  fans: "2 x 120mm",
+  fan_size: "120mm x 25mm",
+  fan_cfm: "75",
+  fan_rpm: "2700 rpm",
+  noise_level: "37 dBA",
+  radiator: "240mm",
+  dimensions: %{
+    length: 277.00,
+    width: 120,
+    height: 27
+  }
+})
+|> Repo.insert!()
 
-  %CPUCooler{}
-  |> CPUCooler.changeset(%{
-    name: "Hyper 212 Evo",
-    manufacturer: "Cooler Master",
-    model: "Cooler Master Hyper 212 Evo CPU Cooler",
-    model_number: "RR-212E-20PK-R2",
-    launch: ~D[2011-09-16],
-    color: "Black / Silver",
-    led: "fan leds / corsair icue block",
-    type: "Liquid Cooling System",
-    socket_support: ["AM2", "AM2+",
+%CPUCooler{}
+|> CPUCooler.changeset(%{
+  name: "Hyper 212 Evo",
+  manufacturer: "Cooler Master",
+  model: "Cooler Master Hyper 212 Evo CPU Cooler",
+  model_number: "RR-212E-20PK-R2",
+  launch: ~D[2011-09-16],
+  color: "Black / Silver",
+  led: "fan leds / corsair icue block",
+  type: "Liquid Cooling System",
+  socket_support: [
+    "AM2",
+    "AM2+",
     "AM3+",
     "AM4",
     "FM1",
@@ -310,105 +315,274 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU}
     "LGA1200",
     "LGA2011",
     "LGA2011-3",
-    "LGA2066"],
-    bearing_type: "Long Life Sleeve Bearing",
-    fans: "1 x 120mm",
-    fan_size: "120mm x 25mm",
-    fan_cfm: "25-83 CFM",
-    fan_rpm: "600 - 2000rpm",
-    noise_level: "9 - 36 dBA",
-    dimensions: %{
-      length: 116.00,
-      width: 51,
-      height: 159
-    }
-  })
-  |> Repo.insert!()
+    "LGA2066"
+  ],
+  bearing_type: "Long Life Sleeve Bearing",
+  fans: "1 x 120mm",
+  fan_size: "120mm x 25mm",
+  fan_cfm: "25-83 CFM",
+  fan_rpm: "600 - 2000rpm",
+  noise_level: "9 - 36 dBA",
+  dimensions: %{
+    length: 116.00,
+    width: 51,
+    height: 159
+  }
+})
+|> Repo.insert!()
 
-  %GPU{}
-  |> GPU.changeset(%{
-    name: "Radeon RX 570",
-    manufacturer: "AMD",
-    model: "MSI Radeon RX 570 DirectX 12 RX 570 ARMOR 8G OC",
-    color: "Black / Red",
-    model_number: "RR-212E-20PK-R2",
-    launch: ~D[2017-11-01],
-    series: "AMD Radeon RX 500 Series",
-    chipset: "Radeon™ RX 570",
-    interface: "PCI Express x16",
-    directx: "DirectX 12",
-    opengl: "OpenGL 4.5",
-    cuda_cores: -1,
-    stream_processors: 2048,
-    base_clock: 1168,
-    boost_clock: 1268,
-    memory: "8GB",
-    memory_clock: "7000 MHz",
-    memory_type: "GDDR5",
-    memory_interface: "256-Bit",
-    sli_support: "false",
-    crossfire_support: "2-Way (Bridgeless)",
-    frame_sync: "FreeSync",
-    slot_width: "2",
-    max_resolution: "-1",
-    max_monitors: 5,
-    power_connector: "8-pin",
-    ray_tracing: "false",
-    cooler: "Double Fans",
-    hdcp: "true",
-    backplate: "true",
-    io: ["1 x HDMI", "3 x DisplayPort", "1 x DL-DVI-D"],
-    rgb: "fals",
-    tdp: 150,
-    weight: 0.622,
-    dimensions: %{
-      length: 246.00,
-      width: 130,
-      height: 39
-    }
-    })
-    |> Repo.insert!()
+%GPU{}
+|> GPU.changeset(%{
+  name: "Radeon RX 570",
+  manufacturer: "AMD",
+  model: "MSI Radeon RX 570 DirectX 12 RX 570 ARMOR 8G OC",
+  color: "Black / Red",
+  model_number: "RR-212E-20PK-R2",
+  launch: ~D[2017-11-01],
+  series: "AMD Radeon RX 500 Series",
+  chipset: "Radeon™ RX 570",
+  interface: "PCI Express x16",
+  directx: "DirectX 12",
+  opengl: "OpenGL 4.5",
+  cuda_cores: -1,
+  stream_processors: 2048,
+  base_clock: 1168,
+  boost_clock: 1268,
+  memory: "8GB",
+  memory_clock: "7000 MHz",
+  memory_type: "GDDR5",
+  memory_interface: "256-Bit",
+  sli_support: "false",
+  crossfire_support: "2-Way (Bridgeless)",
+  frame_sync: "FreeSync",
+  slot_width: "2",
+  max_resolution: "-1",
+  max_monitors: 5,
+  power_connector: "8-pin",
+  ray_tracing: "false",
+  cooler: "Double Fans",
+  hdcp: "true",
+  backplate: "true",
+  io: ["1 x HDMI", "3 x DisplayPort", "1 x DL-DVI-D"],
+  rgb: "fals",
+  tdp: 150,
+  weight: 0.622,
+  dimensions: %{
+    length: 246.00,
+    width: 130,
+    height: 39
+  }
+})
+|> Repo.insert!()
 
-    %GPU{}
-  |> GPU.changeset(%{
-    name: "GeForce GTX 1660 SUPER",
-    manufacturer: "AMD",
-    model: "MSI GeForce GTX 1660 SUPER 6 GB VENTUS XS OC",
-    color: "Black / White",
-    model_number: "RR-212E-20PK-R2",
-    launch: ~D[2017-11-01],
-    series: "GeForce GTX 1600 Series",
-    chipset: "GeForce GTX 1660 SUPER",
-    interface: "PCI Express 3.0 x16",
-    directx: "DirectX 12",
-    opengl: "OpenGL 4.5",
-    cuda_cores: 1408,
-    stream_processors: -1,
-    base_clock: 1380,
-    boost_clock: 1815,
-    memory: "8GB",
-    memory_clock: "7000 MHz",
-    memory_type: "GDDR6",
-    memory_interface: "256-Bit",
-    sli_support: "false",
-    crossfire_support: "2-Way (Bridgeless)",
-    frame_sync: "G-Sync",
-    slot_width: "2",
-    max_resolution: "7680 x 4320",
-    max_monitors: 4,
-    power_connector: "8-pin",
-    ray_tracing: "true",
-    cooler: "Double Fans",
-    hdcp: "2.2",
-    backplate: "true",
-    io: ["1 x HDMI 2.0b", "3 x DisplayPort 1.4"],
-    rgb: "fals",
-    tdp: 150,
-    weight: 0.622,
-    dimensions: %{
-      length: 247,
-      width: 127,
-      height: 46
-    }
-    })
-    |> Repo.insert!()
+%GPU{}
+|> GPU.changeset(%{
+  name: "GeForce GTX 1660 SUPER",
+  manufacturer: "AMD",
+  model: "MSI GeForce GTX 1660 SUPER 6 GB VENTUS XS OC",
+  color: "Black / White",
+  model_number: "RR-212E-20PK-R2",
+  launch: ~D[2017-11-01],
+  series: "GeForce GTX 1600 Series",
+  chipset: "GeForce GTX 1660 SUPER",
+  interface: "PCI Express 3.0 x16",
+  directx: "DirectX 12",
+  opengl: "OpenGL 4.5",
+  cuda_cores: 1408,
+  stream_processors: -1,
+  base_clock: 1380,
+  boost_clock: 1815,
+  memory: "8GB",
+  memory_clock: "7000 MHz",
+  memory_type: "GDDR6",
+  memory_interface: "256-Bit",
+  sli_support: "false",
+  crossfire_support: "2-Way (Bridgeless)",
+  frame_sync: "G-Sync",
+  slot_width: "2",
+  max_resolution: "7680 x 4320",
+  max_monitors: 4,
+  power_connector: "8-pin",
+  ray_tracing: "true",
+  cooler: "Double Fans",
+  hdcp: "2.2",
+  backplate: "true",
+  io: ["1 x HDMI 2.0b", "3 x DisplayPort 1.4"],
+  rgb: "fals",
+  tdp: 150,
+  weight: 0.622,
+  dimensions: %{
+    length: 247,
+    width: 127,
+    height: 46
+  }
+})
+|> Repo.insert!()
+
+%GPU{}
+|> GPU.changeset(%{
+  name: "Radeon RX 570",
+  manufacturer: "AMD",
+  model: "MSI Radeon RX 570 DirectX 12 RX 570 ARMOR 8G OC",
+  color: "Black / Red",
+  model_number: "RR-212E-20PK-R2",
+  launch: ~D[2017-11-01],
+  series: "AMD Radeon RX 500 Series",
+  chipset: "Radeon™ RX 570",
+  interface: "PCI Express x16",
+  directx: "DirectX 12",
+  opengl: "OpenGL 4.5",
+  cuda_cores: -1,
+  stream_processors: 2048,
+  base_clock: 1168,
+  boost_clock: 1268,
+  memory: "8GB",
+  memory_clock: "7000 MHz",
+  memory_type: "GDDR5",
+  memory_interface: "256-Bit",
+  sli_support: "false",
+  crossfire_support: "2-Way (Bridgeless)",
+  frame_sync: "FreeSync",
+  slot_width: "2",
+  max_resolution: "-1",
+  max_monitors: 5,
+  power_connector: "8-pin",
+  ray_tracing: "false",
+  cooler: "Double Fans",
+  hdcp: "true",
+  backplate: "true",
+  io: ["1 x HDMI", "3 x DisplayPort", "1 x DL-DVI-D"],
+  rgb: "fals",
+  tdp: 150,
+  weight: 0.622,
+  dimensions: %{
+    length: 246.00,
+    width: 130,
+    height: 39
+  }
+})
+|> Repo.insert!()
+
+%Memory{}
+|> Memory.changeset(%{
+  name: "Corsair Vengeance RGB Pro DDR4-3200 CL16",
+  manufacturer: "Corsair",
+  model: "MSI GeForce GTX 1660 SUPER 6 GB VENTUS XS OC",
+  model_number: "CMW32GX4M2C3200C16",
+  launch: ~D[2017-11-01],
+  color: "Black / LED",
+  series: "VENGEANCE RGB PRO",
+  type: "288-Pin DDR4 SDRAM",
+  chipset: "Intel XMP 2.0",
+  cas_latency: "16",
+  heatsink: "Anodized Aluminum",
+  module_size: "16GB",
+  speed: "3200MHz",
+  speeed_rating: "PC4-25600",
+  timing: "16-18-18-36",
+  voltage: "1.35V",
+  ecc: "false",
+  ecc_rank: "",
+  led: "Individually Addressable",
+})
+|> Repo.insert!()
+
+%Memory{}
+|> Memory.changeset(%{
+  name: "G.SKILL Trident Z RGB DDR4-3600 CL18",
+  manufacturer: "G.SKILL",
+  model: "MSI GeForce GTX 1660 SUPER 6 GB VENTUS XS OC",
+  model_number: "F4-3600C18D-16GTZRX",
+  launch: ~D[2017-11-01],
+  color: "Black / LED",
+  series: "Trident Z RGB",
+  type: "288-Pin DDR4 SDRAM",
+  chipset: "Intel XMP 2.0",
+  heatsink: "Anodized Aluminum",
+  module_size: "8GB",
+  speed: "3200MHz",
+  speeed_rating: "PC4-28800",
+  cas_latency: "18",
+  timing: "18-22-22-42",
+  voltage: "1.35V",
+  ecc: "false",
+  ecc_rank: "",
+  led: "Individually Addressable",
+})
+|> Repo.insert!()
+
+%PSU{}
+|> PSU.changeset(%{
+  name: "",
+  manufacturer: "",
+  model: "",
+  model_number: "",
+  launch: ~D[],
+  color: "",
+  series: "",
+  type: "",
+  efficiency: "",
+  wattage: ,
+  form_factor: "",
+  modular: "",
+  rating: "",
+  fan_bearing: "",
+  fan_size: "",
+  fan_dba: "",
+  main_connector: "",
+  pci_express_connector: "",
+  twelvevrails: ,
+  sata_connectors: ,
+  input_current: "",
+  input_voltage: "",
+  manufacturer_warranty: "",
+  MTBF: "",
+  weight: ,
+  cable_type: "",
+  rgb: "",
+  connectors: [""],
+  dimensions: %{
+    length: 246.00,
+    width: 130,
+    height: 39
+  }
+})
+|> Repo.insert!()
+
+%PSU{}
+|> PSU.changeset(%{
+  name: "Revolution D.F. 750W",
+  manufacturer: "ENERMAX",
+  model: "Revolution D.F. 750W 80 Plus Gold Full Modular Multi Rail",
+  model_number: "ERF750AWT",
+  launch: ~D[2020-12-14],
+  color: "Black / White",
+  series: "REVOLUTION D.F. 750W",
+  type: "ATX12V / EPS12V",
+  efficiency: "87-92%",
+  wattage: 750,
+  form_factor: "",
+  modular: "Full modular",
+  rating: "80 PLUS GOLD Certified",
+  fan_bearing: "",
+  fan_size: "",
+  fan_dba: "",
+  main_connector: "",
+  pci_express_connector: "",
+  twelvevrails: ,
+  sata_connectors: ,
+  input_current: "",
+  input_voltage: "100-240V",
+  manufacturer_warranty: "",
+  MTBF: "",
+  weight: ,
+  cable_type: "",
+  rgb: "false",
+  connectors: [""],
+  dimensions: %{
+    length: 160.00,
+    width: 150,
+    height: 86
+  }
+})
+|> Repo.insert!()

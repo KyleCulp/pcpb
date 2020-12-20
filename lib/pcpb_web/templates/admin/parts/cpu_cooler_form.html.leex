@@ -11,7 +11,7 @@
   <%= input f, :model_number %>
   <%= autocomplete_input f, :manufacturer, [data: @autocomplete_lists.manufacturer] %>
   <%= input f, :launch, using: :datepicker %>
-  <%= input f, :color, [using: :autocomplete, data: @autocomplete_lists.color] %>
+  <%= autocomplete_input f, :color, [data: @autocomplete_lists.color] %>
   <%= input f, :led %>
   <%= input f, :type %>
   <%= input f, :bearing_type %>
@@ -20,11 +20,8 @@
   <%= input f, :fan_rpm %>
   <%= input f, :noise_level %>
   <%= input f, :radiator %>
-    <%= inputs_for f, :dimensions, fn fp -> %>
-    <%= input fp, :length %>
-    <%= input fp, :width %>
-    <%= input fp, :height %>
-  <% end %>
+  <%= map_input f, :dimensions, [inputs: [:length, :width, :height]] %>
+
 
 
   <%= submit "Save", phx_disable_with: "Saving..." %>

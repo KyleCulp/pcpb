@@ -38,7 +38,7 @@
   <%= input f, :rgb %>
   <%= input f, :tdp, using: :number_input %>
   <%= input f, :weight, using: :number_input %>
-  <%= map_input f, :dimensions, [inputs: [[:length, :text], [:width, :text], [:height, :text]]] %>
+  <%= map_input f, :dimensions, [inputs: [:length, :width, :height]] %>
 
 <%= submit "Save", phx_disable_with: "Saving..." %>
 </form>

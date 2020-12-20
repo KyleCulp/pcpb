@@ -1,0 +1,40 @@
+<h2><%= @title %></h2>
+<%= f = form_for @changeset, "#",
+  id: "case-form",
+  class: form_classes,
+  phx_target: @myself,
+  phx_change: "validate",
+  phx_submit: "save" %>
+
+  <%= input f, :name %>
+  <%= autocomplete_input f, :manufacturer, [data: @autocomplete_lists.manufacturer] %>
+  <%= input f, :model %>
+  <%= input f, :model_number %>
+  <%= input f, :launch, using: :datepicker %>
+  <%= input f, :series %>
+  <%= input f, :color %>
+  <%= autocomplete_input f, :type, [data: @autocomplete_lists.type] %>
+  <%= autocomplete_input f, :form_factor, [data: @autocomplete_lists.form_factor] %>
+  <%= autocomplete_input f, :modular, [data: @autocomplete_lists.modular] %>
+  <%= autocomplete_input f, :efficiency, [data: @autocomplete_lists.efficiency] %>
+  <%= autocomplete_input f, :rating, [data: @autocomplete_lists.rating] %>
+  <%= autocomplete_input f, :main_connector, [data: @autocomplete_lists.main_connector] %>
+  <%= autocomplete_input f, :pci_express_connector, [data: @autocomplete_lists.pci_express_connector] %>
+  <%= input f, :sata_connectors %>
+  <%= input f, :input_voltage %>
+  <%= input f, :input_current %>
+  <%= input f, :MTBF %>
+  <%= input f, :weight %>
+  <%= input f, :cable_type %>
+  <%= input f, :rgb %>
+  <%= input f, :fanless %>
+  <%= input f, :fan_size %>
+  <%= input f, :fan_bearing %>
+  <%= input f, :fan_dba %>
+  <%= input f, :manufacturer_warranty %>
+  <%= map_input f, :dimensions, [inputs: [:length, :width, :height]] %>
+
+
+</div>
+<%= submit "Save", phx_disable_with: "Saving..." %>
+</form>

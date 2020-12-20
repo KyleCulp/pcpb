@@ -11,6 +11,6 @@ mix phx.gen.context Parts GPU gpus name manufacturer model series release:date m
 
 mix phx.gen.live Parts Motherboard motherboards name manufacturer model release:date model_number color led  form_factor socket chipset memory_type memory_slots max_memory:integer memory_channel memory_speed:array:string pci_version pciex16:integer pciex8:integer pciex4:integer pciex1:integer pci:integer sata3 sata6 msata m2:array:string raid sli crossfire ethernet_chipset ethernet2_chipset video usb2 usb321 usb322 usb3222 video audio_chipset audio_channels wireless
 
-mix phx.gen.live Parts Memory memorys name manufacturer model release:date model_number color led type chipset  modules speed cas_latency:integer voltage timing heatsink ecc
+mix phx.gen.context Parts Memory memorys name manufacturer model launch:date model_number series color led type chipset modules speed cas_latency:integer voltage timing heatsink ecc ecc_rank
 
-mix phx.gen.live Parts PSU psus name manufacturer model release:date model_number color led type wattage:integer fan main_connector 12v_rails pci_express_connector dimensions:map length:integer
+mix phx.gen.context Parts PSU psus series color led type form_factor wattage:integer modular efficiency rating main_connector 12v_rails pci_express_connector sata_connectors input_voltage input_current MTBF dimensions:map weight:integer cable_type rgb fanless fan_size fan_bearing

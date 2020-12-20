@@ -113,7 +113,7 @@ defmodule Pcpb.Parts do
 
 
 
-
+  # TODO: Refactor this so that you actually understand it, because days later it's still magic
   def autocomplete_lists(table, columns) do
     select_list = Enum.map(columns, fn k ->
       String.to_existing_atom(k)
@@ -460,5 +460,197 @@ defmodule Pcpb.Parts do
   """
   def change_gpu(%GPU{} = gpu, attrs \\ %{}) do
     GPU.changeset(gpu, attrs)
+  end
+
+  alias Pcpb.Parts.Memory
+
+  @doc """
+  Returns the list of memorys.
+
+  ## Examples
+
+      iex> list_memorys()
+      [%Memory{}, ...]
+
+  """
+  def list_memorys do
+    Repo.all(Memory)
+  end
+
+  @doc """
+  Gets a single memory.
+
+  Raises `Ecto.NoResultsError` if the Memory does not exist.
+
+  ## Examples
+
+      iex> get_memory!(123)
+      %Memory{}
+
+      iex> get_memory!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_memory!(id), do: Repo.get!(Memory, id)
+
+  @doc """
+  Creates a memory.
+
+  ## Examples
+
+      iex> create_memory(%{field: value})
+      {:ok, %Memory{}}
+
+      iex> create_memory(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_memory(attrs \\ %{}) do
+    %Memory{}
+    |> Memory.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a memory.
+
+  ## Examples
+
+      iex> update_memory(memory, %{field: new_value})
+      {:ok, %Memory{}}
+
+      iex> update_memory(memory, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_memory(%Memory{} = memory, attrs) do
+    memory
+    |> Memory.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a memory.
+
+  ## Examples
+
+      iex> delete_memory(memory)
+      {:ok, %Memory{}}
+
+      iex> delete_memory(memory)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_memory(%Memory{} = memory) do
+    Repo.delete(memory)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking memory changes.
+
+  ## Examples
+
+      iex> change_memory(memory)
+      %Ecto.Changeset{data: %Memory{}}
+
+  """
+  def change_memory(%Memory{} = memory, attrs \\ %{}) do
+    Memory.changeset(memory, attrs)
+  end
+
+  alias Pcpb.Parts.PSU
+
+  @doc """
+  Returns the list of psus.
+
+  ## Examples
+
+      iex> list_psus()
+      [%PSU{}, ...]
+
+  """
+  def list_psus do
+    Repo.all(PSU)
+  end
+
+  @doc """
+  Gets a single psu.
+
+  Raises `Ecto.NoResultsError` if the Psu does not exist.
+
+  ## Examples
+
+      iex> get_psu!(123)
+      %PSU{}
+
+      iex> get_psu!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_psu!(id), do: Repo.get!(PSU, id)
+
+  @doc """
+  Creates a psu.
+
+  ## Examples
+
+      iex> create_psu(%{field: value})
+      {:ok, %PSU{}}
+
+      iex> create_psu(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_psu(attrs \\ %{}) do
+    %PSU{}
+    |> PSU.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a psu.
+
+  ## Examples
+
+      iex> update_psu(psu, %{field: new_value})
+      {:ok, %PSU{}}
+
+      iex> update_psu(psu, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_psu(%PSU{} = psu, attrs) do
+    psu
+    |> PSU.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a psu.
+
+  ## Examples
+
+      iex> delete_psu(psu)
+      {:ok, %PSU{}}
+
+      iex> delete_psu(psu)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_psu(%PSU{} = psu) do
+    Repo.delete(psu)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking psu changes.
+
+  ## Examples
+
+      iex> change_psu(psu)
+      %Ecto.Changeset{data: %PSU{}}
+
+  """
+  def change_psu(%PSU{} = psu, attrs \\ %{}) do
+    PSU.changeset(psu, attrs)
   end
 end
