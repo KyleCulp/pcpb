@@ -11,7 +11,7 @@ defmodule PcpbWeb.AdminLive.Parts.PSUFormComponent do
   def update(%{part: psu} = assigns, socket) do
     changeset = Parts.change_psu(psu)
     # tag_lists = Parts.list_array_suggestions("psus", ["output"])
-    autocomplete_lists = Parts.autocomplete_lists("psus", ["type", "manufacturer", "color", "form_factor", "modular", "efficiency", "rating", "main_connector", "pci_express_connector"])
+    autocomplete_lists = Parts.autocomplete_lists("psus", ["type", "manufacturer", "color", "form_factor", "modular", "efficiency", "rating", "main_connectors", "pci_express_connectors"])
 
     {:ok,
      socket

@@ -18,19 +18,22 @@
   <%= autocomplete_input f, :modular, [data: @autocomplete_lists.modular] %>
   <%= autocomplete_input f, :efficiency, [data: @autocomplete_lists.efficiency] %>
   <%= autocomplete_input f, :rating, [data: @autocomplete_lists.rating] %>
-  <%= autocomplete_input f, :main_connector, [data: @autocomplete_lists.main_connector] %>
-  <%= autocomplete_input f, :pci_express_connector, [data: @autocomplete_lists.pci_express_connector] %>
+  <%= autocomplete_input f, :main_connectors, [data: @autocomplete_lists.main_connectors] %>
+  <%= autocomplete_input f, :pci_express_connectors, [data: @autocomplete_lists.pci_express_connectors] %>
   <%= input f, :sata_connectors %>
+  <%= input f, :peripheral_connectors %>
+  <%= input f, :twelvevrails %>
   <%= input f, :input_voltage %>
   <%= input f, :input_current %>
+  <%= input f, :fan_size %>
+  <%= input f, :fan_bearing %>
+  <%= input f, :fan_dba %>
+  <%= input f, :manufacturer_warranty %>
   <%= input f, :MTBF %>
   <%= input f, :weight %>
   <%= input f, :cable_type %>
   <%= input f, :rgb %>
-  <%= input f, :fanless %>
-  <%= input f, :fan_size %>
-  <%= input f, :fan_bearing %>
-  <%= input f, :fan_dba %>
+
   <%= input f, :manufacturer_warranty %>
   <%= map_input f, :dimensions, [inputs: [:length, :width, :height]] %>
 

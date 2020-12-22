@@ -18,18 +18,18 @@ defmodule Pcpb.Parts.PSU do
     field :fan_bearing, :string
     field :fan_size, :string
     field :fan_dba, :string
-    field :main_connector, :string
-    field :pci_express_connector, :string
+    field :main_connectors, :string
+    field :pci_express_connectors, :string
     field :twelvevrails, :integer
     field :sata_connectors, :integer
+    field :peripheral_connectors, :integer
     field :input_current, :string
     field :input_voltage, :string
     field :manufacturer_warranty, :string
     field :MTBF, :string
-    field :weight, :integer
+    field :weight, :decimal
     field :cable_type, :string
     field :rgb, :string
-    field :connectors, {:array, :string}
     timestamps()
   end
 
@@ -50,43 +50,34 @@ defmodule Pcpb.Parts.PSU do
       :fan_bearing,
       :fan_size,
       :fan_dba,
-      :main_connector,
-      :pci_express_connector,
-      :twelvevrails,
+      :main_connectors,
+      :pci_express_connectors,
       :sata_connectors,
+      :peripheral_connectors,
+      :twelvevrails,
       :input_current,
       :input_voltage,
       :manufacturer_warranty,
       :MTBF,
       :weight,
       :cable_type,
-      :rgb,
-      :connectors
+      :rgb
     ])
     |> validate_required([
       :series,
       :color,
-      :efficiency,
       :type,
       :wattage,
       :form_factor,
       :modular,
       :rating,
-      :fan_bearing,
-      :fan_size,
-      :fan_dba,
-      :main_connector,
-      :pci_express_connector,
+      :main_connectors,
+      :pci_express_connectors,
       :twelvevrails,
       :sata_connectors,
-      :input_current,
-      :input_voltage,
       :manufacturer_warranty,
-      :MTBF,
-      :weight,
       :cable_type,
-      :rgb,
-      :connectors
+      :rgb
     ])
   end
 end

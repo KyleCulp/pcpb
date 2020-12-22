@@ -9,6 +9,7 @@ defmodule PcpbWeb.AdminLive.Parts.Index do
       %{name: "Case", action: :case},
       %{name: "GPU", action: :gpu},
       %{name: "Memory", action: :memory},
+      %{name: "PSU", action: :psu},
     ]
   end
 
