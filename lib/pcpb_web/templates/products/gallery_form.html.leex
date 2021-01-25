@@ -1,0 +1,23 @@
+<%= if input_name(@form, :images) != [] do %>
+  <div class="flex border-2 border-blue-300 border-solid dropzone" id="gallery_dropzone" phx-hook="Gallery">
+    <%= input_value(@form, :images) |> Enum.with_index() |> Enum.map(fn({img, index}) -> %>
+    <img src="<%= cdn_url() <> "parts/" <> img.full %>" id="<%= img.id %>" class="draggable" style="max-height: 200px" draggable="true" />
+  <% end) %>
+</div>
+<% end %>
+<%= for entry <- @uploads.photo.entries do %>
+  <div class="grid grid-flow-row grid-cols-3">
+    <div class="col-span-1">
+      <%= live_img_preview entry, height: 80 %>
+    </div>
+    <div class="col-span-1">
+      <progress max="100" value="<%= entry.progress %>"/>
+    </div>
+    <div class="col-span-1">
+      <a href="#" phx-click="cancel-entry" phx-value-ref="<%= entry.ref %>" phx-target="<%= @self %>">
+        cancel
+      </a>
+    </div>
+  </div>
+<% end %>
+<%= live_file_input @uploads.photo %>

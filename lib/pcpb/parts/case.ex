@@ -1,6 +1,7 @@
   defmodule Pcpb.Parts.Case do
     use Ecto.Schema
     import Ecto.Changeset
+    use Pcpb.Parts.Base
     import Pcpb.Parts.Base
 
     schema "cases" do

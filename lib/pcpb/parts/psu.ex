@@ -1,6 +1,7 @@
 defmodule Pcpb.Parts.PSU do
   use Ecto.Schema
   import Ecto.Changeset
+  use Pcpb.Parts.Base
   import Pcpb.Parts.Base
 
   schema "psus" do

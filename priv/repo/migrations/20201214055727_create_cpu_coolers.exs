@@ -3,7 +3,7 @@ defmodule Pcpb.Repo.Migrations.CreateCpuCoolers do
   import Pcpb.Parts.Base
 
   def change do
-    create table(:cpu_coolers) do
+    create table(:cpu_coolers, primary_key: false) do
       part_base_fields_migration
       add :dimensions, :map
       add :series, :string

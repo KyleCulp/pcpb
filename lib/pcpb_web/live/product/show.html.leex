@@ -1,0 +1,33 @@
+<%= if @live_action in [:new, :edit] do %>
+  <%= live_modal @socket, PcpbWeb.ProductLive.FormComponent,
+    id: @product.id || :new,
+    title: @page_title,
+    action: @live_action,
+    product: @product,
+    return_to: @return_route %>
+<% end %>
+
+<%= if @product != nil do %>
+
+<div class="flex flex-wrap w-full">
+  <!-- Title -->
+  <div class="w-full text-center bg-pcpbblack">
+    <h4 class="text-white align-middle"><%= @product.part.model %></h4>
+  </div>
+  <!-- Images -->
+  <%= Phoenix.View.render(PcpbWeb.ProductsView, "gallery.html", socket: @socket, images: @product.images) %>
+  <!-- Product Specification -->
+  <div class="w-full bg-red-900">
+
+    <span><%= live_patch "Edit", to:  Routes.product_show_path(@socket, :edit, @product), class: "button" %></span>
+    <span><%= live_redirect "Back", to: Routes.product_index_path(@socket, :index, @category) %></span>
+  </div>
+  <div class="flex-1">
+    lol
+  </div>
+</div>
+<%# <%= Phoenix.View.render(PcpbWeb.ProductsView, "#{@product.part_type}.html", socket: @socket, part: @product.part) %>
+<% end %>
+<%= if @product == nil do %>
+404
+<% end %>

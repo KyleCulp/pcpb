@@ -3,7 +3,7 @@ defmodule Pcpb.Repo.Migrations.CreateCases do
   import Pcpb.Parts.Base
 
   def change do
-    create table(:cases) do
+    create table(:cases, primary_key: false) do
       part_base_fields_migration
       add :dimensions, :map
       add :color, :string

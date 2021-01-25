@@ -3,7 +3,7 @@ defmodule Pcpb.Repo.Migrations.CreateGpus do
   import Pcpb.Parts.Base
 
   def change do
-    create table(:gpus) do
+    create table(:gpus, primary_key: false) do
       part_base_fields_migration
       add :series, :string
       add :chipset, :string
@@ -13,7 +13,7 @@ defmodule Pcpb.Repo.Migrations.CreateGpus do
       add :opengl, :string
       add :cuda_cores, :integer
       add :stream_processors, :integer
-      add :base_clock, :decimal
+      add :core_clock, :decimal
       add :boost_clock, :decimal
       add :memory, :string
       add :memory_clock, :string

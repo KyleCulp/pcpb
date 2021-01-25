@@ -1,6 +1,7 @@
 defmodule Pcpb.Parts.Memory do
   use Ecto.Schema
   import Ecto.Changeset
+  use Pcpb.Parts.Base
   import Pcpb.Parts.Base
 
   schema "memorys" do
@@ -27,7 +28,40 @@ defmodule Pcpb.Parts.Memory do
   def changeset(memory, attrs) do
     memory
     |> part_base_fields_changeset(attrs)
-    |> cast(attrs, [:series, :color, :led, :type, :chipset, :module_size, :speed, :speeed_rating, :cas_latency, :voltage, :timing, :heatsink, :ecc, :ecc_rank])
-    |> validate_required([:name, :manufacturer, :model, :launch, :model_number, :series, :color, :led, :type, :chipset, :module_size, :speed, :cas_latency, :voltage, :timing, :heatsink, :ecc])
+    |> cast(attrs, [
+      :series,
+      :color,
+      :led,
+      :type,
+      :chipset,
+      :module_size,
+      :speed,
+      :speeed_rating,
+      :cas_latency,
+      :voltage,
+      :timing,
+      :heatsink,
+      :ecc,
+      :ecc_rank
+    ])
+    |> validate_required([
+      :name,
+      :manufacturer,
+      :model,
+      :launch,
+      :model_number,
+      :series,
+      :color,
+      :led,
+      :type,
+      :chipset,
+      :module_size,
+      :speed,
+      :cas_latency,
+      :voltage,
+      :timing,
+      :heatsink,
+      :ecc
+    ])
   end
 end

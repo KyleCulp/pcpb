@@ -12,17 +12,21 @@
 alias Pcpb.Repo
 alias Pcpb.Users.User
 alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
+import Pcpb.Parts
 
-%User{admin: true}
-|> User.changeset(%{
+
+
+
+Pcpb.Users.create_user(%{
   email: "admin@pcpb.app",
   password: "12345678",
-  password_confirmation: "12345678"
+  password_confirmation: "12345678",
+  admin: true,
+  username: "kryllis"
 })
-|> Repo.insert!()
 
-%CPU{}
-|> CPU.changeset(%{
+create_cpu(%{
+  id: generate_part_id(:cpu),
   name: "Core i9-10850K",
   manufacturer: "Intel",
   model: "Intel Core i9-10850K Comet Lake 10-Core 3.6 GHz",
@@ -54,10 +58,10 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
   stock_cooler: "false",
   tdp: 125
 })
-|> Repo.insert!()
 
-%CPU{}
-|> CPU.changeset(%{
+
+create_cpu(%{
+  id: generate_part_id(:cpu),
   name: "Ryzen 9 5900X",
   manufacturer: "AMD",
   model: "AMD Ryzen 9 5900X 12-Core 3.7 GHz",
@@ -89,10 +93,10 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
   stock_cooler: "false",
   tdp: 125
 })
-|> Repo.insert!()
 
-%Case{}
-|> Case.changeset(%{
+
+create_case(%{
+  id: generate_part_id(:case),
   name: "MasterBox Q300L",
   manufacturer: "Cooler Master",
   model: "Cooler Master MasterBox Q300L MicroATX Mini Tower Case",
@@ -142,10 +146,10 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
   side_window: "Acrylic",
   io: ["2 x USB 3.0", "Audio"]
 })
-|> Repo.insert!()
 
-%Case{}
-|> Case.changeset(%{
+
+create_case(%{
+  id: generate_part_id(:case),
   name: "Corsair other case haha",
   manufacturer: "Corsair",
   model: "Cooler Master MasterBox Q300L MicroATX Mini Tower Case",
@@ -195,7 +199,7 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
   side_window: "Acrylic",
   io: ["2 x USB 3.0", "Audio"]
 })
-|> Repo.insert!()
+
 
 # %Case{}
 # |> Case.changeset(%{
@@ -247,9 +251,9 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
 #   side_window: "",
 #   io: [""]
 # })
-# |> Repo.insert!()
-%CPUCooler{}
-|> CPUCooler.changeset(%{
+#
+create_cpu_cooler(%{
+  id: generate_part_id(:cpu_cooler),
   name: "Corsair H100i RGB PLATINUM",
   manufacturer: "Corsair",
   model: "Corsair H100i RGB PLATINUM 75 CFM Liquid CPU Cooler",
@@ -288,10 +292,10 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
     height: 27
   }
 })
-|> Repo.insert!()
 
-%CPUCooler{}
-|> CPUCooler.changeset(%{
+
+create_cpu_cooler(%{
+  id: generate_part_id(:cpu_cooler),
   name: "Hyper 212 Evo",
   manufacturer: "Cooler Master",
   model: "Cooler Master Hyper 212 Evo CPU Cooler",
@@ -329,10 +333,10 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
     height: 159
   }
 })
-|> Repo.insert!()
 
-%GPU{}
-|> GPU.changeset(%{
+
+create_gpu(%{
+  id: generate_part_id(:gpu),
   name: "Radeon RX 570",
   manufacturer: "AMD",
   model: "MSI Radeon RX 570 DirectX 12 RX 570 ARMOR 8G OC",
@@ -346,7 +350,7 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
   opengl: "OpenGL 4.5",
   cuda_cores: -1,
   stream_processors: 2048,
-  base_clock: 1168,
+  core_clock: 1168,
   boost_clock: 1268,
   memory: "8GB",
   memory_clock: "7000 MHz",
@@ -373,10 +377,10 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
     height: 39
   }
 })
-|> Repo.insert!()
 
-%GPU{}
-|> GPU.changeset(%{
+
+create_gpu(%{
+  id: generate_part_id(:gpu),
   name: "GeForce GTX 1660 SUPER",
   manufacturer: "AMD",
   model: "MSI GeForce GTX 1660 SUPER 6 GB VENTUS XS OC",
@@ -390,7 +394,7 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
   opengl: "OpenGL 4.5",
   cuda_cores: 1408,
   stream_processors: -1,
-  base_clock: 1380,
+  core_clock: 1380,
   boost_clock: 1815,
   memory: "8GB",
   memory_clock: "7000 MHz",
@@ -417,54 +421,10 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
     height: 46
   }
 })
-|> Repo.insert!()
 
-%GPU{}
-|> GPU.changeset(%{
-  name: "Radeon RX 570",
-  manufacturer: "AMD",
-  model: "MSI Radeon RX 570 DirectX 12 RX 570 ARMOR 8G OC",
-  color: "Black / Red",
-  model_number: "RR-212E-20PK-R2",
-  launch: ~D[2017-11-01],
-  series: "AMD Radeon RX 500 Series",
-  chipset: "Radeon™ RX 570",
-  interface: "PCI Express x16",
-  directx: "DirectX 12",
-  opengl: "OpenGL 4.5",
-  cuda_cores: -1,
-  stream_processors: 2048,
-  base_clock: 1168,
-  boost_clock: 1268,
-  memory: "8GB",
-  memory_clock: "7000 MHz",
-  memory_type: "GDDR5",
-  memory_interface: "256-Bit",
-  sli_support: "false",
-  crossfire_support: "2-Way (Bridgeless)",
-  frame_sync: "FreeSync",
-  slot_width: "2",
-  max_resolution: "-1",
-  max_monitors: 5,
-  power_connector: "8-pin",
-  ray_tracing: "false",
-  cooler: "Double Fans",
-  hdcp: "true",
-  backplate: "true",
-  io: ["1 x HDMI", "3 x DisplayPort", "1 x DL-DVI-D"],
-  rgb: "fals",
-  tdp: 150,
-  weight: 0.622,
-  dimensions: %{
-    length: 246.00,
-    width: 130,
-    height: 39
-  }
-})
-|> Repo.insert!()
 
-%Memory{}
-|> Memory.changeset(%{
+create_memory(%{
+  id: generate_part_id(:memory),
   name: "Corsair Vengeance RGB Pro DDR4-3200 CL16",
   manufacturer: "Corsair",
   model: "MSI GeForce GTX 1660 SUPER 6 GB VENTUS XS OC",
@@ -485,34 +445,34 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
   ecc_rank: "",
   led: "Individually Addressable",
 })
-|> Repo.insert!()
 
-%Memory{}
-|> Memory.changeset(%{
-  name: "G.SKILL Trident Z RGB DDR4-3600 CL18",
-  manufacturer: "G.SKILL",
-  model: "MSI GeForce GTX 1660 SUPER 6 GB VENTUS XS OC",
-  model_number: "F4-3600C18D-16GTZRX",
-  launch: ~D[2017-11-01],
-  color: "Black / LED",
-  series: "Trident Z RGB",
-  type: "288-Pin DDR4 SDRAM",
-  chipset: "Intel XMP 2.0",
-  heatsink: "Anodized Aluminum",
-  module_size: "8GB",
-  speed: "3200MHz",
-  speeed_rating: "PC4-28800",
-  cas_latency: "18",
-  timing: "18-22-22-42",
-  voltage: "1.35V",
-  ecc: "false",
-  ecc_rank: "",
-  led: "Individually Addressable",
-})
-|> Repo.insert!()
 
-%PSU{}
-|> PSU.changeset(%{
+# create_memory(%{
+#   id: generate_part_id(:memory),
+#   name: "G.SKILL Trident Z RGB DDR4-3600 CL18",
+#   manufacturer: "G.SKILL",
+#   model: "MSI GeForce GTX 1660 SUPER 6 GB VENTUS XS OC",
+#   model_number: "F4-3600C18D-16GTZRX",
+#   launch: ~D[2017-11-01],
+#   color: "Black / LED",
+#   series: "Trident Z RGB",
+#   type: "288-Pin DDR4 SDRAM",
+#   chipset: "Intel XMP 2.0",
+#   heatsink: "Anodized Aluminum",
+#   module_size: "8GB",
+#   speed: "3200MHz",
+#   speeed_rating: "PC4-28800",
+#   cas_latency: "18",
+#   timing: "18-22-22-42",
+#   voltage: "1.35V",
+#   ecc: "false",
+#   ecc_rank: "",
+#   led: "Individually Addressable",
+# })
+
+
+create_psu(%{
+  id: generate_part_id(:psu),
   name: "Ion+ 660P 80 PLUS Platinum Certified 660W Full Modular Compact ATX",
   manufacturer: "Fractal Design",
   model: "Fractal Design Ion+ 660P 80 PLUS Platinum Certified 660W Full Modular Compact ATX ",
@@ -547,10 +507,9 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
     height: 86
   }
 })
-|> Repo.insert!()
 
-%PSU{}
-|> PSU.changeset(%{
+create_psu(%{
+  id: generate_part_id(:psu),
   name: "Revolution D.F. 750W",
   manufacturer: "ENERMAX",
   model: "Revolution D.F. 750W 80 Plus Gold Full Modular Multi Rail",
@@ -583,4 +542,63 @@ alias Pcpb.Parts.{CPU, Case, CPUCooler, GPU, Memory, PSU}
     height: 86
   }
 })
-|> Repo.insert!()
+
+
+alias Pcpb.App
+
+defmodule Pcpb.Seeds do
+
+
+  def insert do
+    memory_id = generate_part_id(:memory)
+    create_memory(%{
+      id: memory_id,
+      name: "Trident Z RGB",
+      manufacturer: "G.SKILL",
+      model: "G.SKILL Trident Z RGB DDR4-3600 CL1",
+      model_number: "F4-3600C18D-16GTZRX",
+      launch: ~D[2017-11-01],
+      color: "Black / LED",
+      series: "Trident Z RGB",
+      type: "288-Pin DDR4 SDRAM",
+      chipset: "Intel XMP 2.0",
+      heatsink: "Anodized Aluminum",
+      module_size: "8GB",
+      speed: "3200MHz",
+      speeed_rating: "PC4-28800",
+      cas_latency: "18",
+      timing: "18-22-22-42",
+      voltage: "1.35V",
+      ecc: "false",
+      ecc_rank: "",
+      led: "Individually Addressable",
+    })
+    for x <- 0..50 do
+      Pcpb.App.create_product(%{
+        name: "#{x} gskill test",
+        part_type: :memory,
+        part_id: memory_id
+      })
+    end
+
+    # Enum.each(0..50, fn x ->
+    #   # IO.inspect(x)
+    #   Pcpb.App.create_product(%{
+    #     name: "#{x} gskill test",
+    #     part_type: :memory,
+    #     part: memory_id
+    #   })
+    # end)
+    # Enum.each(0..50, fn x ->
+    #   IO.inspect(x <> "gskill test")
+    # #  Pcpb.App.create_product(%{
+    # #     id: Pcpb.App.generate_product_id,
+    # #     name: x <> "gskill test",
+    # #     part_type: :memory,
+    # #     part: memory_id
+    # #   })
+    # end)
+  end
+end
+
+Pcpb.Seeds.insert()

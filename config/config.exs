@@ -35,6 +35,25 @@ config :pcpb, :pow,
   mailer_backend: Pcpb.PowMailer,
   cache_store_backend: Pow.Store.Backend.MnesiaCache
 
+config :nanoid,
+  size: 8,
+  alphabet: "0123456789abcdefghijklmnopqrstuvwxyz"
+
+config :ex_aws,
+  access_key_id: "miniokey",
+  secret_access_key: "miniokey",
+  # region: "us-west-2",
+  json_codec: Jason,
+  debug_requests: true
+
+config :ex_aws, :s3,
+  scheme: "http://",
+  host: "localhost",
+  port: 9000
+
+config :pcpb,
+  url: "http://localhost:9000/"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

@@ -50,4 +50,29 @@ have product listings merge/overwrite the part on that page when viewing that sp
 individually sleeved black plastic coating https://images-na.ssl-images-amazon.com/images/I/51Mpxeo3RdL._AC_SL1001_.jpg
 
 sleeved binded black plastic coating  https://c1.neweggimages.com/ProductImageCompressAll1280/A4M5_1_20200116596852916.jpg
+might need to go back to cases and see if i have usb 3/2 headers from io to compare against mobo... i wonder if thisll be an issue with 99% of cases having at most one usb 3&usb2 header, while mobos have 3
+some motherboards support dual sli & triple crossfire...
+
+how will i query results from existing parts on the list to show valid parts only? I feel like piping query conditions with each specification / parts unique validation function could work, something like
+
+```
+def valid_cpus(list)
+query
+|>
+```
+
+figure out easy way to support ```2 x PCIe 3.0 x16 slots (support x16, x8/x8 modes)```
+have list of enums for the different pcie arrangements, handle all of them in the check mobo module
+
+product page = a page with images, links to retailers, maybe price analytics, and the part id of the core part of the product. I say this because the white case will be different than the default black case perhaps, there will be some inconsistencies but this overwrite default part specs seems to be the best solution to keep up with many different product variations of a part. Perhaps with gpu's, I could overwrite core nvidia/amd specs with the small shit other companies do?
+
+Have a product page, it calls for a function to get that product from its id and preload the part referenced? But it'll have to be searched, not the easy ecto way.
+
+user system with allowed parts to add / edit. sort it at parts.ex?
+
+image select that merges @product.images and @uploads.photos.entries into one form, where you can drag the images around, and select one main one to display in larger size
+
+products
+  make manufacturers table, reference to different parts, have company logos saved
+  products index shows most popular manufacturers w/ logo, then list of all different type of products
 

@@ -14,6 +14,7 @@ defmodule PcpbWeb.SessionController do
       {:ok, conn} ->
         conn
         |> put_flash(:info, "Welcome back!")
+        |> admin_redirect()
         |> redirect(to: Routes.page_path(conn, :index))
 
       {:error, conn} ->
@@ -29,5 +30,15 @@ defmodule PcpbWeb.SessionController do
     conn
     |> Pow.Plug.delete()
     |> redirect(to: Routes.page_path(conn, :index))
+  end
+
+  defp admin_redirect(conn) do
+    user = Pow.Plug.current_user(conn)
+    if user.admin do
+      IO.inspect("barz")
+    else
+      IO.inspect("Not barz")
+    end
+    conn
   end
 end

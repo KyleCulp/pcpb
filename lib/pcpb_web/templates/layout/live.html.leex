@@ -1,11 +1,62 @@
-<main role="main" class="container">
-  <p class="alert alert-info" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+<script>
+  const setup = () => {
+    return {
+      loading: true,
+      isSidebarOpen: false,
+      toggleSidbarMenu() {
+        console.log('xd')
+        this.isSidebarOpen = !this.isSidebarOpen
+      },
+      isSettingsPanelOpen: false,
+      isSearchBoxOpen: false,
+    }
+  }
+</script>
+<div class="flex h-full max-h-full min-w-full overflow-hidden"  x-data="setup()">
+  <%= render "sidebar.html", socket: @socket %>
+  <div class="flex-grow max-h-screen text-gray-900 bg-white" :class="{'': !isSidebarOpen}">
+    <div class="flex items-center h-16 text-center align-middle">
+      <button @click="toggleSidbarMenu()" class="p-2 rounded-md focus:outline-none sm:hidden" :class="{'hidden': isSidebarOpen}">
+        <svg
+          class="w-4 h-4 text-gray-600"
+          :class="{'hidden': isSidebarOpen}"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+        </svg>
+      </button>
+      <%= live_patch "System Builder", to: Routes.product_index_path(@socket, :index), class: nav_classes() %>
+      <%= live_patch "Products", to: Routes.product_index_path(@socket, :index), class: nav_classes() %>
+      <ul class="hidden">
+        <%= for product <- PcpbWeb.LayoutView.products_map do %>
+          <li>
+            <%= live_patch product.name, to: Routes.product_index_path(@socket, :index, product.atom), class: nav_classes() %>
+          </li>
+        <% end %>
+      </ul>
+      <div class="flex-1"></div>
+      <%= if @user do %>
+        <a class="<%= nav_classes() %>"><%= @user.username %></a>
+      <% else %>
+        <%= live_patch "Login", to: Routes.login_path(@socket, :new), class: nav_classes() %>
+        <%= live_patch "Register", to: Routes.signup_path(@socket, :new), class: nav_classes() %>
+      <% end %>
+    </div>
+    <hr class="p-0 m-0"/>
 
-  <p class="alert alert-danger" role="alert"
-    phx-click="lv:clear-flash"
-    phx-value-key="error"><%= live_flash(@flash, :error) %></p>
-
-  <%= @inner_content %>
-</main>
+    <main role="main" class="h-full overflow-y-auto bg-gray-100">
+      <p class="alert alert-info" role="alert"
+            phx-click="lv:clear-flash"
+            phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+      <p class="alert alert-danger" role="alert"
+            phx-click="lv:clear-flash"
+            phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+      <div class="overflow-y-auto">
+        <%= @inner_content %>
+      </div>
+    </main>
+  </div>
+</div>

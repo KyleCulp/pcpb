@@ -6,6 +6,52 @@ defmodule Pcpb.Parts do
   import Ecto.Query, warn: false
   alias Pcpb.Repo
 
+  @parts_list ["cpus", "cpu_coolers", "cases", "memorys", "gpus", "psus"]
+  alias Pcpb.Parts.Media
+
+  # refactor this to not be so meh
+  def generate_part_id do
+    id = Nanoid.generate()
+    duplicate = false
+
+    for option <- @parts_list do
+      query = Ecto.Query.from(a in "#{option}", where: a.id == ^id)
+
+      if !Repo.exists?(query) do
+        duplicate = true
+      end
+    end
+
+    cond do
+      duplicate -> generate_part_id()
+      !duplicate -> id
+    end
+  end
+
+  alias Pcpb.Parts.{CPU, CPUCooler, Case, GPU, Memory, PSU}
+
+  def generate_part_id(part_type) do
+
+    # this code is from before I made the part alias system... so it's bad,  but still works.
+
+    id = Nanoid.generate(8)
+    duplicate = false
+
+    # for option <- @parts_list do
+    #   query = Ecto.Query.from(a in "#{option}", where: a.id == ^id)
+
+    #   if Repo.exists?(query) do
+    #     duplicate = true
+    #   end
+    # end
+
+    cond do
+      duplicate -> generate_part_id(part_type)
+      !duplicate -> id
+    end
+  end
+
+
   alias Pcpb.Parts.CPU
 
   @doc """
@@ -44,6 +90,7 @@ defmodule Pcpb.Parts do
   """
   def get_cpu!(id), do: Repo.get!(CPU, id)
 
+
   @doc """
   Creates a cpu.
 
@@ -57,6 +104,8 @@ defmodule Pcpb.Parts do
 
   """
   def create_cpu(attrs \\ %{}) do
+    create_part(%{id: attrs.id, part_type: :cpu})
+
     %CPU{}
     |> CPU.changeset(attrs)
     |> Repo.insert()
@@ -111,13 +160,13 @@ defmodule Pcpb.Parts do
 
   alias Pcpb.Parts.Case
 
-
-
   # TODO: Refactor this so that you actually understand it, because days later it's still magic
   def autocomplete_lists(table, columns) do
-    select_list = Enum.map(columns, fn k ->
-      String.to_existing_atom(k)
-    end)
+    select_list =
+      Enum.map(columns, fn k ->
+        String.to_existing_atom(k)
+      end)
+
     query = from p in table, select: map(p, ^select_list)
 
     query
@@ -131,7 +180,7 @@ defmodule Pcpb.Parts do
     end)
   end
 
-  #first implementation of autocomplete, had to learn ecto stuff to do above.
+  # first implementation of autocomplete, had to learn ecto stuff to do above.
   # def simple_autocomplete_lists(table, columns) do
   #   columns_data = []
 
@@ -218,6 +267,8 @@ defmodule Pcpb.Parts do
 
   """
   def create_case(attrs \\ %{}) do
+    create_part(%{id: attrs.id, part_type: :case})
+
     %Case{}
     |> Case.changeset(attrs)
     |> Repo.insert()
@@ -314,6 +365,8 @@ defmodule Pcpb.Parts do
 
   """
   def create_cpu_cooler(attrs \\ %{}) do
+    create_part(%{id: attrs.id, part_type: :cpu_cooler})
+
     %CPUCooler{}
     |> CPUCooler.changeset(attrs)
     |> Repo.insert()
@@ -410,9 +463,12 @@ defmodule Pcpb.Parts do
 
   """
   def create_gpu(attrs \\ %{}) do
+    create_part(%{id: attrs.id, part_type: :gpu})
+
     %GPU{}
     |> GPU.changeset(attrs)
     |> Repo.insert()
+
   end
 
   @doc """
@@ -506,6 +562,8 @@ defmodule Pcpb.Parts do
 
   """
   def create_memory(attrs \\ %{}) do
+    create_part(%{id: attrs.id, part_type: :memory})
+
     %Memory{}
     |> Memory.changeset(attrs)
     |> Repo.insert()
@@ -602,6 +660,8 @@ defmodule Pcpb.Parts do
 
   """
   def create_psu(attrs \\ %{}) do
+    create_part(%{id: attrs.id, part_type: :psu})
+
     %PSU{}
     |> PSU.changeset(attrs)
     |> Repo.insert()
@@ -652,5 +712,206 @@ defmodule Pcpb.Parts do
   """
   def change_psu(%PSU{} = psu, attrs \\ %{}) do
     PSU.changeset(psu, attrs)
+  end
+
+  alias Pcpb.Parts.Part
+
+  @doc """
+  Returns the list of parts.
+
+  ## Examples
+
+      iex> list_parts()
+      [%Part{}, ...]
+
+  """
+  def list_parts do
+    Repo.all(Part)
+  end
+
+  def list_part_ids do
+    Repo.all(from p in Part, select: p.id)
+  end
+
+  def list_part_ids(part_type) do
+    Repo.all(from p in Part, where: p.part_type == ^part_type, select: p.id)
+  end
+
+
+  @doc """
+  Gets a single part.
+
+  Raises `Ecto.NoResultsError` if the Part does not exist.
+
+  ## Examples
+
+      iex> get_part!(123)
+      %Part{}
+
+      iex> get_part!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_part!(id), do: Repo.get!(Part, id)
+
+  @doc """
+  Creates a part.
+
+  ## Examples
+
+      iex> create_part(%{field: value})
+      {:ok, %Part{}}
+
+      iex> create_part(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_part(attrs \\ %{}) do
+    %Part{}
+    |> Part.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a part.
+
+  ## Examples
+
+      iex> update_part(part, %{field: new_value})
+      {:ok, %Part{}}
+
+      iex> update_part(part, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_part(%Part{} = part, attrs) do
+    part
+    |> Part.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a part.
+
+  ## Examples
+
+      iex> delete_part(part)
+      {:ok, %Part{}}
+
+      iex> delete_part(part)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_part(%Part{} = part) do
+    Repo.delete(part)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking part changes.
+
+  ## Examples
+
+      iex> change_part(part)
+      %Ecto.Changeset{data: %Part{}}
+
+  """
+  def change_part(%Part{} = part, attrs \\ %{}) do
+    Part.changeset(part, attrs)
+  end
+
+  alias Pcpb.Parts.Metadata
+
+  @doc """
+  Returns the list of metadatas.
+
+  ## Examples
+
+      iex> list_metadatas()
+      [%Metadata{}, ...]
+
+  """
+  def list_metadatas do
+    Repo.all(Metadata)
+  end
+
+  @doc """
+  Gets a single metadata.
+
+  Raises `Ecto.NoResultsError` if the Metadata does not exist.
+
+  ## Examples
+
+      iex> get_metadata!(123)
+      %Metadata{}
+
+      iex> get_metadata!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_metadata!(id), do: Repo.get!(Metadata, id)
+
+  @doc """
+  Creates a metadata.
+
+  ## Examples
+
+      iex> create_metadata(%{field: value})
+      {:ok, %Metadata{}}
+
+      iex> create_metadata(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_metadata(attrs \\ %{}) do
+    %Metadata{}
+    |> Metadata.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a metadata.
+
+  ## Examples
+
+      iex> update_metadata(metadata, %{field: new_value})
+      {:ok, %Metadata{}}
+
+      iex> update_metadata(metadata, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_metadata(%Metadata{} = metadata, attrs) do
+    metadata
+    |> Metadata.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a metadata.
+
+  ## Examples
+
+      iex> delete_metadata(metadata)
+      {:ok, %Metadata{}}
+
+      iex> delete_metadata(metadata)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_metadata(%Metadata{} = metadata) do
+    Repo.delete(metadata)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking metadata changes.
+
+  ## Examples
+
+      iex> change_metadata(metadata)
+      %Ecto.Changeset{data: %Metadata{}}
+
+  """
+  def change_metadata(%Metadata{} = metadata, attrs \\ %{}) do
+    Metadata.changeset(metadata, attrs)
   end
 end

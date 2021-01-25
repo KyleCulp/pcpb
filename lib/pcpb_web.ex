@@ -52,10 +52,11 @@ defmodule PcpbWeb do
     end
   end
 
+  # this was a bad idea honestly, will be removed soon
   def live_admin_view do
     quote do
       use Phoenix.LiveView,
-        layout: {PcpbWeb.AdminView, "live.html"}
+        layout: {PcpbWeb.OldAdminView, "live.html"}
 
       unquote(view_helpers())
     end

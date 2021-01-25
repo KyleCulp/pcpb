@@ -1,0 +1,109 @@
+<style></style>
+<script></script>
+<nav class="relative text-gray-900 bg-white border-gray-300"  x-data="{ open: false }">
+  <div class="container flex justify-around mx-auto">
+    <div class="relative block p-4 text-xl font-bold text-blue-600 lg:p-6">PCPartBuilder</div>
+    <ul class="flex">
+      <!--Regular Link-->
+      <li class="hover:bg-blue-800 hover:text-white">
+        <a href="#" class="relative block px-2 py-6 text-sm font-bold lg:p-6 lg:text-base">Normal</a>
+      </li>
+      <li class="hover:bg-blue-800 hover:text-white"
+        @click="open = !open"
+        @click.away="open = false"
+      >
+        <a class="relative block px-2 py-6 text-sm font-bold lg:p-6 lg:text-base"
+
+        >Products</a>
+      </li>
+      <!--Hoverable Link-->
+      <%= if @user do %>
+      <li class="">
+        <a class="relative block px-4 py-6 text-sm font-bold lg:p-6 lg:text-base hover:bg-blue-800 hover:text-white"><%= @user.email %></a>
+      </li>
+      <% else %>
+      <%= live_patch "Login", to: Routes.login_path(@socket, :new), class: "relative block px-4 py-6 text-sm font-bold lg:p-6 lg:text-base hover:bg-blue-800 hover:text-white" %>
+      <%= live_patch "Register", to: Routes.signup_path(@socket, :new), class: "relative block px-4 py-6 text-sm font-bold lg:p-6 lg:text-base hover:bg-blue-800 hover:text-white" %>
+      </li>
+      <% end %>
+
+    </ul>
+  </div>
+  <div x-ref="dropdown" x-show="open" class="container p-2 mx-auto mb-16 text-center bg-blue-800 shadow-xl dropdown-menu sm:mb-0">
+    <div class="container flex flex-wrap justify-between">
+      <ul class="px-4 pt-6 pb-6 border-b border-gray-600 sm:w-1/2 lg:w-1/2 sm:border-r lg:border-b-0 lg:pt-3">
+        <h3 class="mb-2 text-xl font-bold text-white text-bold">Heading 1</h3>
+        <%= for product <- PcpbWeb.LayoutView.products_map do %>
+          <li>
+          <%= live_patch product.name , to: Routes.product_index_path(@socket, :index, product.atom), class: "block p-3 text-gray-300 hover:bg-blue-600 hover:text-white" %>
+          </li>
+        <% end %>
+      </ul>
+      <ul class="w-full px-4 pt-6 pb-6 border-b border-gray-600 sm:w-1/2 lg:w-1/2 sm:border-r-0 lg:border-r lg:border-b-0 lg:pt-3">
+        <h3 class="mb-2 text-xl font-bold text-white text-bold">Heading 2</h3>
+        <li>
+          <a href="#" class="block p-3 text-gray-300 hover:bg-blue-600 hover:text-white">Category One Sublink</a>
+        </li>
+        <li>
+          <a href="#" class="block p-3 text-gray-300 hover:bg-blue-600 hover:text-white">Category One Sublink</a>
+        </li>
+        <li>
+          <a href="#" class="block p-3 text-gray-300 hover:bg-blue-600 hover:text-white">Category One Sublink</a>
+        </li>
+        <li>
+          <a href="#" class="block p-3 text-gray-300 hover:bg-blue-600 hover:text-white">Category One Sublink</a>
+        </li>
+        <li>
+          <a href="#" class="block p-3 text-gray-300 hover:bg-blue-600 hover:text-white">Category One Sublink</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<main role="main" class="container mx-auto">
+  <p class="alert alert-info" role="alert"
+    phx-click="lv:clear-flash"
+    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+  <p class="alert alert-danger" role="alert"
+    phx-click="lv:clear-flash"
+    phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+  <%= @inner_content %>
+</main>
+
+
+
+
+ <nav class="relative text-gray-900 bg-white border-gray-300"  x-data="{ open: false }">
+        <div class="container flex mx-auto">
+          <div class="flex-1">
+            <%= live_patch "PCPartBuilder", to: Routes.page_path(@socket, :index), class: "flex-1" %>
+            <%= live_patch "System Builder", to: Routes.product_index_path(@socket, :index), class: "" %>
+            <%= live_patch "Products", to: Routes.product_index_path(@socket, :index), class: "" %>
+            <ul class="hidden">
+              <%= for product <- PcpbWeb.LayoutView.products_map do %>
+                <li>
+                  <%= live_patch product.name, to: Routes.product_index_path(@socket, :index, product.atom), class: "" %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+          <div class="">
+            <%= if @user do %>
+              <a class=""><%= @user.username %></a>
+            <% else %>
+              <%= live_patch "Login", to: Routes.login_path(@socket, :new), class: "" %>
+              <%= live_patch "Register", to: Routes.signup_path(@socket, :new), class: "" %>
+            </li>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+    <main role="main" class="container mx-auto">
+      <p class="alert alert-info" role="alert"
+    phx-click="lv:clear-flash"
+    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+      <p class="alert alert-danger" role="alert"
+    phx-click="lv:clear-flash"
+    phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+      <%= @inner_content %>
+    </main>

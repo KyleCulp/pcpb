@@ -3,7 +3,7 @@ defmodule Pcpb.Repo.Migrations.CreatePsus do
   import Pcpb.Parts.Base
 
   def change do
-    create table(:psus) do
+    create table(:psus, primary_key: false) do
       part_base_fields_migration
 
       add :dimensions, :map

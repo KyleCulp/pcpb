@@ -3,7 +3,7 @@ defmodule Pcpb.Repo.Migrations.CreateCpus do
   import Pcpb.Parts.Base
 
   def change do
-    create table(:cpus) do
+    create table(:cpus, primary_key: false) do
       part_base_fields_migration
       add :family, :string
       add :series, :string

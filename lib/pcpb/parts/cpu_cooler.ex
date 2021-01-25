@@ -1,6 +1,7 @@
 defmodule Pcpb.Parts.CPUCooler do
   use Ecto.Schema
   import Ecto.Changeset
+  use Pcpb.Parts.Base
   import Pcpb.Parts.Base
   alias Parts
 

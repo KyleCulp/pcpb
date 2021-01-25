@@ -37,7 +37,7 @@ defmodule Pcpb.MixProject do
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 0.14.8"},
+      {:phoenix_live_view, "~> 0.15.3"},
       {:floki, ">= 0.0.0", only: :test},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
@@ -46,7 +46,16 @@ defmodule Pcpb.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:pow, "~> 1.0"},
-      {:bamboo, "~> 1.5"}
+      {:bamboo, "~> 1.5"},
+      {:nanoid, "~> 2.0.4"},
+      # AWS dependencies
+      {:ex_aws, "~> 2.0"},
+      {:ex_aws_s3, "~> 2.0"},
+      {:hackney, "~> 1.9"},
+      {:sweet_xml, "~> 0.6.6"},
+      # End AWS dependencies
+      {:thumbnex, "~> 0.3.3"}
+
     ]
   end
 
@@ -61,7 +70,8 @@ defmodule Pcpb.MixProject do
       setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      "seed": ["ecto.drop", "ecto.setup"]
     ]
   end
 end

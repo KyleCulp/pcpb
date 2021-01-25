@@ -2,9 +2,23 @@ version: "3"
 services:
   postgres:
     image: postgres
+    container_name: postgres
     restart: always
     ports:
       - "5434:5432"
     environment:
       POSTGRES_PASSWORD: postgrespassword
       DATABASE: pcpb_dev
+  minio:
+    image: minio/minio
+    container_name: minio
+    ports:
+      - '9000:9000'
+    environment:
+        - MINIO_ACCESS_KEY=miniokey
+        - MINIO_SECRET_KEY=miniokey
+    volumes:
+      - minio:/data
+    command: server --address 0.0.0.0:9000 /data
+volumes:
+  minio:

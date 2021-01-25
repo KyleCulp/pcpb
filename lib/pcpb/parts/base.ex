@@ -6,6 +6,8 @@ defmodule Pcpb.Parts.Base do
   defmacro __using__(_) do
     quote do
       import Ecto.Schema, only: [schema: 2, embedded_schema: 1]
+      @primary_key {:id, :string, autogenerate: false}
+      @derive {Phoenix.Param, key: :id}
     end
   end
 
@@ -32,29 +34,33 @@ defmodule Pcpb.Parts.Base do
   defmacro dimensions_map do
     quote do
       embeds_one :dimensions, DimensionsMap do
-          field :length, :decimal
-          field :width, :decimal
-          field :height, :decimal
-        end
+        field :length, :decimal
+        field :width, :decimal
+        field :height, :decimal
+      end
     end
   end
 
   def part_base_fields_changeset(changeset, params) do
     changeset
     |> cast(params, [
+      :id,
       :name,
       :manufacturer,
       :model,
       :model_number,
-      :launch,
+      :launch
     ])
     |> validate_required([
       :name,
       :manufacturer,
       :model,
       :model_number,
-      :launch,
-      ])
+      :launch
+    ])
+
+    # |> Map.merge(%{id: generate_product_id})
+
     # |> cast_embed(:dimensions, with: &dimensions_map_changeset/2)
   end
 
@@ -70,12 +76,12 @@ defmodule Pcpb.Parts.Base do
 
   defmacro part_base_fields_migration do
     quote do
-      add :name, :string
-      add :manufacturer, :string
-      add :model, :string
-      add :model_number, :string
-      add :launch, :date
+      add(:id, :string, primary_key: true)
+      add(:name, :string)
+      add(:manufacturer, :string)
+      add(:model, :string)
+      add(:model_number, :string)
+      add(:launch, :date)
     end
-
   end
 end

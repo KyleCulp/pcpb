@@ -640,9 +640,9 @@ defmodule Pcpb.PartsTest do
   describe "gpus" do
     alias Pcpb.Parts.GPU
 
-    @valid_attrs %{name: "some name", memory_type: "some memory_type", dimensions: %{}, backplate: "some backplate", interface: "some interface", release: ~D[2010-04-17], opengl: "some opengl", model_number: "some model_number", hdcp: "some hdcp", cooler: "some cooler", power_connector: "some power_connector", crossfire_support: "some crossfire_support", series: "some series", chipset: "some chipset", max_resolution: "some max_resolution", rgb: "some rgb", slot_width: "some slot_width", model: "some model", stream_processors: 42, directx: "some directx", io: %{}, max_monitors: "some max_monitors", memory: "some memory", frame_sync: "some frame_sync", base_clock: "120.5", ray_tracing: "some ray_tracing", GPU: "some GPU", memory_clock: "some memory_clock", virtuallink: "some virtuallink", boost_clock: "120.5", sli_support: "some sli_support", cuda_cores: 42, memory_interface: "some memory_interface", manufacturer: "some manufacturer"}
-    @update_attrs %{name: "some updated name", memory_type: "some updated memory_type", dimensions: %{}, backplate: "some updated backplate", interface: "some updated interface", release: ~D[2011-05-18], opengl: "some updated opengl", model_number: "some updated model_number", hdcp: "some updated hdcp", cooler: "some updated cooler", power_connector: "some updated power_connector", crossfire_support: "some updated crossfire_support", series: "some updated series", chipset: "some updated chipset", max_resolution: "some updated max_resolution", rgb: "some updated rgb", slot_width: "some updated slot_width", model: "some updated model", stream_processors: 43, directx: "some updated directx", io: %{}, max_monitors: "some updated max_monitors", memory: "some updated memory", frame_sync: "some updated frame_sync", base_clock: "456.7", ray_tracing: "some updated ray_tracing", GPU: "some updated GPU", memory_clock: "some updated memory_clock", virtuallink: "some updated virtuallink", boost_clock: "456.7", sli_support: "some updated sli_support", cuda_cores: 43, memory_interface: "some updated memory_interface", manufacturer: "some updated manufacturer"}
-    @invalid_attrs %{name: nil, memory_type: nil, dimensions: nil, backplate: nil, interface: nil, release: nil, opengl: nil, model_number: nil, hdcp: nil, cooler: nil, power_connector: nil, crossfire_support: nil, series: nil, chipset: nil, max_resolution: nil, rgb: nil, slot_width: nil, model: nil, stream_processors: nil, directx: nil, io: nil, max_monitors: nil, memory: nil, frame_sync: nil, base_clock: nil, ray_tracing: nil, GPU: nil, memory_clock: nil, virtuallink: nil, boost_clock: nil, sli_support: nil, cuda_cores: nil, memory_interface: nil, manufacturer: nil}
+    @valid_attrs %{name: "some name", memory_type: "some memory_type", dimensions: %{}, backplate: "some backplate", interface: "some interface", release: ~D[2010-04-17], opengl: "some opengl", model_number: "some model_number", hdcp: "some hdcp", cooler: "some cooler", power_connector: "some power_connector", crossfire_support: "some crossfire_support", series: "some series", chipset: "some chipset", max_resolution: "some max_resolution", rgb: "some rgb", slot_width: "some slot_width", model: "some model", stream_processors: 42, directx: "some directx", io: %{}, max_monitors: "some max_monitors", memory: "some memory", frame_sync: "some frame_sync", core_clock: "120.5", ray_tracing: "some ray_tracing", GPU: "some GPU", memory_clock: "some memory_clock", virtuallink: "some virtuallink", boost_clock: "120.5", sli_support: "some sli_support", cuda_cores: 42, memory_interface: "some memory_interface", manufacturer: "some manufacturer"}
+    @update_attrs %{name: "some updated name", memory_type: "some updated memory_type", dimensions: %{}, backplate: "some updated backplate", interface: "some updated interface", release: ~D[2011-05-18], opengl: "some updated opengl", model_number: "some updated model_number", hdcp: "some updated hdcp", cooler: "some updated cooler", power_connector: "some updated power_connector", crossfire_support: "some updated crossfire_support", series: "some updated series", chipset: "some updated chipset", max_resolution: "some updated max_resolution", rgb: "some updated rgb", slot_width: "some updated slot_width", model: "some updated model", stream_processors: 43, directx: "some updated directx", io: %{}, max_monitors: "some updated max_monitors", memory: "some updated memory", frame_sync: "some updated frame_sync", core_clock: "456.7", ray_tracing: "some updated ray_tracing", GPU: "some updated GPU", memory_clock: "some updated memory_clock", virtuallink: "some updated virtuallink", boost_clock: "456.7", sli_support: "some updated sli_support", cuda_cores: 43, memory_interface: "some updated memory_interface", manufacturer: "some updated manufacturer"}
+    @invalid_attrs %{name: nil, memory_type: nil, dimensions: nil, backplate: nil, interface: nil, release: nil, opengl: nil, model_number: nil, hdcp: nil, cooler: nil, power_connector: nil, crossfire_support: nil, series: nil, chipset: nil, max_resolution: nil, rgb: nil, slot_width: nil, model: nil, stream_processors: nil, directx: nil, io: nil, max_monitors: nil, memory: nil, frame_sync: nil, core_clock: nil, ray_tracing: nil, GPU: nil, memory_clock: nil, virtuallink: nil, boost_clock: nil, sli_support: nil, cuda_cores: nil, memory_interface: nil, manufacturer: nil}
 
     def gpu_fixture(attrs \\ %{}) do
       {:ok, gpu} =
@@ -674,7 +674,7 @@ defmodule Pcpb.PartsTest do
       assert gpu.memory_clock == "some memory_clock"
       assert gpu.GPU == "some GPU"
       assert gpu.ray_tracing == "some ray_tracing"
-      assert gpu.base_clock == Decimal.new("120.5")
+      assert gpu.core_clock == Decimal.new("120.5")
       assert gpu.frame_sync == "some frame_sync"
       assert gpu.memory == "some memory"
       assert gpu.max_monitors == "some max_monitors"
@@ -717,7 +717,7 @@ defmodule Pcpb.PartsTest do
       assert gpu.memory_clock == "some updated memory_clock"
       assert gpu.GPU == "some updated GPU"
       assert gpu.ray_tracing == "some updated ray_tracing"
-      assert gpu.base_clock == Decimal.new("456.7")
+      assert gpu.core_clock == Decimal.new("456.7")
       assert gpu.frame_sync == "some updated frame_sync"
       assert gpu.memory == "some updated memory"
       assert gpu.max_monitors == "some updated max_monitors"
@@ -955,6 +955,126 @@ defmodule Pcpb.PartsTest do
     test "change_psu/1 returns a psu changeset" do
       psu = psu_fixture()
       assert %Ecto.Changeset{} = Parts.change_psu(psu)
+    end
+  end
+
+  describe "parts" do
+    alias Pcpb.Parts.Part
+
+    @valid_attrs %{part_id: "some part_id", part_type: "some part_type"}
+    @update_attrs %{part_id: "some updated part_id", part_type: "some updated part_type"}
+    @invalid_attrs %{part_id: nil, part_type: nil}
+
+    def part_fixture(attrs \\ %{}) do
+      {:ok, part} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Parts.create_part()
+
+      part
+    end
+
+    test "list_parts/0 returns all parts" do
+      part = part_fixture()
+      assert Parts.list_parts() == [part]
+    end
+
+    test "get_part!/1 returns the part with given id" do
+      part = part_fixture()
+      assert Parts.get_part!(part.id) == part
+    end
+
+    test "create_part/1 with valid data creates a part" do
+      assert {:ok, %Part{} = part} = Parts.create_part(@valid_attrs)
+      assert part.part_id == "some part_id"
+      assert part.part_type == "some part_type"
+    end
+
+    test "create_part/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Parts.create_part(@invalid_attrs)
+    end
+
+    test "update_part/2 with valid data updates the part" do
+      part = part_fixture()
+      assert {:ok, %Part{} = part} = Parts.update_part(part, @update_attrs)
+      assert part.part_id == "some updated part_id"
+      assert part.part_type == "some updated part_type"
+    end
+
+    test "update_part/2 with invalid data returns error changeset" do
+      part = part_fixture()
+      assert {:error, %Ecto.Changeset{}} = Parts.update_part(part, @invalid_attrs)
+      assert part == Parts.get_part!(part.id)
+    end
+
+    test "delete_part/1 deletes the part" do
+      part = part_fixture()
+      assert {:ok, %Part{}} = Parts.delete_part(part)
+      assert_raise Ecto.NoResultsError, fn -> Parts.get_part!(part.id) end
+    end
+
+    test "change_part/1 returns a part changeset" do
+      part = part_fixture()
+      assert %Ecto.Changeset{} = Parts.change_part(part)
+    end
+  end
+
+  describe "metadatas" do
+    alias Pcpb.Parts.Metadata
+
+    @valid_attrs %{edits: []}
+    @update_attrs %{edits: []}
+    @invalid_attrs %{edits: nil}
+
+    def metadata_fixture(attrs \\ %{}) do
+      {:ok, metadata} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Parts.create_metadata()
+
+      metadata
+    end
+
+    test "list_metadatas/0 returns all metadatas" do
+      metadata = metadata_fixture()
+      assert Parts.list_metadatas() == [metadata]
+    end
+
+    test "get_metadata!/1 returns the metadata with given id" do
+      metadata = metadata_fixture()
+      assert Parts.get_metadata!(metadata.id) == metadata
+    end
+
+    test "create_metadata/1 with valid data creates a metadata" do
+      assert {:ok, %Metadata{} = metadata} = Parts.create_metadata(@valid_attrs)
+      assert metadata.edits == []
+    end
+
+    test "create_metadata/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Parts.create_metadata(@invalid_attrs)
+    end
+
+    test "update_metadata/2 with valid data updates the metadata" do
+      metadata = metadata_fixture()
+      assert {:ok, %Metadata{} = metadata} = Parts.update_metadata(metadata, @update_attrs)
+      assert metadata.edits == []
+    end
+
+    test "update_metadata/2 with invalid data returns error changeset" do
+      metadata = metadata_fixture()
+      assert {:error, %Ecto.Changeset{}} = Parts.update_metadata(metadata, @invalid_attrs)
+      assert metadata == Parts.get_metadata!(metadata.id)
+    end
+
+    test "delete_metadata/1 deletes the metadata" do
+      metadata = metadata_fixture()
+      assert {:ok, %Metadata{}} = Parts.delete_metadata(metadata)
+      assert_raise Ecto.NoResultsError, fn -> Parts.get_metadata!(metadata.id) end
+    end
+
+    test "change_metadata/1 returns a metadata changeset" do
+      metadata = metadata_fixture()
+      assert %Ecto.Changeset{} = Parts.change_metadata(metadata)
     end
   end
 end

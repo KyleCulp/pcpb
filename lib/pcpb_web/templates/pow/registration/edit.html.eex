@@ -23,8 +23,11 @@
   <%= password_input f, :password_confirmation %>
   <%= error_tag f, :password_confirmation %>
 
+      <%= label f, :username %>
+  <%= text_input f, :username %>
+  <%= error_tag f, :username %>
+
   <div>
     <%= submit "Update" %>
   </div>
 <% end %>
-

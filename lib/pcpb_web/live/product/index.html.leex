@@ -1,0 +1,41 @@
+<h1>Listing Products</h1>
+<%= if @live_action in [:new] do %>
+  <%= live_modal @socket, PcpbWeb.ProductLive.FormComponent,
+    id: @product.id || :new,
+    title: @page_title,
+    action: @live_action,
+    product: @product,
+    return_to: Routes.product_index_path(@socket, :index) %>
+<% end %>
+<%= if @category == "index" do %>
+  <ul>
+    <%= for product <- PcpbWeb.LayoutView.products_map do %>
+      <li id="product-<%= product.name %>">
+        <%= live_patch product.name, to: Routes.product_index_path(@socket, :index, product.atom), class: "block p-3" %>
+      </li>
+    <% end %>
+  </ul>
+  <%= live_patch "New Product", to: Routes.product_index_path(@socket, :new), class: "block p-3" %>
+<% end %>
+<%= if @category not in ["index", "edit"] do %>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="products">
+      <%= for product <- @products do %>
+        <tr id="product-<%= product.id %>">
+          <td><%= product.name %></td>
+          <td>
+            <span><%= live_redirect "Show", to: Routes.product_show_path(@socket, :index, @category, product.id) %></span>
+            <span><%= live_patch "Edit", to: Routes.product_show_path(@socket, :edit, product) %></span>
+            <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: product.id, data: [confirm: "Are you sure?"] %></span>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

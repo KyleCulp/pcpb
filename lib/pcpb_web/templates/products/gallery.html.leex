@@ -1,0 +1,7 @@
+<%= if @images != nil do %>
+<div class="flex border-2 border-blue-300 border-solid dropzone" id="gallery_dropzone" phx-hook="Gallery">
+<%= Enum.with_index(@images) |> Enum.map(fn({img, index}) -> %>
+  <img src="<%= cdn_url() <> "parts/" <> img.full %>" id="<%= img.id %>" class="draggable" style="max-height: 200px" draggable="true" />
+<% end) %>
+</div>
+<% end %>

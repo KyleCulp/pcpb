@@ -22,5 +22,6 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 To develop, run:
 
 docker-compose up -d
+apt-get install imagemagick
 cd assets && npm run watch (to use tailwind css @apply)
 mix phx.server

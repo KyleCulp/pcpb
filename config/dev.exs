@@ -59,10 +59,12 @@ config :pcpb, PcpbWeb.Endpoint,
 config :pcpb, PcpbWeb.Endpoint,
   live_reload: [
     patterns: [
-      ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
+      ~r"priv/static/(?!uploads).*(js|css|png|jpeg|jpg|gif|svg)$",
+      # ~r"priv/static/[?!uploads].*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"lib/pcpb_web/(live|views)/.*(ex)$",
       ~r"lib/pcpb_web/templates/.*(eex)$"
-    ]
+    ],
+    iframe_attrs: [class: "hidden"]
   ]
 
 # Do not include metadata nor timestamps in development logs

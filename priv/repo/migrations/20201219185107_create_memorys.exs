@@ -3,7 +3,7 @@ defmodule Pcpb.Repo.Migrations.CreateMemorys do
   import Pcpb.Parts.Base
 
   def change do
-    create table(:memorys) do
+    create table(:memorys, primary_key: false) do
       part_base_fields_migration
 
       add :series, :string

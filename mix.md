@@ -6,10 +6,10 @@ mix phx.gen.live Parts Case cases name manufacturer model release:date model_num
 
 mix phx.gen.live Parts CPUCooler cpu_coolers name manufacturer model series release:date model_number color led type intel_socket_support:array:string amd_socket_support:array:string bearing_type fans:integer fan_size:integer rpm noise_level fan_cfm dimensions:map watercool:map fan_dimensions rgb
 
-mix phx.gen.context Parts GPU gpus name manufacturer model series release:date model_number interface chipset GPU base_clock:decimal boost_clock:decimal memory_clock frame_sync cuda_cores:integer stream_processors:integer memory memory_clock memory_interface memory_type directx opengl max_resolution max_monitors io:map power_connector hdcp slot_width dimensions:map cooler sli_support crossfire_support ray_tracing backplate virtuallink rgb
+mix phx.gen.context Parts GPU gpus name manufacturer model series release:date model_number interface chipset GPU core_clock:decimal boost_clock:decimal memory_clock frame_sync cuda_cores:integer stream_processors:integer memory memory_clock memory_interface memory_type directx opengl max_resolution max_monitors io:map power_connector hdcp slot_width dimensions:map cooler sli_support crossfire_support ray_tracing backplate virtuallink rgb
 
 
-mix phx.gen.context Parts Motherboard motherboards form_factor socket chipset memory_type memory_dimms max_memory:integer memory_channels memory_speed:array:string memory_oc_speed:array:string pciex16:array:string pciex8:array:string pciex4:array:string pciex1:array:string pci:integer sata3 sata6 msata sata_raid m2:array:string raid sli crossfire ethernet_chipset ethernet2_chipset video usb2 usb321 usb322 usb3222 video audio_chipset audio_channels wireless color led intel_optane
+mix phx.gen.context Parts Motherboard motherboards form_factor socket chipset memory_type memory_dimms max_memory:integer memory_channels memory_speed:array:string memory_oc_speed:array:string pciex16:array:string pciex8:array:string pciex4:array:string pciex1:array:string pci:integer sata3 sata6 msata sata_raid m2:array:string power_pins:array:string sli crossfire lan lan_speed video usb2_headers usb3usb_three_two_gen_one usb_three_two_gen_two video audio_chipset audio_channels bluetooth wifi color led intel_optane backplate liquid_cooling
 
 mix phx.gen.context Parts Memory memorys name manufacturer model launch:date model_number series color led type chipset modules speed cas_latency:integer voltage timing heatsink ecc ecc_rank
 

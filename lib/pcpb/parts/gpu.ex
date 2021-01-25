@@ -1,6 +1,7 @@
 defmodule Pcpb.Parts.GPU do
   use Ecto.Schema
   import Ecto.Changeset
+  use Pcpb.Parts.Base
   import Pcpb.Parts.Base
 
   schema "gpus" do
@@ -14,7 +15,7 @@ defmodule Pcpb.Parts.GPU do
     field :opengl, :string
     field :cuda_cores, :integer
     field :stream_processors, :integer
-    field :base_clock, :decimal
+    field :core_clock, :decimal
     field :boost_clock, :decimal
 
     field :memory, :string
@@ -54,7 +55,7 @@ defmodule Pcpb.Parts.GPU do
       :opengl,
       :cuda_cores,
       :stream_processors,
-      :base_clock,
+      :core_clock,
       :boost_clock,
       :memory,
       :memory_clock,
@@ -85,7 +86,7 @@ defmodule Pcpb.Parts.GPU do
       :opengl,
       :cuda_cores,
       :stream_processors,
-      :base_clock,
+      :core_clock,
       :boost_clock,
       :memory,
       :memory_clock,
